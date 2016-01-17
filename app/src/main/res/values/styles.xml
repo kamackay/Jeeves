@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@android:color/holo_red_dark</item>
+        <item name="colorPrimaryDark">@android:color/holo_red_dark</item>
+        <item name="colorAccent">@android:color/holo_red_dark</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:buttonStyle">@style/ButtonText</item>
+    </style>
+    <style name="ButtonText" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/buttonstyle</item><!-- only way to change this is to change the src image -->
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10sp</item>
+        <item name="android:layout_width">wrap_content</item><item name="android:layout_height">wrap_content</item>
+    </style>
+    <color name="buttonstyle">#404040</color>
+</resources>

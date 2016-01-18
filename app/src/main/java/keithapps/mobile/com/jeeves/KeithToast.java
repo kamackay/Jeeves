@@ -36,7 +36,13 @@ public class KeithToast {
             ImageView iv = (ImageView) layout.findViewById(R.id.keithtoast_imageview);
             iv.setImageResource(getColoredImage(color));
             TextView t2 = (TextView) layout.findViewById(R.id.keithToast_iconText);
-            t2.setTextColor(color);
+            t2.setTextColor(color);/**
+             Typeface tf = Typeface.createFromAsset(context.getAssets(), "arial.ttf");
+             if (tf == null) tf = Typeface.createFromAsset(context.getAssets(), "calibri.ttf");
+             if (tf != null) {
+             textView.setTypeface(tf);
+             t2.setTypeface(tf);
+             }//*/
             Toast toast = new Toast(context);
             toast.setGravity(Gravity.TOP, 0, 50);
             if (length == Toast.LENGTH_LONG || length == Toast.LENGTH_SHORT)

@@ -2,4 +2,36 @@
     <string name="app_name">Jeeves</string>
     <string name="text_home">Home</string>
     <string name="text_class">Class</string>
+    <string name="text_notificationVolume">Notification Volume</string>
+    <string name="text_mediaVolume">Media Volume</string>
+    <string name="text_ringtoneVolume">Ringtone Volume</string>
+    <string name="text_systemVolume">System Volume</string>
+    <string name="sharedPrefrences_code">jeeves.prefs</string>
+    <string name="settings_home_ringtoneVolume">settings_home_ringtoneVolume</string>
+    <string name="settings_home_mediaVolume">settings_home_mediaVolume</string>
+    <string name="settings_home_systemVolume">settings_home_systemVolume</string>
+    <string name="settings_home_notificationVolume">settings_home_notificationVolume</string>
+    <string name="settings_class_ringtoneVolume">settings_class_ringtoneVolume</string>
+    <string name="settings_class_mediaVolume">settings_class_mediaVolume</string>
+    <string name="settings_class_systemVolume">settings_class_systemVolume</string>
+    <string name="settings_class_notificationVolume">settings_class_notificationVolume</string>
+    <string name="text_alarmVolume">Alarm Volume</string>
+    <string name="settings_class_alarmVolume">settings_class_alarmVolume</string>
+    <string name="settings_home_alarmVolume">settings_home_alarmVolume</string>
+    <string name="text_car">Car</string>
+    <string name="text_other">Other</string>
+    <string name="text_immortal">Immortal Battery</string>
+    <string-array name="percentages">
+        <item>0%</item>
+        <item>10%</item>
+        <item>20%</item>
+        <item>30%</item>
+        <item>40%</item>
+        <item>50%</item>
+        <item>60%</item>
+        <item>70%</item>
+        <item>80%</item>
+        <item>90%</item>
+        <item>100%</item>
+    </string-array>
 </resources>

@@ -12,7 +12,8 @@
     </style>
     <style name="ButtonText" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/buttonstyle</item><!-- only way to change this is to change the src image -->
+        <item name="android:background">@color/button_forecolor</item>
+        <!-- only way to change this is to change the src image -->
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:padding">10sp</item>

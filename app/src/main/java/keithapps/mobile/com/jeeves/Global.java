@@ -153,4 +153,20 @@ public class Global {
         return context.getSharedPreferences(context.getString(R.string.sharedPrefrences_code),
                 Context.MODE_PRIVATE);
     }
+
+    /**
+     * Get the version name of this app
+     * @param context The calling context
+     * @return the Name of this app, Unknown if it could not be found
+     */
+    public static String getVersionName(Context context){
+        try{
+            String s = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
+            if (s.isEmpty()) return "Unknown";
+            else return s;
+        } catch (Exception e){
+            return "Unknown";
+        }
+    }
 }

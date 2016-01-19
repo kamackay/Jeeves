@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         spinners[7].setSelection(prefs.getInt(getString(R.string.settings_class_systemVolume), 0));
         spinners[8].setSelection(prefs.getInt(getString(R.string.settings_class_notificationVolume), 0));
         spinners[9].setSelection(prefs.getInt(getString(R.string.settings_class_alarmVolume), 0));
+        ((TextView)findViewById(R.id.activity_main_versionText))
+                .setText(String.format("Version: %s", getVersionName(getApplicationContext())));
     }
 
     /**

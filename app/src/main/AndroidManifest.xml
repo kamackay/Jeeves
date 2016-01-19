@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="keithapps.mobile.com.jeeves">
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,15 +24,25 @@
 
         <receiver android:name=".MainService$ClassButtonListener" />
         <receiver android:name=".MainService$HomeButtonListener" />
-        <receiver android:name="BootFinishedListener">
+        <receiver android:name=".BootFinishedListener">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".HeadphoneListener">
+            <intent-filter>
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".MainService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
+
+        <activity
+            android:name=".HeadphoneQueryPopup"
+            android:theme="@android:style/Theme.Dialog" />
     </application>
 
 </manifest>

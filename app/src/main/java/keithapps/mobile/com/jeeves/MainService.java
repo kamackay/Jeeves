@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
@@ -23,9 +24,10 @@ public class MainService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
+
+    private HeadphoneListener headphoneListener;
 
     /**
      * Called by the system when the service is first created.  Do not call this method directly.
@@ -33,6 +35,9 @@ public class MainService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        headphoneListener = new HeadphoneListener();
+        IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(headphoneListener, filter);
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -41,7 +46,7 @@ public class MainService extends Service {
         builder.setSmallIcon(android.R.color.transparent);
         builder.setOngoing(true);
         builder.setAutoCancel(false);
-        builder.setPriority(Notification.PRIORITY_DEFAULT);
+        builder.setPriority(Notification.PRIORITY_MIN);
         RemoteViews contentView = new RemoteViews(this.getPackageName(), R.layout.notification_layout);
         contentView.setOnClickPendingIntent(R.id.notification_button1,
                 PendingIntent.getBroadcast(this, 0,

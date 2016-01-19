@@ -19,7 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+<TextView
+    android:layout_width="match_parent"
+    android:id="@+id/activity_main_versionText"
+    android:textAlignment="gravity"
+    android:gravity="right"
+    android:text="Version: idk"
+    android:paddingBottom="20sp"
+    android:textColor="@android:color/white"
+    android:layout_height="wrap_content" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

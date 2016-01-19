@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,29 +10,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="keithapps.mobile.com.jeeves.MainActivity">
 
+    <TextView
+        android:id="@+id/activity_main_versionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingBottom="20sp"
+        android:text="Version: idk"
+        android:textAlignment="gravity"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Jeeves"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
     <ScrollView
         android:id="@+id/activity_main_scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_main_versionText">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-<TextView
-    android:layout_width="match_parent"
-    android:id="@+id/activity_main_versionText"
-    android:textAlignment="gravity"
-    android:gravity="right"
-    android:text="Version: idk"
-    android:paddingBottom="20sp"
-    android:textColor="@android:color/white"
-    android:layout_height="wrap_content" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/buttonstyle"
-                android:orientation="vertical">
+                android:background="@drawable/notification_button_background"
+                android:orientation="vertical"
+                android:padding="20sp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -156,8 +167,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/buttonstyle"
-                android:orientation="vertical">
+                android:background="@drawable/notification_button_background"
+                android:orientation="vertical"
+                android:padding="20sp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -273,6 +285,132 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notification_button_background"
+                android:orientation="vertical"
+                android:padding="20sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20sp"
+                    android:text="@string/text_out"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:text="@string/text_ringtoneVolume"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_out_ringtoneVolume"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:text="@string/text_mediaVolume"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_out_mediaVolume"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:text="@string/text_notificationVolume"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_out_notificationVolume"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:text="@string/text_systemVolume"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_out_systemVolume"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="10sp"
+                        android:paddingStart="10sp"
+                        android:text="@string/text_alarmVolume"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_out_alarmVolume"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

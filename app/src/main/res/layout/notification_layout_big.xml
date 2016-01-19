@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="125sp"
-    android:background="@color/notification_background"
+    android:background="@drawable/notification_background"
     android:orientation="vertical"
     android:padding="5sp">
 
@@ -30,7 +30,7 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="@color/button_forecolor"
+            android:background="@drawable/notification_button_background"
             android:text="@string/text_home"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
@@ -46,11 +46,26 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="@color/button_forecolor"
+            android:background="@drawable/notification_button_background"
             android:text="@string/text_class"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
+        <Button
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+        <Button
+            android:id="@+id/notification_big_button3"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@drawable/notification_button_background"
+            android:text="@string/text_out"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
         <ImageView
             android:id="@+id/notification_big_settings"
             android:layout_width="0sp"
@@ -76,31 +91,14 @@
             android:background="@android:color/transparent" />
 
         <Button
-            android:id="@+id/notification_big_button3"
-            android:layout_width="0sp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:background="@color/button_forecolor"
-            android:text="@string/text_car"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:layout_width="0sp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent" />
-
-        <Button
             android:id="@+id/notification_big_button4"
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="@color/button_forecolor"
-            android:text="@string/text_immortal"
+            android:background="@drawable/notification_button_background"
+            android:text="@string/text_car"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:layout_width="0sp"
@@ -113,8 +111,24 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="@color/button_forecolor"
-            android:text="@string/text_other"
+            android:background="@drawable/notification_button_background"
+            android:text="@string/text_work"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+        <Button
+            android:id="@+id/notification_big_button6"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@drawable/notification_button_background"
+            android:text="@string/text_idkYet"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 

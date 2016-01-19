@@ -29,7 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 (Spinner) findViewById(R.id.settingsScreen_class_mediaVolume),
                 (Spinner) findViewById(R.id.settingsScreen_class_systemVolume),
                 (Spinner) findViewById(R.id.settingsScreen_class_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_alarmVolume)
+                (Spinner) findViewById(R.id.settingsScreen_class_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_out_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_out_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_out_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_out_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_out_alarmVolume)
         };
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.percentages, android.R.layout.simple_spinner_item);
@@ -48,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 prefs.putInt(getString(R.string.settings_class_systemVolume), spinners[7].getSelectedItemPosition());
                 prefs.putInt(getString(R.string.settings_class_notificationVolume), spinners[8].getSelectedItemPosition());
                 prefs.putInt(getString(R.string.settings_class_alarmVolume), spinners[9].getSelectedItemPosition());
+                prefs.putInt(getString(R.string.settings_out_ringtoneVolume), spinners[10].getSelectedItemPosition());
+                prefs.putInt(getString(R.string.settings_out_mediaVolume), spinners[11].getSelectedItemPosition());
+                prefs.putInt(getString(R.string.settings_out_systemVolume), spinners[12].getSelectedItemPosition());
+                prefs.putInt(getString(R.string.settings_out_notificationVolume), spinners[13].getSelectedItemPosition());
+                prefs.putInt(getString(R.string.settings_out_alarmVolume), spinners[14].getSelectedItemPosition());
                 prefs.apply();
             }
 
@@ -71,6 +81,11 @@ public class MainActivity extends AppCompatActivity {
         spinners[7].setSelection(prefs.getInt(getString(R.string.settings_class_systemVolume), 0));
         spinners[8].setSelection(prefs.getInt(getString(R.string.settings_class_notificationVolume), 0));
         spinners[9].setSelection(prefs.getInt(getString(R.string.settings_class_alarmVolume), 0));
+        spinners[10].setSelection(prefs.getInt(getString(R.string.settings_out_ringtoneVolume), 5));
+        spinners[11].setSelection(prefs.getInt(getString(R.string.settings_out_mediaVolume), 5));
+        spinners[12].setSelection(prefs.getInt(getString(R.string.settings_out_systemVolume), 5));
+        spinners[13].setSelection(prefs.getInt(getString(R.string.settings_out_notificationVolume), 5));
+        spinners[14].setSelection(prefs.getInt(getString(R.string.settings_out_alarmVolume), 10));
         ((TextView)findViewById(R.id.activity_main_versionText))
                 .setText(String.format("Version: %s", getVersionName(getApplicationContext())));
     }

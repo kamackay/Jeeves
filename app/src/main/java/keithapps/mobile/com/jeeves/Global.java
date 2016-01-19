@@ -8,11 +8,14 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Process;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -30,11 +33,11 @@ public class Global {
      * NOTE: The service must be in this APK
      *
      * @param serviceClass the class of the service that is being checked
-     * @param context      the context of the calling class
+     * @param c            the context of the calling class
      * @return true if the given service is running
      */
-    public static boolean isServiceRunning(Class<?> serviceClass, Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    public static boolean isServiceRunning(Class<?> serviceClass, Context c) {
+        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
             if (serviceClass.getName().equals(service.service.getClassName()))
                 return true;
@@ -42,15 +45,47 @@ public class Global {
     }
 
     /**
+     * Change the WiFi state
+     *
+     * @param c  the calling context
+     * @param on whether to turn the WiFi on or off
+     */
+    private static void changeWiFiState(Context c, boolean on) {
+        try { //Try to turn on the WiFi
+            ((WifiManager) c.getSystemService(Context.WIFI_SERVICE)).setWifiEnabled(on);
+        } catch (Exception e) {
+            //Nothing is wrong
+        }
+    }
+
+    /**
+     * Turn on the WiFi
+     *
+     * @param c the calling context
+     */
+    public static void turnOnWiFi(Context c) {
+        changeWiFiState(c, true);
+    }
+
+    /**
+     * Turn off the WiFi
+     *
+     * @param c the calling context
+     */
+    public static void turnOffWiFi(Context c) {
+        changeWiFiState(c, false);
+    }
+
+    /**
      * Turn on the GPS
      * <p/>
      * NOTE: May not work
      *
-     * @param context The calling context
+     * @param c The calling context
      */
-    public static void turnGPSOn(Context context) {
+    public static void turnGPSOn(Context c) {
         try {
-            String provider = Settings.Secure.getString(context.getContentResolver(),
+            String provider = Settings.Secure.getString(c.getContentResolver(),
                     Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
             if (!provider.contains("gps")) { //if gps is disabled
                 final Intent poke = new Intent();
@@ -58,7 +93,7 @@ public class Global {
                         "com.android.settings.widget.SettingsAppWidgetProvider");
                 poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
                 poke.setData(Uri.parse("3"));
-                context.sendBroadcast(poke);
+                c.sendBroadcast(poke);
             }
         } catch (Exception e) {
             //It's all good
@@ -70,42 +105,46 @@ public class Global {
      * <p/>
      * NOTE: May not work
      *
-     * @param context The calling context
+     * @param c The calling context
      */
-    public static void turnGPSOff(Context context) {
+    public static void turnGPSOff(Context c) {
         try {
-            String provider = Settings.Secure.getString(context.getContentResolver(),
+            String provider = Settings.Secure.getString(c.getContentResolver(),
                     Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
             if (provider.contains("gps")) { //if gps is enabled
                 final Intent poke = new Intent();
                 poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
                 poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
                 poke.setData(Uri.parse("3"));
-                context.sendBroadcast(poke);
+                c.sendBroadcast(poke);
             }
         } catch (Exception e) {
-            KeithToast.show("didn't work", context);
+            KeithToast.show("didn't work", c);
         }
     }
 
     /**
      * Close the notification tray
      *
-     * @param context the calling context
+     * @param c the calling context
      */
-    public static void closeNotificationTray(Context context) {
-        context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+    public static void closeNotificationTray(Context c) {
+        try {
+            c.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        } catch (Exception e) {
+            //Everything's ok
+        }
     }
 
     /**
      * Can the GPS be toggled off?
      *
-     * @param context the calling context
+     * @param c the calling context
      * @return false if the system is unable to turn off the GPS
      */
-    public static boolean canToggleGPS(Context context) {
-        PackageManager pacman = context.getPackageManager();
-        PackageInfo pacInfo = null;
+    public static boolean canToggleGPS(Context c) {
+        PackageManager pacman = c.getPackageManager();
+        PackageInfo pacInfo;
         try {
             pacInfo = pacman.getPackageInfo("com.android.settings", PackageManager.GET_RECEIVERS);
         } catch (PackageManager.NameNotFoundException e) {
@@ -156,17 +195,42 @@ public class Global {
 
     /**
      * Get the version name of this app
+     *
      * @param context The calling context
      * @return the Name of this app, Unknown if it could not be found
      */
-    public static String getVersionName(Context context){
-        try{
+    public static String getVersionName(Context context) {
+        try {
             String s = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0).versionName;
             if (s.isEmpty()) return "Unknown";
             else return s;
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Unknown";
+        }
+    }
+
+    /**
+     * I dislike Snapchat. If it has a background process, kill it.
+     *
+     * @param c the calling context
+     */
+    public static void tryToKillSnapchat(Context c) {
+        try {
+            String nameOfProcess = "com.snapchat.android";
+            ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo process : listOfProcesses)
+                if (process.processName.contains(nameOfProcess)) {
+                    try {
+                        android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
+                        Process.killProcess(process.pid);
+                    } catch (Exception e) {
+                        KeithToast.show("Found Snapchat, but couldn't kill it", c);
+                    }
+                }
+        } catch (Exception e) {
+            //Fuck you, snapchat
         }
     }
 }

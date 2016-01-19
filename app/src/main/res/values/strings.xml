@@ -19,8 +19,17 @@
     <string name="settings_class_alarmVolume">settings_class_alarmVolume</string>
     <string name="settings_home_alarmVolume">settings_home_alarmVolume</string>
     <string name="text_car">Car</string>
-    <string name="text_other">Other</string>
-    <string name="text_immortal">Immortal Battery</string>
+    <string name="text_idkYet">IDK Yet</string>
+    <string name="headphone_popup_title">Headset Detected\n\nFull volume or partial volume?</string>
+    <string name="text_full">Full</string>
+    <string name="text_partial">Partial</string>
+    <string name="text_out">Out</string>
+    <string name="text_work">Work</string>
+    <string name="settings_out_ringtoneVolume">settings_out_ringtoneVolume</string>
+    <string name="settings_out_mediaVolume">settings_out_mediaVolume</string>
+    <string name="settings_out_systemVolume">settings_out_systemVolume</string>
+    <string name="settings_out_notificationVolume">settings_out_notificationVolume</string>
+    <string name="settings_out_alarmVolume">settings_out_alarmVolume</string>
     <string-array name="percentages">
         <item>0%</item>
         <item>10%</item>

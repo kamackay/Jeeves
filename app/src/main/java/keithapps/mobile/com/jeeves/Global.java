@@ -32,6 +32,10 @@ public class Global {
      * The String "\n"
      */
     public static final String TEXT_NEWLINE = "\n";
+    /**
+     * Snapchat's package name
+     */
+    public final static String PACKAGE_SNAPCHAT = "com.snapchat.android";
 
     /**
      * Is the given service running.
@@ -224,11 +228,10 @@ public class Global {
     public static void tryToKillSnapchat(final Context c) {
         try {
             boolean b = false;
-            final String nameOfProcess = "com.snapchat.android";
             final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
             for (ActivityManager.RunningAppProcessInfo process : listOfProcesses)
-                if (process.processName.contains(nameOfProcess)) {
+                if (process.processName.contains(PACKAGE_SNAPCHAT)) {
                     try {
                         android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
                         Process.killProcess(process.pid);
@@ -245,7 +248,7 @@ public class Global {
                         boolean isAlive = false;
                         List<ActivityManager.RunningAppProcessInfo> l = manager.getRunningAppProcesses();
                         for (ActivityManager.RunningAppProcessInfo process : l)
-                            if (process.processName.toLowerCase().contains(nameOfProcess))
+                            if (process.processName.toLowerCase().contains(PACKAGE_SNAPCHAT))
                                 isAlive = true;
                         if (!isAlive) KeithToast.show("Snapchat background process killed", c);
                         else KeithToast.show("Failed to kill a Snapchat background process", c);
@@ -276,7 +279,6 @@ public class Global {
     }
 
     public static void turnOffVibrate(AudioManager a) {
-        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
         a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_OFF);
     }
@@ -286,9 +288,19 @@ public class Global {
     }
 
     public static void turnOnVibrate(AudioManager a) {
-        a.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
         a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
         a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ON);
+    }
+
+    public static boolean isVibrateOn(Context c) {
+        return isVibrateOn((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
+    }
+
+    public static boolean isVibrateOn(AudioManager a) {
+        if (a.getVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION) == AudioManager.VIBRATE_SETTING_OFF &&
+                a.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER) == AudioManager.VIBRATE_SETTING_OFF)
+            return false;
+        return a.getRingerMode() != AudioManager.RINGER_MODE_SILENT;
     }
 
     public static void turnOnVibrate(Context c) {

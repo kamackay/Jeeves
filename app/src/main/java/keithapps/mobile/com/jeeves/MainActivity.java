@@ -26,6 +26,8 @@ import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean mainShowing;
+
     /**
      * Creation event
      *
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
      * Initialize
      */
     private void init() {
+        mainShowing = true;
         final Spinner[] spinners = getSpinners();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.percentages, android.R.layout.simple_spinner_item);
@@ -157,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
      * @param v the sync button
      */
     public void populateProcesses(View v) {
+        mainShowing = false;
         Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         LinearLayout l = (LinearLayout) findViewById(R.id.runningProcesses_root);
         if (l.getChildCount() > 0) l.removeAllViews();
@@ -266,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
                 //Absorb the key event
                 return true;
             case KeyEvent.KEYCODE_BACK:
-                //Absorb the key event
+                if (!mainShowing) clickDone(null);
+                return true;
+            case KeyEvent.KEYCODE_HOME:
                 return true;
         }
         return super.onKeyDown(keycode, e);

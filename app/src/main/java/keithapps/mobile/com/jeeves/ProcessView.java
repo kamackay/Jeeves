@@ -24,7 +24,7 @@ public class ProcessView extends TextView {
                         "\n    Class: %s\n    Is Foreground: %s\n",
                 breakIntoLines(p.process), p.pid, p.clientCount, breakIntoLines(c),
                 (p.foreground ? "Yes" : "No")));
-        setPadding(30, 40, 20, 20);
+        setPadding(40, 50, 20, 20);
     }
 
     /**

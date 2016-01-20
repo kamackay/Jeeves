@@ -35,6 +35,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".MainService$BackgroundProcessListener" />
         <receiver android:name=".HeadphoneListener">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
@@ -52,5 +53,6 @@
 
         <receiver android:name=".MainService$OutButtonListener" />
         <receiver android:name=".MainService$CarButtonListener" />
+        <receiver android:name=".MainService$ScreenListener" />
     </application>
 </manifest>

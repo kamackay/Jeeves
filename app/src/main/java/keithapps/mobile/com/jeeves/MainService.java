@@ -1,5 +1,7 @@
 package keithapps.mobile.com.jeeves;
 
+import android.app.ActivityManager;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,14 +13,28 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
+import java.util.Calendar;
+
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
-public class MainService extends Service {
-    private static Notification n;
+import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
 
+public class MainService extends Service {
+    private ScreenListener screenListener;
+
+    /**
+     * Constructor
+     */
     public MainService() {
+
     }
 
+    /**
+     * Show the Notification
+     *
+     * @param mode the current mode to put the notification in
+     * @param c    the calling context
+     */
     public static void showNotification(Mode mode, Context c) {
         Intent intent = new Intent(c, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(c, 1,
@@ -67,6 +83,24 @@ public class MainService extends Service {
 
     }
 
+    public static void startBackgroundProcess(Context c) {
+        Intent myIntent = new Intent(c, BackgroundProcessListener.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c, 0, myIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 0); // first time
+        long frequency = 60 * 1000; // in ms
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);
+    }
+
+    /**
+     * On Bind?
+     *
+     * @param intent the intent trying to bind with
+     * @return Hell if I know
+     */
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -82,10 +116,35 @@ public class MainService extends Service {
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(headphoneListener, filter);
         showNotification();
+        startBackgroundProcess(getApplicationContext());
+        startScreenListener();
     }
 
+    public void startScreenListener() {
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        screenListener = new ScreenListener();
+        registerReceiver(screenListener, filter);
+    }
+
+    /**
+     * Can't remember why I made this.
+     * Calls the show Notification and uses Home as a default
+     */
     public void showNotification() {
         showNotification(Mode.Home, getApplicationContext());
+    }
+
+    /**
+     * When the Service is being closed
+     */
+    @Override
+    public void onDestroy() {
+        if (screenListener != null) {
+            unregisterReceiver(screenListener);
+            screenListener = null;
+        }
+        super.onDestroy();
     }
 
     public static class HomeButtonListener extends BroadcastReceiver {
@@ -136,4 +195,37 @@ public class MainService extends Service {
         }
     }
 
+
+    /**
+     * Created by Keith on 1/19/2016.
+     * Background Process Listener
+     */
+    public static class BackgroundProcessListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context c, Intent intent) {
+            ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                if (service.service.getClassName().equals(PACKAGE_SNAPCHAT)) {
+                    KeithToast.show("Snapchat is running", c);
+                    return;
+                }
+            }
+        }
+    }
+
+    public static class ScreenListener extends BroadcastReceiver {
+        private boolean on = true;
+
+        @Override
+        public void onReceive(Context c, Intent i) {
+            if (i.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                if (!on) {
+                    on = true;
+                    //KeithToast.show("Screen on", c);
+                }
+            } else if (i.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                if (on) on = false;
+            }
+        }
+    }
 }

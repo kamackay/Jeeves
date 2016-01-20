@@ -12,10 +12,10 @@ import static keithapps.mobile.com.jeeves.Global.breakIntoLines;
  * Created by Keith on 1/19/2016.
  * Basically just a textview that stores a process
  */
-public class ProcessTextView extends TextView {
+public class ProcessView extends TextView {
     private ActivityManager.RunningServiceInfo p;
 
-    public ProcessTextView(Context context, ActivityManager.RunningServiceInfo p) {
+    public ProcessView(Context context, ActivityManager.RunningServiceInfo p) {
         super(context);
         this.p = p;
         String[] temp = p.service.toString().split("/");
@@ -24,6 +24,7 @@ public class ProcessTextView extends TextView {
                         "\n    Class: %s\n    Is Foreground: %s\n",
                 breakIntoLines(p.process), p.pid, p.clientCount, breakIntoLines(c),
                 (p.foreground ? "Yes" : "No")));
+        setPadding(30, 40, 20, 20);
     }
 
     /**
@@ -39,9 +40,12 @@ public class ProcessTextView extends TextView {
         else if (text.toLowerCase().contains("com.android.") || p.process.equals("system"))
             setTextColor(Color.rgb(175, 80, 0));
         else if (text.toLowerCase().contains("keithapps")) setTextColor(Color.BLACK);
+        else if (text.toLowerCase().contains("pushbullet")) setTextColor(Color.GREEN);
         super.setText(text);
-        if (p.foreground) setBackgroundResource(R.drawable.background_processview);
-        else setBackgroundResource(R.drawable.background_processview);
+        if (p.foreground) {
+            setBackgroundResource(R.drawable.background_processview_inverted);
+            super.setTextColor(Color.WHITE);
+        } else setBackgroundResource(R.drawable.background_processview);
     }
 
     @Override

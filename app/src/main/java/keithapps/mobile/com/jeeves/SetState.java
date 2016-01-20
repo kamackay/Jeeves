@@ -12,9 +12,7 @@ import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
 import static keithapps.mobile.com.jeeves.Global.getPrefs;
 import static keithapps.mobile.com.jeeves.Global.tryToKillSnapchat;
 import static keithapps.mobile.com.jeeves.Global.turnGPSOff;
-import static keithapps.mobile.com.jeeves.Global.turnOffVibrate;
 import static keithapps.mobile.com.jeeves.Global.turnOffWiFi;
-import static keithapps.mobile.com.jeeves.Global.turnOnBluetooth;
 import static keithapps.mobile.com.jeeves.Global.turnOnNFC;
 import static keithapps.mobile.com.jeeves.Global.turnOnWiFi;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
@@ -48,7 +46,7 @@ public class SetState {
         setMediaVolume(c, ManageVolume.Mode.Home);
         setNotificationVolume(c, ManageVolume.Mode.Home);
 
-        turnOnBluetooth(c);
+        //turnOnBluetooth(c);
 
         tryToKillSnapchat(c);
         showNotification(Mode.Out, c);
@@ -86,7 +84,7 @@ public class SetState {
             setAlarmVolume(c, a, prefs, ManageVolume.Mode.Class);
             setMediaVolume(c, a, prefs, ManageVolume.Mode.Class);
             setNotificationVolume(c, a, prefs, ManageVolume.Mode.Class);
-            turnOffVibrate(a);
+            //turnOffVibrate(a);
         } catch (Exception e) {
             sb.append("Had a problem turning down the volume").append(Global.TEXT_NEWLINE);
         }

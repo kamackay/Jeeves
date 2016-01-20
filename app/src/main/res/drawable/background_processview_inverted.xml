@@ -9,10 +9,10 @@
         android:top="5pt">
         <shape android:shape="rectangle">
             <corners android:radius="15sp" />
-            <solid android:color="@color/button_forecolor" />
+            <solid android:color="@android:color/darker_gray" />
             <stroke
                 android:width="3px"
-                android:color="@android:color/darker_gray" />
+                android:color="@color/button_forecolor" />
         </shape>
     </item>
 </layer-list>

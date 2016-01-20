@@ -162,10 +162,9 @@ public class MainActivity extends AppCompatActivity {
         if (l.getChildCount() > 0) l.removeAllViews();
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (final ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            ProcessTextView tv = new ProcessTextView(getApplicationContext(), service);
+            ProcessView tv = new ProcessView(getApplicationContext(), service);
             if (tf != null) tv.setTypeface(tf);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            tv.setPadding(20, 20, 20, 20);
             tv.setOnLongClickListener(getProcessViewListener());
             l.addView(tv);
         }
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            int pid = ((ProcessTextView) v).getProcess().pid;
+                            int pid = ((ProcessView) v).getProcess().pid;
                             try {
                                 android.os.Process.sendSignal(pid, Process.SIGNAL_KILL);
                                 Process.killProcess(pid);

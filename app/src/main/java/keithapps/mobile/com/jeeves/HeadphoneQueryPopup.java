@@ -11,8 +11,6 @@ import java.util.TimerTask;
 
 public class HeadphoneQueryPopup extends Activity {
 
-    private Timer timer;
-
     /**
      * Initialize
      *
@@ -22,7 +20,7 @@ public class HeadphoneQueryPopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_headphone_query_popup);
-        timer = new Timer();
+        final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -46,17 +44,28 @@ public class HeadphoneQueryPopup extends Activity {
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-        Timer timer2 = new Timer();
+        final Timer timer2 = new Timer();
         timer2.schedule(new TimerTask() { // Do this because it seems that the system will
             @Override   // lower the volume back down. Because it hates me
             public void run() {
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                         audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
                         AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-                timer.cancel();
-                timer.purge();
+                timer2.cancel();
+                timer2.purge();
             }
         }, 5000);
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                        audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                        AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                t.cancel();
+                t.purge();
+            }
+        }, 10000);
         finish();
     }
 

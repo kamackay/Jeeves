@@ -1,0 +1,16 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:height="20pt">
+        <shape android:shape="rectangle">
+            <corners android:radius="15sp" />
+            <solid android:color="@color/button_forecolor" />
+            <stroke
+                android:width="3px"
+                android:color="@android:color/darker_gray" />
+        </shape>
+    </item>
+    <item android:height="30pt">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

@@ -14,16 +14,16 @@
         android:id="@+id/activity_main_versionText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:gravity="end"
         android:paddingBottom="20sp"
-        android:text="Version: idk"
+        android:text="@string/default_versionText"
         android:textAlignment="gravity"
         android:textColor="@android:color/white" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to Jeeves"
+        android:text="@string/text_welcomeToJeeves"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 

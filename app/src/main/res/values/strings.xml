@@ -30,6 +30,11 @@
     <string name="settings_out_systemVolume">settings_out_systemVolume</string>
     <string name="settings_out_notificationVolume">settings_out_notificationVolume</string>
     <string name="settings_out_alarmVolume">settings_out_alarmVolume</string>
+    <string name="text_welcomeToJeeves">Welcome to Jeeves</string>
+    <string name="default_versionText">Version: idk</string>
+    <string name="text_showAllRunningProcesses">Show All Running Processes</string>
+    <string name="text_done">Done</string>
+    <string name="text_sync">Sync</string>
     <string-array name="percentages">
         <item>0%</item>
         <item>10%</item>

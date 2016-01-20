@@ -1,21 +1,27 @@
 package keithapps.mobile.com.jeeves;
 
 import android.app.ActivityManager;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.nfc.NfcAdapter;
 import android.os.Process;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -215,22 +221,114 @@ public class Global {
      *
      * @param c the calling context
      */
-    public static void tryToKillSnapchat(Context c) {
+    public static void tryToKillSnapchat(final Context c) {
         try {
-            String nameOfProcess = "com.snapchat.android";
-            ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+            boolean b = false;
+            final String nameOfProcess = "com.snapchat.android";
+            final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
             List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
             for (ActivityManager.RunningAppProcessInfo process : listOfProcesses)
                 if (process.processName.contains(nameOfProcess)) {
                     try {
                         android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
                         Process.killProcess(process.pid);
+                        b = true;
                     } catch (Exception e) {
-                        KeithToast.show("Found Snapchat, but couldn't kill it", c);
+                        KeithToast.show("Error occurred killing Snapchat background process", c);
                     }
                 }
+            if (b) {
+                Timer t = new Timer();
+                t.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        boolean isAlive = false;
+                        List<ActivityManager.RunningAppProcessInfo> l = manager.getRunningAppProcesses();
+                        for (ActivityManager.RunningAppProcessInfo process : l)
+                            if (process.processName.toLowerCase().contains(nameOfProcess))
+                                isAlive = true;
+                        if (!isAlive) KeithToast.show("Snapchat background process killed", c);
+                        else KeithToast.show("Failed to kill a Snapchat background process", c);
+                    }
+                }, 4000);
+            }
         } catch (Exception e) {
             //Fuck you, snapchat
         }
+    }
+
+    /**
+     * Turn on the Bluetooth
+     *
+     * @param c the calling context
+     */
+    public static void turnOffBluetooth(Context c) {
+        ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter().disable();
+    }
+
+    /**
+     * Turn off the Bluetooth
+     *
+     * @param c the calling context
+     */
+    public static void turnOnBluetooth(Context c) {
+        ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter().enable();
+    }
+
+    public static void turnOffVibrate(AudioManager a) {
+        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_OFF);
+    }
+
+    public static void turnOffVibrate(Context c) {
+        turnOffVibrate((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
+    }
+
+    public static void turnOnVibrate(AudioManager a) {
+        a.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ON);
+    }
+
+    public static void turnOnVibrate(Context c) {
+        turnOnVibrate((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
+    }
+
+    public static String breakIntoLines(String s) {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        boolean f = true;
+        for (String x : s.split("\\.")) {
+            if (i + x.length() > 30) {
+                sb.append("\n        .").append(x);
+                i = x.length();
+            } else {
+                if (f) f = false;
+                else sb.append(".");
+                sb.append(x);
+                i += x.length();
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    public static void turnOnNFC(final Context c) {
+        final NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(c);
+        new Thread("toggleNFC") {
+            public void run() {
+                try {
+                    Class<?> NfcManagerClass;
+                    Method setNfcEnabled;
+                    NfcManagerClass = Class.forName(mNfcAdapter.getClass().getName());
+                    setNfcEnabled = NfcManagerClass.getDeclaredMethod("enable");
+                    setNfcEnabled.setAccessible(true);
+                    boolean Nfc = (Boolean) setNfcEnabled.invoke(mNfcAdapter);
+                    if (Nfc) KeithToast.show("Holy shit, it worked", c);
+                } catch (Exception e) {
+                    //Eh, worth a shot
+                }
+            }
+        }.start();
     }
 }

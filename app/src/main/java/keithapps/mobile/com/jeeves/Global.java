@@ -220,6 +220,12 @@ public class Global {
         }
     }
 
+    public static boolean isKeith(Context c) {
+        SharedPreferences prefs = c.getSharedPreferences(
+                c.getString(R.string.sharedPrefrences_code), Context.MODE_PRIVATE);
+        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false);
+    }
+
     /**
      * I dislike Snapchat. If it has a background process, kill it.
      *

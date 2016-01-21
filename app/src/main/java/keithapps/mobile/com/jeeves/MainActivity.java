@@ -121,8 +121,27 @@ public class MainActivity extends AppCompatActivity {
         spinners[12].setSelection(prefs.getInt(getString(R.string.settings_out_systemVolume), 5));
         spinners[13].setSelection(prefs.getInt(getString(R.string.settings_out_notificationVolume), 5));
         spinners[14].setSelection(prefs.getInt(getString(R.string.settings_out_alarmVolume), 10));
-        ((TextView) findViewById(R.id.activity_main_versionText))
-                .setText(String.format("Version: %s", getVersionName(getApplicationContext())));
+        TextView t = (TextView) findViewById(R.id.activity_main_versionText);
+        t.setText(String.format("Version: %s", getVersionName(getApplicationContext())));
+        t.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                SharedPreferences prefs = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE);
+                if (prefs.getBoolean(getString(R.string.settings_isKeith), false)) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(getString(R.string.settings_isKeith), false);
+                    editor.apply();
+                    KeithToast.show("You are no longer a developer.", getApplicationContext());
+                } else {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(getString(R.string.settings_isKeith), true);
+                    editor.apply();
+                    KeithToast.show("Hello, Keith", getApplicationContext());
+                }
+                return false;
+            }
+        });
     }
 
     /**

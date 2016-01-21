@@ -11,13 +11,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.os.Process;
 import android.widget.RemoteViews;
 
 import java.util.Calendar;
+import java.util.List;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
 import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
+import static keithapps.mobile.com.jeeves.Global.isKeith;
 
 public class MainService extends Service {
     private ScreenListener screenListener;
@@ -203,13 +206,29 @@ public class MainService extends Service {
     public static class BackgroundProcessListener extends BroadcastReceiver {
         @Override
         public void onReceive(Context c, Intent intent) {
-            ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (service.service.getClassName().equals(PACKAGE_SNAPCHAT)) {
-                    KeithToast.show("Snapchat is running", c);
-                    return;
+            if (!isKeith(c)) return;
+            boolean triedToKill = false;
+            final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo process : listOfProcesses) {
+                if (process.processName.contains(PACKAGE_SNAPCHAT)) {
+                    try {
+                        triedToKill = true;
+                        Process.killProcess(process.pid);
+                        android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
+                    } catch (Exception e) {
+                        //I doubt this'll ever happen
+                    }
                 }
             }
+            if (!triedToKill) return;
+            boolean alive = false;
+            List<ActivityManager.RunningAppProcessInfo> l =
+                    ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
+                            .getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo process : l)
+                if (process.processName.contains(PACKAGE_SNAPCHAT)) alive = true;
+            if (!alive) KeithToast.show("Snapchat was killed", c);
         }
     }
 
@@ -218,10 +237,11 @@ public class MainService extends Service {
 
         @Override
         public void onReceive(Context c, Intent i) {
+            if (!isKeith(c)) return;
             if (i.getAction().equals(Intent.ACTION_SCREEN_ON)) {
                 if (!on) {
                     on = true;
-                    //KeithToast.show("Screen on", c);
+                    KeithToast.show("Screen on", c);
                 }
             } else if (i.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 if (on) on = false;

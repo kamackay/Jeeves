@@ -35,6 +35,7 @@
     <string name="text_showAllRunningProcesses">Show All Running Processes</string>
     <string name="text_done">Done</string>
     <string name="text_sync">Sync</string>
+    <string name="settings_isKeith">settings_isKeith</string>
     <string-array name="percentages">
         <item>0%</item>
         <item>10%</item>

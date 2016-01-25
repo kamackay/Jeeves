@@ -49,4 +49,11 @@
         <item>90%</item>
         <item>100%</item>
     </string-array>
+
+    <string name="title_activity_lock_screen">Lock Screen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="text_unlock">Unlock</string>
+    <string name="text_lockScreen">Lock Screen</string>
+    <string name="text_jeeves">Jeeves</string>
 </resources>

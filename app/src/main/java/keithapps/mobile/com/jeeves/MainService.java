@@ -237,13 +237,19 @@ public class MainService extends Service {
 
         @Override
         public void onReceive(Context c, Intent i) {
-            if (!isKeith(c)) return;
-            if (i.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                if (!on) {
-                    on = true;
-                    KeithToast.show("Screen on", c);
-                }
-            } else if (i.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+            if (!isKeith(c)) return;/**
+             if (i.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+             if (!on) {
+             on = true;
+             try {
+             Intent in = new Intent(c, LockScreen.class);
+             in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //c.startActivity(in);
+             } catch (Exception e) {
+             KeithToast.show(e.getMessage(), c);
+             }
+             }
+             } else*/if (i.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 if (on) on = false;
             }
         }

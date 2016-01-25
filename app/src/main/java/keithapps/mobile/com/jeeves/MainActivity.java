@@ -180,17 +180,32 @@ public class MainActivity extends AppCompatActivity {
      */
     public void populateProcesses(View v) {
         mainShowing = false;
-        Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
-        LinearLayout l = (LinearLayout) findViewById(R.id.runningProcesses_root);
+        final Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
+        final LinearLayout l = (LinearLayout) findViewById(R.id.runningProcesses_root);
         if (l.getChildCount() > 0) l.removeAllViews();
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (final ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            ProcessView tv = new ProcessView(getApplicationContext(), service);
-            if (tf != null) tv.setTypeface(tf);
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            tv.setOnLongClickListener(getProcessViewListener());
-            l.addView(tv);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ActivityManager localActivityManager =
+                        (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                for (final ActivityManager.RunningAppProcessInfo process :
+                        localActivityManager.getRunningAppProcesses()) {
+                    try {
+                        final ProcessView tv = new ProcessView(getApplicationContext(), process);
+                        if (tf != null) tv.setTypeface(tf);
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                        tv.setOnLongClickListener(getProcessViewListener());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                l.addView(tv);
+                            }
+                        });
+                    } catch (Exception e) {//It's all good}
+                    }
+                }
+            }
+        }).start();
     }
 
     /**
@@ -198,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @return new listener for the processtextview. need one per.
      */
+
     private View.OnLongClickListener getProcessViewListener() {
         return new View.OnLongClickListener() {
             @Override
@@ -214,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-                            int pid = ((ProcessView) v).getProcess().pid;
+                            int pid = ((ProcessView) v).getPID();
                             try {
                                 android.os.Process.sendSignal(pid, Process.SIGNAL_KILL);
                                 Process.killProcess(pid);

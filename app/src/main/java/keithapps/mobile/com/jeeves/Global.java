@@ -23,15 +23,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED;
+
 /**
  * Created by Keith on 1/17/2016.
  * Contains Global static methods and variables
  */
 public class Global {
-    /**
-     * The String "\n"
-     */
-    public static final String TEXT_NEWLINE = "\n";
     /**
      * Snapchat's package name
      */
@@ -96,7 +94,7 @@ public class Global {
     public static void turnGPSOn(Context c) {
         try {
             String provider = Settings.Secure.getString(c.getContentResolver(),
-                    Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+                    LOCATION_PROVIDERS_ALLOWED);
             if (!provider.contains("gps")) { //if gps is disabled
                 final Intent poke = new Intent();
                 poke.setClassName("com.android.settings",
@@ -120,7 +118,7 @@ public class Global {
     public static void turnGPSOff(Context c) {
         try {
             String provider = Settings.Secure.getString(c.getContentResolver(),
-                    Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+                    LOCATION_PROVIDERS_ALLOWED);
             if (provider.contains("gps")) { //if gps is enabled
                 final Intent poke = new Intent();
                 poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
@@ -317,7 +315,8 @@ public class Global {
         StringBuilder sb = new StringBuilder();
         int i = 0;
         boolean f = true;
-        for (String x : s.split("\\.")) {
+        for (String x : s.split("[\\.:]")) {
+            if (x.contains("\n")) i = -6;
             if (i + x.length() > 30) {
                 sb.append("\n        .").append(x);
                 i = x.length();

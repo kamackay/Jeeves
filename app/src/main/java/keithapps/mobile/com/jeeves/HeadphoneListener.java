@@ -14,7 +14,9 @@ public class HeadphoneListener extends BroadcastReceiver {
     private boolean previouslyPlugged = false;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context c, Intent intent) {
+        if (!intent.getAction().equals(Intent.ACTION_HEADSET_PLUG))
+            KeithToast.show(intent.getAction(), c);
         if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
             int state = intent.getIntExtra("state", -1);
             switch (state) {
@@ -22,8 +24,8 @@ public class HeadphoneListener extends BroadcastReceiver {
                     if (previouslyPlugged) { //There used to be a headset
                         previouslyPlugged = false;
                         AudioManager audioManager =
-                                (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                        SharedPreferences prefs = context.getSharedPreferences(context.getString(
+                                (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+                        SharedPreferences prefs = c.getSharedPreferences(c.getString(
                                         R.string.sharedPrefrences_code),
                                 Context.MODE_PRIVATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
@@ -31,11 +33,11 @@ public class HeadphoneListener extends BroadcastReceiver {
                                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
-                                        (prefs.getInt(context.getString(R.string.settings_home_notificationVolume),
+                                        (prefs.getInt(c.getString(R.string.settings_home_notificationVolume),
                                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
-                                        prefs.getInt(context.getString(
+                                        prefs.getInt(c.getString(
                                                         R.string.settings_home_mediaVolume),
                                                 5) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                     }
@@ -44,14 +46,14 @@ public class HeadphoneListener extends BroadcastReceiver {
                     //KeithToast.show("Headset is plugged", context);
                     if (!previouslyPlugged) {
                         previouslyPlugged = true;
-                        Intent i = new Intent(context, HeadphoneQueryPopup.class);
+                        Intent i = new Intent(c, HeadphoneQueryPopup.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        context.startActivity(i);
+                        c.startActivity(i);
                     }
                     break;
                 default:
-                    KeithToast.show("Headset is unknown", context);
+                    KeithToast.show("Headset is unknown", c);
             }
         }
     }

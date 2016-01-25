@@ -95,7 +95,7 @@ public class SetState {
                 c.sendBroadcast(i);
             }
         } catch (Exception e) {
-            //sb.append("Had a problem turning off the GPS").append(Global.TEXT_NEWLINE);
+            //Everything's Good
         }
         turnOnNFC(c);
         tryToKillSnapchat(c);

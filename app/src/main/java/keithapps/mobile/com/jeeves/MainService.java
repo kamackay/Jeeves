@@ -23,7 +23,6 @@ import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
 import static keithapps.mobile.com.jeeves.Global.isKeith;
 
 public class MainService extends Service {
-    private ScreenListener screenListener;
 
     /**
      * Constructor
@@ -120,15 +119,8 @@ public class MainService extends Service {
         registerReceiver(headphoneListener, filter);
         showNotification();
         startBackgroundProcess(getApplicationContext());
-        startScreenListener();
     }
 
-    public void startScreenListener() {
-        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
-        screenListener = new ScreenListener();
-        registerReceiver(screenListener, filter);
-    }
 
     /**
      * Can't remember why I made this.
@@ -143,10 +135,6 @@ public class MainService extends Service {
      */
     @Override
     public void onDestroy() {
-        if (screenListener != null) {
-            unregisterReceiver(screenListener);
-            screenListener = null;
-        }
         super.onDestroy();
     }
 
@@ -229,29 +217,8 @@ public class MainService extends Service {
             for (ActivityManager.RunningAppProcessInfo process : l)
                 if (process.processName.contains(PACKAGE_SNAPCHAT)) alive = true;
             if (!alive) KeithToast.show("Snapchat was killed", c);
-        }
-    }
 
-    public static class ScreenListener extends BroadcastReceiver {
-        private boolean on = true;
-
-        @Override
-        public void onReceive(Context c, Intent i) {
-            if (!isKeith(c)) return;/**
-             if (i.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-             if (!on) {
-             on = true;
-             try {
-             Intent in = new Intent(c, LockScreen.class);
-             in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-             //c.startActivity(in);
-             } catch (Exception e) {
-             KeithToast.show(e.getMessage(), c);
-             }
-             }
-             } else*/if (i.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                if (on) on = false;
-            }
+            //Add functions that should be performed periodically in the background here
         }
     }
 }

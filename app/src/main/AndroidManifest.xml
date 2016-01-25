@@ -54,20 +54,6 @@
 
         <receiver android:name=".MainService$OutButtonListener" />
         <receiver android:name=".MainService$CarButtonListener" />
-        <receiver android:name=".MainService$ScreenListener" />
-
-        <activity
-            android:name=".lockscreen.LockScreen"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_lock_screen"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.HOME" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

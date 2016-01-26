@@ -158,6 +158,11 @@
                         android:layout_width="100sp"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_home_WiFiOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View

@@ -25,7 +25,13 @@ import android.widget.TextView;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 
+/**
+ * The main activity, which contains all of the changes that can be made to the Service's settings
+ */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Is the main screen showing?
+     */
     private boolean mainShowing;
 
     /**
@@ -142,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        ModeChangeView mcv = (ModeChangeView) findViewById(R.id.settingsScreen_home_WiFiOption);
+        mcv.setText("WiFi");
     }
 
     /**

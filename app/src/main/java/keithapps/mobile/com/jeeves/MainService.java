@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.Process;
 import android.widget.RemoteViews;
@@ -32,12 +33,30 @@ public class MainService extends Service {
     }
 
     /**
+     * The Current Mode
+     */
+
+    /**
+     * Get the current mode to show in the notification
+     *
+     * @return the current mode
+     */
+    public static int getMode(Context c) {
+        return c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE)
+                .getInt(c.getString(R.string.current_mode), Mode.Home);
+    }
+
+    /**
      * Show the Notification
      *
      * @param mode the current mode to put the notification in
      * @param c    the calling context
      */
-    public static void showNotification(Mode mode, Context c) {
+    public static void showNotification(int mode, Context c) {
+        SharedPreferences.Editor edit = c.getSharedPreferences(
+                c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+        edit.putInt(c.getString(R.string.current_mode), mode);
+        edit.apply();
         Intent intent = new Intent(c, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(c, 1,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -117,10 +136,13 @@ public class MainService extends Service {
         HeadphoneListener headphoneListener = new HeadphoneListener();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(headphoneListener, filter);
+
+        BackgroundProcessListener backListener = new BackgroundProcessListener();
+        IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
+        registerReceiver(backListener, f);
         showNotification();
         startBackgroundProcess(getApplicationContext());
     }
-
 
     /**
      * Can't remember why I made this.
@@ -135,6 +157,8 @@ public class MainService extends Service {
      */
     @Override
     public void onDestroy() {
+        Context c = getApplicationContext();
+        showNotification(getMode(c), c);
         super.onDestroy();
     }
 
@@ -222,6 +246,10 @@ public class MainService extends Service {
                 } catch (Exception e) {
                     //Don't do anything
                 }
+            showNotification(getMode(c), c); //May or may not want to do this.
+            // It looks as if the icon is being cleared from the Notification when the
+            // main activity closes. IDK, man
+
 
             //Add functions that should be performed periodically in the background here
 

@@ -193,32 +193,38 @@ public class MainService extends Service {
      */
     public static class BackgroundProcessListener extends BroadcastReceiver {
         @Override
-        public void onReceive(Context c, Intent intent) {
-            if (!isKeith(c)) return;
-            boolean triedToKill = false;
-            final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-            List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo process : listOfProcesses) {
-                if (process.processName.contains(PACKAGE_SNAPCHAT)) {
-                    try {
-                        triedToKill = true;
-                        Process.killProcess(process.pid);
-                        android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
-                    } catch (Exception e) {
-                        //I doubt this'll ever happen
+        public void onReceive(final Context c, Intent intent) {
+            if (isKeith(c))
+                try {
+                    boolean triedToKill = false;
+                    final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+                    List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
+                    for (ActivityManager.RunningAppProcessInfo process : listOfProcesses) {
+                        if (process.processName.contains(PACKAGE_SNAPCHAT)) {
+                            try {
+                                triedToKill = true;
+                                Process.killProcess(process.pid);
+                                android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
+                            } catch (Exception e) {
+                                //I doubt this'll ever happen
+                            }
+                        }
                     }
+                    if (triedToKill) {
+                        boolean alive = false;
+                        List<ActivityManager.RunningAppProcessInfo> l =
+                                ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
+                                        .getRunningAppProcesses();
+                        for (ActivityManager.RunningAppProcessInfo process : l)
+                            if (process.processName.contains(PACKAGE_SNAPCHAT)) alive = true;
+                        if (!alive) KeithToast.show("Snapchat was killed", c);
+                    }
+                } catch (Exception e) {
+                    //Don't do anything
                 }
-            }
-            if (!triedToKill) return;
-            boolean alive = false;
-            List<ActivityManager.RunningAppProcessInfo> l =
-                    ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
-                            .getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo process : l)
-                if (process.processName.contains(PACKAGE_SNAPCHAT)) alive = true;
-            if (!alive) KeithToast.show("Snapchat was killed", c);
 
             //Add functions that should be performed periodically in the background here
+
         }
     }
 }

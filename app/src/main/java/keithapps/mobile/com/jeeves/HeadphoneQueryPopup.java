@@ -2,6 +2,7 @@ package keithapps.mobile.com.jeeves;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
@@ -66,6 +67,10 @@ public class HeadphoneQueryPopup extends Activity {
                 t.purge();
             }
         }, 10000);
+        SharedPreferences.Editor edit = getSharedPreferences(
+                getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+        edit.putBoolean(getString(R.string.volume_settofull), false);
+        edit.apply();
         finish();
     }
 

@@ -35,11 +35,14 @@ public class HeadphoneListener extends BroadcastReceiver {
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
                                         (prefs.getInt(c.getString(R.string.settings_home_notificationVolume),
                                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                                (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
-                                        prefs.getInt(c.getString(
-                                                        R.string.settings_home_mediaVolume),
-                                                5) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+//                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+//                                (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
+//                                        prefs.getInt(c.getString(
+//                                                        R.string.settings_home_mediaVolume),
+//                                                5) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+//                        SharedPreferences.Editor edit = prefs.edit();
+//                        edit.putBoolean(c.getString(R.string.volume_settofull), false);
+//                        edit.apply();
                     }
                     break;
                 case 1:

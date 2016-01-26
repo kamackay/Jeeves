@@ -56,4 +56,5 @@
     <string name="text_unlock">Unlock</string>
     <string name="text_lockScreen">Lock Screen</string>
     <string name="text_jeeves">Jeeves</string>
+    <string name="volume_settofull">vol.settofull</string>
 </resources>

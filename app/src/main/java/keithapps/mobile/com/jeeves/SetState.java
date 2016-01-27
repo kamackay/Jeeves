@@ -1,21 +1,19 @@
 package keithapps.mobile.com.jeeves;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
-import static keithapps.mobile.com.jeeves.Global.canToggleGPS;
 import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
 import static keithapps.mobile.com.jeeves.Global.getPrefs;
 import static keithapps.mobile.com.jeeves.Global.isVibrateOn;
 import static keithapps.mobile.com.jeeves.Global.tryToKillSnapchat;
-import static keithapps.mobile.com.jeeves.Global.turnGPSOff;
+import static keithapps.mobile.com.jeeves.Global.turnOffBluetooth;
 import static keithapps.mobile.com.jeeves.Global.turnOffVibrate;
 import static keithapps.mobile.com.jeeves.Global.turnOffWiFi;
-import static keithapps.mobile.com.jeeves.Global.turnOnNFC;
+import static keithapps.mobile.com.jeeves.Global.turnOnBluetooth;
 import static keithapps.mobile.com.jeeves.Global.turnOnVibrate;
 import static keithapps.mobile.com.jeeves.Global.turnOnWiFi;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
@@ -24,6 +22,9 @@ import static keithapps.mobile.com.jeeves.ManageVolume.setMediaVolume;
 import static keithapps.mobile.com.jeeves.ManageVolume.setNotificationVolume;
 import static keithapps.mobile.com.jeeves.ManageVolume.setRingtoneVolume;
 import static keithapps.mobile.com.jeeves.ManageVolume.setSystemVolume;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
 
 /**
  * Created by Keith on 1/19/2016.
@@ -37,7 +38,6 @@ public class SetState {
      */
     public static void out(Context c) {
         closeNotificationTray(c);
-        turnOffWiFi(c); //Turn off WiFi
         SharedPreferences prefs = getPrefs(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
         setRingtoneVolume(c, a, prefs, ManageVolume.Mode.Home);
@@ -46,7 +46,25 @@ public class SetState {
         setMediaVolume(c, ManageVolume.Mode.Home);
         setNotificationVolume(c, ManageVolume.Mode.Home);
         if (!isVibrateOn(a)) turnOnVibrate(a);
-        //turnOnBluetooth(c);
+        int wifiAction = prefs.getInt(c.getString(R.string.settings_out_wifiAction),
+                SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
+                R.string.settings_out_bluetoothAction), SELECTED_LEAVE);
+        switch (wifiAction) {
+            case SELECTED_ON:
+                turnOnWiFi(c);
+                break;
+            case SELECTED_OFF:
+                turnOffWiFi(c);
+                break;
+        }
+        switch (bluetoothAction) {
+            case SELECTED_ON:
+                turnOnBluetooth(c);
+                break;
+            case SELECTED_OFF:
+                turnOffBluetooth(c);
+                break;
+        }
         tryToKillSnapchat(c);
         showNotification(Mode.Out, c);
     }
@@ -66,7 +84,25 @@ public class SetState {
         setMediaVolume(c, a, prefs, ManageVolume.Mode.Home);
         setNotificationVolume(c, a, prefs, ManageVolume.Mode.Home);
         if (!isVibrateOn(a)) turnOnVibrate(a);
-        turnOnWiFi(c);
+        int wifiAction = prefs.getInt(c.getString(R.string.settings_home_wifiAction),
+                SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
+                R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
+        switch (wifiAction) {
+            case SELECTED_ON:
+                turnOnWiFi(c);
+                break;
+            case SELECTED_OFF:
+                turnOffWiFi(c);
+                break;
+        }
+        switch (bluetoothAction) {
+            case SELECTED_ON:
+                turnOnBluetooth(c);
+                break;
+            case SELECTED_OFF:
+                turnOffBluetooth(c);
+                break;
+        }
         tryToKillSnapchat(c);
         showNotification(Mode.Home, c);
     }
@@ -86,18 +122,25 @@ public class SetState {
         setMediaVolume(c, a, prefs, ManageVolume.Mode.Class);
         setNotificationVolume(c, a, prefs, ManageVolume.Mode.Class);
         if (isVibrateOn(a)) turnOffVibrate(a);
-        turnOnWiFi(c);
-        try { //Try to turn off the GPS
-            if (canToggleGPS(c)) turnGPSOff(c);
-            else {
-                Intent i = new Intent("android.location.GPS_ENABLED_CHANGE");
-                i.putExtra("enabled", false);
-                c.sendBroadcast(i);
-            }
-        } catch (Exception e) {
-            //Everything's Good
+        int wifiAction = prefs.getInt(c.getString(R.string.settings_class_wifiAction),
+                SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
+                R.string.settings_class_bluetoothAction), SELECTED_LEAVE);
+        switch (wifiAction) {
+            case SELECTED_ON:
+                turnOnWiFi(c);
+                break;
+            case SELECTED_OFF:
+                turnOffWiFi(c);
+                break;
         }
-        turnOnNFC(c);
+        switch (bluetoothAction) {
+            case SELECTED_ON:
+                turnOnBluetooth(c);
+                break;
+            case SELECTED_OFF:
+                turnOffBluetooth(c);
+                break;
+        }
         tryToKillSnapchat(c);
         showNotification(Mode.Class, c);
     }

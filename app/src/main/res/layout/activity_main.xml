@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_welcomeToJeeves"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/main_textSmall" />
 
     <ScrollView
         android:id="@+id/activity_main_scrollView"
@@ -67,7 +67,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_home_ringtoneVolume"
@@ -88,7 +88,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_home_mediaVolume"
@@ -109,7 +109,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_home_notificationVolume"
@@ -130,7 +130,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_home_systemVolume"
@@ -151,7 +151,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_home_alarmVolume"
@@ -161,6 +161,11 @@
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
                     android:id="@+id/settingsScreen_home_WiFiOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_home_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -198,7 +203,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_class_ringtoneVolume"
@@ -219,7 +224,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_class_mediaVolume"
@@ -240,7 +245,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_class_notificationVolume"
@@ -261,7 +266,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_class_systemVolume"
@@ -282,13 +287,23 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_class_alarmVolume"
                         android:layout_width="100sp"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_class_WiFiOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_class_bluetoothOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View
@@ -324,7 +339,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_out_ringtoneVolume"
@@ -345,7 +360,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_out_mediaVolume"
@@ -366,7 +381,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_out_notificationVolume"
@@ -387,7 +402,7 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_out_systemVolume"
@@ -408,13 +423,23 @@
                         android:paddingStart="10sp"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_out_alarmVolume"
                         android:layout_width="100sp"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_out_WiFiOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_out_bluetoothOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

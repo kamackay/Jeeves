@@ -97,7 +97,7 @@ public class MainService extends Service {
         bigContent.setOnClickPendingIntent(R.id.notification_big_button4,
                 PendingIntent.getBroadcast(c, 0,
                         new Intent(c, CarButtonListener.class), 0));
-        notification.bigContentView = bigContent;
+        //notification.bigContentView = bigContent;
         NotificationManager notificationManger =
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManger.notify(992944, notification);

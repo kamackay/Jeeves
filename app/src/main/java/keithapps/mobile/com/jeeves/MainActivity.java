@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 
 /**
  * The main activity, which contains all of the changes that can be made to the Service's settings
@@ -148,8 +149,84 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        ModeChangeView mcv = (ModeChangeView) findViewById(R.id.settingsScreen_home_WiFiOption);
-        mcv.setText("WiFi");
+        final ModeChangeView mcv_home_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_home_WiFiOption),
+                mcv_class_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_class_WiFiOption),
+                mcv_out_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_out_WiFiOption),
+                mcv_home_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_home_bluetoothOption),
+                mcv_out_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_out_bluetoothOption),
+                mcv_class_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_class_bluetoothOption);
+        mcv_home_wifi.setText("WiFi");
+        mcv_class_wifi.setText("WiFi");
+        mcv_out_wifi.setText("WiFi");
+        mcv_home_bluetooth.setText("Bluetooth");
+        mcv_class_bluetooth.setText("Bluetooth");
+        mcv_out_bluetooth.setText("Bluetooth");
+        mcv_home_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_home_wifiAction), mcv_home_wifi.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_out_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_out_wifiAction), mcv_out_wifi.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_class_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_class_wifiAction), mcv_class_wifi.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_home_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_home_bluetoothAction), mcv_home_bluetooth.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_class_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_class_bluetoothAction), mcv_class_bluetooth.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_out_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+            @Override
+            public void run() {
+                SharedPreferences.Editor edit = getSharedPreferences(
+                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                edit.putInt(getString(R.string.settings_out_bluetoothAction), mcv_out_bluetooth.getSelection());
+                edit.apply();
+            }
+        });
+        mcv_home_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_home_wifiAction), SELECTED_LEAVE));
+        mcv_class_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_class_wifiAction), SELECTED_LEAVE));
+        mcv_out_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_out_wifiAction), SELECTED_LEAVE));
+        mcv_home_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_home_bluetoothAction), SELECTED_LEAVE));
+        mcv_class_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_class_bluetoothAction), SELECTED_LEAVE));
+        mcv_out_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                MODE_PRIVATE).getInt(getString(R.string.settings_out_bluetoothAction), SELECTED_LEAVE));
     }
 
     /**
@@ -209,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                                 l.addView(tv);
                             }
                         });
-                    } catch (Exception e) {//It's all good}
+                    } catch (Exception e) {  //It's all good}
                     }
                 }
             }

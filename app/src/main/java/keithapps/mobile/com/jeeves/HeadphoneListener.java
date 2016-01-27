@@ -28,9 +28,9 @@ public class HeadphoneListener extends BroadcastReceiver {
                         SharedPreferences prefs = c.getSharedPreferences(c.getString(
                                         R.string.sharedPrefrences_code),
                                 Context.MODE_PRIVATE);
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-                                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+//                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+//                                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+//                                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
                                         (prefs.getInt(c.getString(R.string.settings_home_notificationVolume),

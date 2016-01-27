@@ -11,7 +11,37 @@ import android.widget.TextView;
 
 public class ModeChangeView extends LinearLayout {
 
+    public static final int SELECTED_ON = 2;
+    public static final int SELECTED_OFF = 0;
+    public static final int SELECTED_LEAVE = 1;
     private LinearLayout l;
+    private RadioButton rb_OFF, rb_ON, rb_LEAVE;
+    private ItemChangedListener listener;
+    private Runnable offPress = new Runnable() {
+        @Override
+        public void run() {
+            rb_ON.setChecked(false);
+            rb_LEAVE.setChecked(false);
+            rb_OFF.setChecked(true);
+            if (listener != null) listener.run();
+        }
+    }, onPress = new Runnable() {
+        @Override
+        public void run() {
+            rb_LEAVE.setChecked(false);
+            rb_ON.setChecked(true);
+            rb_OFF.setChecked(false);
+            if (listener != null) listener.run();
+        }
+    }, leavePress = new Runnable() {
+        @Override
+        public void run() {
+            rb_ON.setChecked(false);
+            rb_LEAVE.setChecked(true);
+            rb_OFF.setChecked(false);
+            if (listener != null) listener.run();
+        }
+    };
 
     public ModeChangeView(Context context) {
         super(context);
@@ -22,6 +52,7 @@ public class ModeChangeView extends LinearLayout {
         super(context, attrs);
         init(context);
     }
+
 
     public ModeChangeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -35,26 +66,23 @@ public class ModeChangeView extends LinearLayout {
         final RadioButton rbOFF = (RadioButton) l.findViewById(R.id.modeChangeView_radioButton1),
                 rbON = (RadioButton) l.findViewById(R.id.modeChangeView_radioButton3),
                 rbLEAVE = (RadioButton) l.findViewById(R.id.modeChangeView_radioButton2);
+        rb_ON = rbON;
+        rb_LEAVE = rbLEAVE;
+        rb_OFF = rbOFF;
         OnClickListener listen_OFF = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbON.setChecked(false);
-                rbLEAVE.setChecked(false);
-                rbOFF.setChecked(true);
+                offPress.run();
             }
         }, listen_ON = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbLEAVE.setChecked(false);
-                rbON.setChecked(true);
-                rbOFF.setChecked(false);
+                onPress.run();
             }
         }, listen_LEAVE = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                rbON.setChecked(false);
-                rbLEAVE.setChecked(true);
-                rbOFF.setChecked(false);
+                leavePress.run();
             }
         };
         rbOFF.setOnClickListener(listen_OFF);
@@ -66,6 +94,34 @@ public class ModeChangeView extends LinearLayout {
         rbON.setChecked(true);
     }
 
+    public void setItemChangedListener(ItemChangedListener l) {
+        listener = l;
+    }
+
+    /**
+     * Get the option that is currently selected
+     *
+     * @return one of the SELECTED_* numbers
+     */
+    public int getSelection() {
+        if (rb_ON.isChecked()) return SELECTED_ON;
+        else if (rb_OFF.isChecked()) return SELECTED_OFF;
+        else return SELECTED_LEAVE;
+    }
+
+    public void setSelection(int selection) {
+        switch (selection) {
+            case SELECTED_ON:
+                onPress.run();
+                return;
+            case SELECTED_LEAVE:
+                leavePress.run();
+                return;
+            case SELECTED_OFF:
+                offPress.run();
+        }
+    }
+
     public void setText(String s) {
         ((TextView) l.findViewById(R.id.modeChangeView_textBoxTEXT)).setText(s);
     }
@@ -73,5 +129,9 @@ public class ModeChangeView extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+    }
+
+    public interface ItemChangedListener {
+        void run();
     }
 }

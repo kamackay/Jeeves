@@ -18,13 +18,13 @@
     <string name="text_alarmVolume">Alarm Volume</string>
     <string name="settings_class_alarmVolume">settings_class_alarmVolume</string>
     <string name="settings_home_alarmVolume">settings_home_alarmVolume</string>
-    <string name="text_car">Car</string>
-    <string name="text_idkYet">IDK Yet</string>
+    <string name="text_car">Car\n(Does nothing)</string>
+    <string name="text_idkYet">IDK Yet\n(Does nothing)</string>
     <string name="headphone_popup_title">Headset Detected\n\nFull volume or partial volume?</string>
     <string name="text_full">Full</string>
     <string name="text_partial">Partial</string>
     <string name="text_out">Out</string>
-    <string name="text_work">Work</string>
+    <string name="text_work">Work\n(Does nothing)</string>
     <string name="settings_out_ringtoneVolume">settings_out_ringtoneVolume</string>
     <string name="settings_out_mediaVolume">settings_out_mediaVolume</string>
     <string name="settings_out_systemVolume">settings_out_systemVolume</string>
@@ -61,4 +61,10 @@
     <string name="text_dontChange">Don\'t Change</string>
     <string name="text_off">Off</string>
     <string name="text_on">On</string>
+    <string name="settings_home_wifiAction">settings_home_wifiAction</string>
+    <string name="settings_class_wifiAction">settings_class_wifiAction</string>
+    <string name="settings_out_wifiAction">settings_out_wifiAction</string>
+    <string name="settings_home_bluetoothAction">settings_home_bluetoothAction</string>
+    <string name="settings_class_bluetoothAction">settings_class_bluetoothAction</string>
+    <string name="settings_out_bluetoothAction">settings_out_bluetoothAction</string>
 </resources>

@@ -69,4 +69,7 @@
     <string name="settings_out_bluetoothAction">settings_out_bluetoothAction</string>
     <string name="text_showBCV">Show Big Content View</string>
     <string name="settings_showBigContentView">settings_showBigContentView</string>
+    <string name="text_showScreenSize">Show Screen Size</string>
+    <string name="text_showNotification">Show Notification</string>
+    <string name="settings_showNotification">settings.showNotification</string>
 </resources>

@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 
@@ -152,9 +153,23 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        Switch bcv_switch = (Switch) findViewById(R.id.settingsScreen_showBCV);
-        bcv_switch.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
-        bcv_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
+        switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
+        switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(getString(
+                        R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
+                edit.apply();
+                showNotification(preferences.getInt(getString(R.string.current_mode),
+                        ManageVolume.Mode.Home), getApplicationContext());
+            }
+        });
+        Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
+        switchShowBCV.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
+        switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences preferences = getSharedPreferences(getString(
@@ -269,6 +284,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button_showAllRunningActions:
                 setContentView(R.layout.running_processes_screen);
                 populateProcesses(null);
+                return true;
+            case R.id.button_showScreenSize:
+                showScreenSize(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

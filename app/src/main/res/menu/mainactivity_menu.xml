@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/button_showScreenSize"
+        android:icon="@drawable/icon_screen_size"
+        android:title="@string/text_showScreenSize"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/button_showAllRunningActions"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="@string/text_showAllRunningProcesses"

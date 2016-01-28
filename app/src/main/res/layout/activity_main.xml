@@ -36,12 +36,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/ten">
 
@@ -57,6 +59,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -66,7 +69,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_ringtoneVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -78,6 +80,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -87,7 +90,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_mediaVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -99,6 +101,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -108,7 +111,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_notificationVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -120,6 +122,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -129,7 +132,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_systemVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -141,6 +143,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -150,7 +153,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_alarmVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -178,6 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/twenty">
 
@@ -187,12 +190,12 @@
                     android:paddingBottom="@dimen/twenty"
                     android:text="@string/text_class"
                     android:textAlignment="center"
-                    android:textColor="@android:color/white"
                     android:textSize="30sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -202,7 +205,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_ringtoneVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -214,6 +216,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -223,7 +226,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_mediaVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -235,6 +237,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -244,7 +247,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_notificationVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -256,6 +258,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -265,7 +268,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_systemVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -277,6 +279,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -286,7 +289,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_alarmVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -314,6 +316,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/twenty">
 
@@ -329,6 +332,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -338,7 +342,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_ringtoneVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -350,6 +353,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -359,7 +363,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_mediaVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -371,6 +374,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -380,7 +384,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_notificationVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -392,6 +395,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -401,7 +405,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_systemVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -413,6 +416,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/twenty">
 
@@ -422,7 +426,6 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_alarmVolume"
-                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -449,6 +452,16 @@
                 android:checked="false"
                 android:paddingTop="@dimen/fifteen"
                 android:text="@string/text_showBCV"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/main_textSmall" />
+
+            <Switch
+                android:id="@+id/settingsScreen_showNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:paddingTop="@dimen/fifteen"
+                android:text="@string/text_showNotification"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/main_textSmall" />
         </LinearLayout>

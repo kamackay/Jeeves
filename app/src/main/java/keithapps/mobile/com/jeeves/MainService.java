@@ -21,7 +21,6 @@ import java.util.List;
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
 import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
-import static keithapps.mobile.com.jeeves.Global.getPrefs;
 import static keithapps.mobile.com.jeeves.Global.isKeith;
 
 public class MainService extends Service {
@@ -54,8 +53,9 @@ public class MainService extends Service {
      * @param c    the calling context
      */
     public static void showNotification(int mode, Context c) {
-        SharedPreferences.Editor edit = c.getSharedPreferences(
-                c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+        SharedPreferences prefs = c.getSharedPreferences(
+                c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
         edit.putInt(c.getString(R.string.current_mode), mode);
         edit.apply();
         Intent intent = new Intent(c, MainActivity.class);
@@ -71,7 +71,8 @@ public class MainService extends Service {
         else if (mode == Mode.Car) builder.setSmallIcon(R.drawable.icon_car_white);
         else if (mode == Mode.Out) builder.setSmallIcon(R.drawable.icon_small);
         else builder.setSmallIcon(R.drawable.icon_small);
-        builder.setOngoing(true);
+        if (prefs.getBoolean(c.getString(R.string.settings_showNotification), true))
+            builder.setOngoing(true);
         builder.setAutoCancel(false);
         RemoteViews contentView = new RemoteViews(c.getPackageName(), R.layout.notification_layout);
         contentView.setOnClickPendingIntent(R.id.notification_button1,
@@ -98,7 +99,7 @@ public class MainService extends Service {
         bigContent.setOnClickPendingIntent(R.id.notification_big_button4,
                 PendingIntent.getBroadcast(c, 0,
                         new Intent(c, CarButtonListener.class), 0));
-        if (getPrefs(c).getBoolean(c.getString(R.string.settings_showBigContentView), false))
+        if (prefs.getBoolean(c.getString(R.string.settings_showBigContentView), false))
             notification.bigContentView = bigContent;
         NotificationManager notificationManger =
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);

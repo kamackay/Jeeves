@@ -1,5 +1,6 @@
 package keithapps.mobile.com.jeeves;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -8,12 +9,14 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.nfc.NfcAdapter;
 import android.os.Process;
 import android.provider.Settings;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -347,5 +350,14 @@ public class Global {
                 }
             }
         }.start();
+    }
+
+    public static void showScreenSize(final Activity a) {
+        Display display = a.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        KeithToast.show(String.format("Height: %d\nWidth: %d", height, width), a.getApplicationContext());
     }
 }

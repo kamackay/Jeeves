@@ -352,6 +352,11 @@ public class Global {
         }.start();
     }
 
+    /**
+     * Show the screen size for this device
+     *
+     * @param a the application that is running
+     */
     public static void showScreenSize(final Activity a) {
         Display display = a.getWindowManager().getDefaultDisplay();
         Point size = new Point();

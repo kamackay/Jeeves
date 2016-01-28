@@ -21,6 +21,7 @@ import java.util.List;
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
 import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
+import static keithapps.mobile.com.jeeves.Global.getPrefs;
 import static keithapps.mobile.com.jeeves.Global.isKeith;
 
 public class MainService extends Service {
@@ -97,7 +98,8 @@ public class MainService extends Service {
         bigContent.setOnClickPendingIntent(R.id.notification_big_button4,
                 PendingIntent.getBroadcast(c, 0,
                         new Intent(c, CarButtonListener.class), 0));
-        //notification.bigContentView = bigContent;
+        if (getPrefs(c).getBoolean(c.getString(R.string.settings_showBigContentView), false))
+            notification.bigContentView = bigContent;
         NotificationManager notificationManger =
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManger.notify(992944, notification);

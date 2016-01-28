@@ -3,6 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="mcv_textSmall">15sp</dimen>
-    <dimen name="mcv_textLarge">20sp</dimen>
-    <dimen name="main_textSmall">20sp</dimen>
+    <dimen name="mcv_textLarge">20sp</dimen> <dimen name="fifteenSP">15sp</dimen><dimen name="twentySP">20sp</dimen>
+    <dimen name="main_textSmall">20sp</dimen><dimen name="tenSP">10sp</dimen>
 </resources>

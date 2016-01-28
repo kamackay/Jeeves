@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:paddingBottom="20sp"
+        android:paddingBottom="@dimen/twentySP"
         android:text="@string/default_versionText"
         android:textAlignment="gravity"
         android:textColor="@android:color/white" />
@@ -43,12 +43,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
                 android:orientation="vertical"
-                android:padding="20sp">
+                android:padding="@dimen/twentySP">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20sp"
+                    android:paddingBottom="@dimen/twentySP"
                     android:text="@string/text_home"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
@@ -58,13 +58,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -79,13 +79,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -100,13 +100,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -121,13 +121,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -142,13 +142,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -179,12 +179,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
                 android:orientation="vertical"
-                android:padding="20sp">
+                android:padding="@dimen/twentySP">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20sp"
+                    android:paddingBottom="@dimen/twentySP"
                     android:text="@string/text_class"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
@@ -194,13 +194,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -215,13 +215,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -236,13 +236,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -257,13 +257,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -278,13 +278,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -315,12 +315,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/notification_button_background"
                 android:orientation="vertical"
-                android:padding="20sp">
+                android:padding="@dimen/twentySP">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20sp"
+                    android:paddingBottom="@dimen/twentySP"
                     android:text="@string/text_out"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
@@ -330,13 +330,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_ringtoneVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -351,13 +351,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_mediaVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -372,13 +372,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_notificationVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -393,13 +393,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_systemVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -414,13 +414,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="20sp">
+                    android:paddingBottom="@dimen/twentySP">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="10sp"
-                        android:paddingStart="10sp"
+                        android:paddingEnd="@dimen/tenSP"
+                        android:paddingStart="@dimen/tenSP"
                         android:text="@string/text_alarmVolume"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
@@ -441,6 +441,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <Switch
+                android:id="@+id/settingsScreen_showBCV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:checked="false"
+                android:text="@string/text_showBCV" android:paddingTop="@dimen/fifteenSP"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/main_textSmall" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

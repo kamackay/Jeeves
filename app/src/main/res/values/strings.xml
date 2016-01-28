@@ -67,4 +67,6 @@
     <string name="settings_home_bluetoothAction">settings_home_bluetoothAction</string>
     <string name="settings_class_bluetoothAction">settings_class_bluetoothAction</string>
     <string name="settings_out_bluetoothAction">settings_out_bluetoothAction</string>
+    <string name="text_showBCV">Show Big Content View</string>
+    <string name="settings_showBigContentView">settings_showBigContentView</string>
 </resources>

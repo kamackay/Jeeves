@@ -49,22 +49,10 @@ public class SetState {
         int wifiAction = prefs.getInt(c.getString(R.string.settings_out_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_out_bluetoothAction), SELECTED_LEAVE);
-        switch (wifiAction) {
-            case SELECTED_ON:
-                turnOnWiFi(c);
-                break;
-            case SELECTED_OFF:
-                turnOffWiFi(c);
-                break;
-        }
-        switch (bluetoothAction) {
-            case SELECTED_ON:
-                turnOnBluetooth(c);
-                break;
-            case SELECTED_OFF:
-                turnOffBluetooth(c);
-                break;
-        }
+        if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+        else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+        if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
+        else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
         tryToKillSnapchat(c);
         showNotification(Mode.Out, c);
     }
@@ -87,22 +75,10 @@ public class SetState {
         int wifiAction = prefs.getInt(c.getString(R.string.settings_home_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
-        switch (wifiAction) {
-            case SELECTED_ON:
-                turnOnWiFi(c);
-                break;
-            case SELECTED_OFF:
-                turnOffWiFi(c);
-                break;
-        }
-        switch (bluetoothAction) {
-            case SELECTED_ON:
-                turnOnBluetooth(c);
-                break;
-            case SELECTED_OFF:
-                turnOffBluetooth(c);
-                break;
-        }
+        if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+        else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+        if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
+        else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
         tryToKillSnapchat(c);
         showNotification(Mode.Home, c);
     }
@@ -125,22 +101,10 @@ public class SetState {
         int wifiAction = prefs.getInt(c.getString(R.string.settings_class_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_class_bluetoothAction), SELECTED_LEAVE);
-        switch (wifiAction) {
-            case SELECTED_ON:
-                turnOnWiFi(c);
-                break;
-            case SELECTED_OFF:
-                turnOffWiFi(c);
-                break;
-        }
-        switch (bluetoothAction) {
-            case SELECTED_ON:
-                turnOnBluetooth(c);
-                break;
-            case SELECTED_OFF:
-                turnOffBluetooth(c);
-                break;
-        }
+        if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+        else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+        if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
+        else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
         tryToKillSnapchat(c);
         showNotification(Mode.Class, c);
     }

@@ -1,5 +1,7 @@
 package keithapps.mobile.com.jeeves;
 
+import static keithapps.mobile.com.jeeves.MainService.showNotification;
+
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
@@ -147,6 +151,20 @@ public class MainActivity extends AppCompatActivity {
                     KeithToast.show("Hello, Keith", getApplicationContext());
                 }
                 return false;
+            }
+        });
+        Switch bcv_switch = (Switch) findViewById(R.id.settingsScreen_showBCV);
+        bcv_switch.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
+        bcv_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(getString(
+                        R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
+                edit.apply();
+                showNotification(preferences.getInt(getString(R.string.current_mode),
+                        ManageVolume.Mode.Home), getApplicationContext());
             }
         });
         final ModeChangeView mcv_home_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_home_WiFiOption),

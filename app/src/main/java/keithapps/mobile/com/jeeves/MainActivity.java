@@ -1,7 +1,5 @@
 package keithapps.mobile.com.jeeves;
 
-import static keithapps.mobile.com.jeeves.MainService.showNotification;
-
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,6 +26,7 @@ import android.widget.TextView;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 
 /**

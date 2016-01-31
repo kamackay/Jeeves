@@ -28,26 +28,16 @@ public class HeadphoneListener extends BroadcastReceiver {
                         SharedPreferences prefs = c.getSharedPreferences(c.getString(
                                         R.string.sharedPrefrences_code),
                                 Context.MODE_PRIVATE);
-//                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-//                                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-//                                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
-                                        (prefs.getInt(c.getString(R.string.settings_home_notificationVolume),
+                                        (prefs.getInt(Global.SETTINGS.HOME.notificationVolume,
                                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-//                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-//                                (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
-//                                        prefs.getInt(c.getString(
-//                                                        R.string.settings_home_mediaVolume),
-//                                                5) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-//                        SharedPreferences.Editor edit = prefs.edit();
-//                        edit.putBoolean(c.getString(R.string.volume_settofull), false);
-//                        edit.apply();
                     }
                     break;
                 case 1:
-                    //KeithToast.show("Headset is plugged", context);
-                    if (!previouslyPlugged) {
+                    if (!previouslyPlugged && c.getSharedPreferences(
+                            c.getString(R.string.sharedPrefrences_code), Context.MODE_PRIVATE)
+                            .getBoolean(c.getString(R.string.settings_showHeadphonesPopup), true)) {
                         previouslyPlugged = true;
                         Intent i = new Intent(c, HeadphoneQueryPopup.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

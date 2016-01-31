@@ -40,11 +40,11 @@ public class SetState {
         closeNotificationTray(c);
         SharedPreferences prefs = getPrefs(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        setRingtoneVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setSystemVolume(c, ManageVolume.Mode.Home);
-        setAlarmVolume(c, ManageVolume.Mode.Home);
-        setMediaVolume(c, ManageVolume.Mode.Home);
-        setNotificationVolume(c, ManageVolume.Mode.Home);
+        setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
+        setSystemVolume(a, prefs, ManageVolume.Mode.Home);
+        setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
+        setMediaVolume(a, prefs, ManageVolume.Mode.Home);
+        setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
         if (!isVibrateOn(a)) turnOnVibrate(a);
         int wifiAction = prefs.getInt(c.getString(R.string.settings_out_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
@@ -63,20 +63,22 @@ public class SetState {
      * @param c the calling context
      */
     public static void atHome(Context c) {
-        closeNotificationTray(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+        closeNotificationTray(c);
         SharedPreferences prefs = getPrefs(c);
-        setRingtoneVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setSystemVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setAlarmVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setMediaVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setNotificationVolume(c, a, prefs, ManageVolume.Mode.Home);
+        setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
+        setSystemVolume(a, prefs, ManageVolume.Mode.Home);
+        setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
+        setMediaVolume(a, prefs, ManageVolume.Mode.Home);
+        setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
         if (!isVibrateOn(a)) turnOnVibrate(a);
         int wifiAction = prefs.getInt(c.getString(R.string.settings_home_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
-        if (wifiAction == SELECTED_ON) turnOnWiFi(c);
-        else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+        if (wifiAction == SELECTED_ON) {
+            turnOffWiFi(c);
+            turnOnWiFi(c);
+        } else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
         if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
         else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
         tryToKillSnapchat(c);
@@ -92,11 +94,11 @@ public class SetState {
         closeNotificationTray(c);
         SharedPreferences prefs = getPrefs(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        setRingtoneVolume(c, a, prefs, ManageVolume.Mode.Class);
-        setSystemVolume(c, a, prefs, ManageVolume.Mode.Class);
-        setAlarmVolume(c, a, prefs, ManageVolume.Mode.Class);
-        setMediaVolume(c, a, prefs, ManageVolume.Mode.Class);
-        setNotificationVolume(c, a, prefs, ManageVolume.Mode.Class);
+        setRingtoneVolume(a, prefs, ManageVolume.Mode.Class);
+        setSystemVolume(a, prefs, ManageVolume.Mode.Class);
+        setAlarmVolume(a, prefs, ManageVolume.Mode.Class);
+        setMediaVolume(a, prefs, ManageVolume.Mode.Class);
+        setNotificationVolume(a, prefs, ManageVolume.Mode.Class);
         if (isVibrateOn(a)) turnOffVibrate(a);
         int wifiAction = prefs.getInt(c.getString(R.string.settings_class_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
@@ -119,11 +121,11 @@ public class SetState {
         turnOffWiFi(c);
         SharedPreferences prefs = getPrefs(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        setRingtoneVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setSystemVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setAlarmVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setMediaVolume(c, a, prefs, ManageVolume.Mode.Home);
-        setNotificationVolume(c, a, prefs, ManageVolume.Mode.Home);
+        setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
+        setSystemVolume(a, prefs, ManageVolume.Mode.Home);
+        setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
+        setMediaVolume(a, prefs, ManageVolume.Mode.Home);
+        setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
         tryToKillSnapchat(c);
         showNotification(Mode.Car, c);
     }

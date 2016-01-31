@@ -1,6 +1,5 @@
 package keithapps.mobile.com.jeeves;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
@@ -10,24 +9,13 @@ import android.media.AudioManager;
  */
 public class ManageVolume {
 
-    public static void setSystemVolume(Context c, AudioManager a, SharedPreferences prefs, int mode) {
+    public static void setSystemVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setSystemVolume(a, prefs.getInt(c.getString(R.string.settings_class_systemVolume), 0));
+            setSystemVolume(a, prefs.getInt(Global.SETTINGS.CLASS.systemVolume, 0));
         else if (mode == Mode.Home)
-            setSystemVolume(a, prefs.getInt(c.getString(R.string.settings_home_systemVolume), 5));
+            setSystemVolume(a, prefs.getInt(Global.SETTINGS.HOME.systemVolume, 5));
         else if (mode == Mode.Out)
-            setSystemVolume(a, prefs.getInt(c.getString(R.string.settings_out_systemVolume), 5));
-    }
-
-    public static void setSystemVolume(Context c, int mode) {
-        if (mode == Mode.Class)
-            setSystemVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_class_systemVolume), 0));
-        else if (mode == Mode.Home)
-            setSystemVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_home_systemVolume), 1));
+            setSystemVolume(a, prefs.getInt(Global.SETTINGS.OUT.systemVolume, 5));
     }
 
     public static void setSystemVolume(AudioManager a, int setTo) {
@@ -37,24 +25,13 @@ public class ManageVolume {
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
-    public static void setNotificationVolume(Context c, AudioManager a, SharedPreferences prefs, int mode) {
+    public static void setNotificationVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setNotificationVolume(a, prefs.getInt(c.getString(R.string.settings_class_notificationVolume), 0));
+            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.CLASS.notificationVolume, 0));
         else if (mode == Mode.Home)
-            setNotificationVolume(a, prefs.getInt(c.getString(R.string.settings_home_notificationVolume), 5));
+            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.HOME.notificationVolume, 5));
         else if (mode == Mode.Out)
-            setNotificationVolume(a, prefs.getInt(c.getString(R.string.settings_out_notificationVolume), 5));
-    }
-
-    public static void setNotificationVolume(Context c, int mode) {
-        if (mode == Mode.Class)
-            setNotificationVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_class_notificationVolume), 0));
-        else if (mode == Mode.Home)
-            setNotificationVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_home_notificationVolume), 1));
+            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.OUT.notificationVolume, 5));
     }
 
     public static void setNotificationVolume(AudioManager a, int setTo) {
@@ -64,24 +41,13 @@ public class ManageVolume {
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
-    public static void setAlarmVolume(Context c, AudioManager a, SharedPreferences prefs, int mode) {
+    public static void setAlarmVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setAlarmVolume(a, prefs.getInt(c.getString(R.string.settings_class_alarmVolume), 0));
+            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.CLASS.alarmVolume, 0));
         else if (mode == Mode.Home)
-            setAlarmVolume(a, prefs.getInt(c.getString(R.string.settings_home_alarmVolume), 5));
+            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.HOME.alarmVolume, 5));
         else if (mode == Mode.Out)
-            setAlarmVolume(a, prefs.getInt(c.getString(R.string.settings_out_alarmVolume), 5));
-    }
-
-    public static void setAlarmVolume(Context c, int mode) {
-        if (mode == Mode.Class)
-            setAlarmVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_class_alarmVolume), 0));
-        else if (mode == Mode.Home)
-            setAlarmVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_home_alarmVolume), 10));
+            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.OUT.alarmVolume, 5));
     }
 
     public static void setAlarmVolume(AudioManager a, int setTo) {
@@ -91,24 +57,13 @@ public class ManageVolume {
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
-    public static void setMediaVolume(Context c, AudioManager a, SharedPreferences prefs, int mode) {
+    public static void setMediaVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setMediaVolume(a, prefs.getInt(c.getString(R.string.settings_class_mediaVolume), 0));
+            setMediaVolume(a, prefs.getInt(Global.SETTINGS.CLASS.mediaVolume, 0));
         else if (mode == Mode.Home)
-            setMediaVolume(a, prefs.getInt(c.getString(R.string.settings_home_mediaVolume), 5));
+            setMediaVolume(a, prefs.getInt(Global.SETTINGS.HOME.mediaVolume, 5));
         else if (mode == Mode.Out)
-            setMediaVolume(a, prefs.getInt(c.getString(R.string.settings_out_mediaVolume), 5));
-    }
-
-    public static void setMediaVolume(Context c, int mode) {
-        if (mode == Mode.Class)
-            setMediaVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_class_mediaVolume), 0));
-        else if (mode == Mode.Home)
-            setMediaVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_home_mediaVolume), 5));
+            setMediaVolume(a, prefs.getInt(Global.SETTINGS.OUT.mediaVolume, 5));
     }
 
     public static void setMediaVolume(AudioManager a, int setTo) {
@@ -118,24 +73,13 @@ public class ManageVolume {
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
-    public static void setRingtoneVolume(Context c, AudioManager a, SharedPreferences prefs, int mode) {
+    public static void setRingtoneVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setRingtoneVolume(a, prefs.getInt(c.getString(R.string.settings_class_ringtoneVolume), 0));
+            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.CLASS.ringtoneVolume, 0));
         else if (mode == Mode.Home)
-            setRingtoneVolume(a, prefs.getInt(c.getString(R.string.settings_home_ringtoneVolume), 5));
+            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.HOME.ringtoneVolume, 5));
         else if (mode == Mode.Out)
-            setRingtoneVolume(a, prefs.getInt(c.getString(R.string.settings_out_ringtoneVolume), 10));
-    }
-
-    public static void setRingtoneVolume(Context c, int mode) {
-        if (mode == Mode.Class)
-            setRingtoneVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_class_ringtoneVolume), 0));
-        else if (mode == Mode.Home)
-            setRingtoneVolume((AudioManager) c.getSystemService(Context.AUDIO_SERVICE),
-                    c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code),
-                            Context.MODE_PRIVATE).getInt(c.getString(R.string.settings_home_ringtoneVolume), 1));
+            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.OUT.ringtoneVolume, 10));
     }
 
     public static void setRingtoneVolume(AudioManager a, int setTo) {

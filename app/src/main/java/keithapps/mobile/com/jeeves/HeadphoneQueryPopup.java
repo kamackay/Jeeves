@@ -85,7 +85,7 @@ public class HeadphoneQueryPopup extends Activity {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
                         (getSharedPreferences(getString(R.string.sharedPrefrences_code),
-                                MODE_PRIVATE).getInt(getString(R.string.settings_home_mediaVolume),
+                                MODE_PRIVATE).getInt(Global.SETTINGS.HOME.mediaVolume,
                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);

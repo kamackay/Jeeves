@@ -365,4 +365,33 @@ public class Global {
         int height = size.y;
         KeithToast.show(String.format("Height: %d\nWidth: %d", height, width), a.getApplicationContext());
     }
+
+    /**
+     * Settings Strings without having to call from a Context
+     */
+    public class SETTINGS {
+        public class CLASS {
+            public static final String notificationVolume = "settings_class_notificationVolume",
+                    ringtoneVolume = "settings_class_ringtoneVolume",
+                    systemVolume = "settings_class_systemVolume",
+                    alarmVolume = "settings_class_alarmVolume",
+                    mediaVolume = "settings_class_mediaVolume";
+        }
+
+        public class OUT {
+            public static final String notificationVolume = "settings_out_notificationVolume",
+                    ringtoneVolume = "settings_out_ringtoneVolume",
+                    systemVolume = "settings_out_systemVolume",
+                    alarmVolume = "settings_out_alarmVolume",
+                    mediaVolume = "settings_out_mediaVolume";
+        }
+
+        public class HOME {
+            public static final String notificationVolume = "settings_home_notificationVolume",
+                    ringtoneVolume = "settings_home_ringtoneVolume",
+                    systemVolume = "settings_home_systemVolume",
+                    alarmVolume = "settings_home_alarmVolume",
+                    mediaVolume = "settings_home_mediaVolume";
+        }
+    }
 }

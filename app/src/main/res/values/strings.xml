@@ -7,17 +7,7 @@
     <string name="text_ringtoneVolume">Ringtone Volume</string>
     <string name="text_systemVolume">System Volume</string>
     <string name="sharedPrefrences_code">jeeves.prefs</string>
-    <string name="settings_home_ringtoneVolume">settings_home_ringtoneVolume</string>
-    <string name="settings_home_mediaVolume">settings_home_mediaVolume</string>
-    <string name="settings_home_systemVolume">settings_home_systemVolume</string>
-    <string name="settings_home_notificationVolume">settings_home_notificationVolume</string>
-    <string name="settings_class_ringtoneVolume">settings_class_ringtoneVolume</string>
-    <string name="settings_class_mediaVolume">settings_class_mediaVolume</string>
-    <string name="settings_class_systemVolume">settings_class_systemVolume</string>
-    <string name="settings_class_notificationVolume">settings_class_notificationVolume</string>
     <string name="text_alarmVolume">Alarm Volume</string>
-    <string name="settings_class_alarmVolume">settings_class_alarmVolume</string>
-    <string name="settings_home_alarmVolume">settings_home_alarmVolume</string>
     <string name="text_car">Car\n(Does nothing)</string>
     <string name="text_idkYet">IDK Yet\n(Does nothing)</string>
     <string name="headphone_popup_title">Headset Detected\n\nFull volume or partial volume?</string>
@@ -25,11 +15,6 @@
     <string name="text_partial">Partial</string>
     <string name="text_out">Out</string>
     <string name="text_work">Work\n(Does nothing)</string>
-    <string name="settings_out_ringtoneVolume">settings_out_ringtoneVolume</string>
-    <string name="settings_out_mediaVolume">settings_out_mediaVolume</string>
-    <string name="settings_out_systemVolume">settings_out_systemVolume</string>
-    <string name="settings_out_notificationVolume">settings_out_notificationVolume</string>
-    <string name="settings_out_alarmVolume">settings_out_alarmVolume</string>
     <string name="text_welcomeToJeeves">Welcome to Jeeves</string>
     <string name="default_versionText">Version: idk</string>
     <string name="text_showAllRunningProcesses">Show All Running Processes</string>
@@ -72,4 +57,6 @@
     <string name="text_showScreenSize">Show Screen Size</string>
     <string name="text_showNotification">Show Notification</string>
     <string name="settings_showNotification">settings.showNotification</string>
+    <string name="text_showHeadphonesPopup">Show Headphones popup</string>
+    <string name="settings_showHeadphonesPopup">settings_showHeadphonesPopup</string>
 </resources>

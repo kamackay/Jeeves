@@ -29,6 +29,8 @@ import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
 
 /**
  * The main activity, which contains all of the changes that can be made to the Service's settings
@@ -262,11 +264,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mcv_home_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
-                MODE_PRIVATE).getInt(getString(R.string.settings_home_wifiAction), SELECTED_LEAVE));
+                MODE_PRIVATE).getInt(getString(R.string.settings_home_wifiAction), SELECTED_ON));
         mcv_class_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
-                MODE_PRIVATE).getInt(getString(R.string.settings_class_wifiAction), SELECTED_LEAVE));
+                MODE_PRIVATE).getInt(getString(R.string.settings_class_wifiAction), SELECTED_ON));
         mcv_out_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
-                MODE_PRIVATE).getInt(getString(R.string.settings_out_wifiAction), SELECTED_LEAVE));
+                MODE_PRIVATE).getInt(getString(R.string.settings_out_wifiAction), SELECTED_OFF));
         mcv_home_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
                 MODE_PRIVATE).getInt(getString(R.string.settings_home_bluetoothAction), SELECTED_LEAVE));
         mcv_class_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),

@@ -3,6 +3,7 @@ package keithapps.mobile.com.jeeves;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
@@ -76,8 +77,9 @@ public class SetState {
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
         if (wifiAction == SELECTED_ON) {
-            turnOffWiFi(c);
-            turnOnWiFi(c);
+            WifiManager wifiManager = (WifiManager)c.getSystemService(Context.WIFI_SERVICE);
+            wifiManager.setWifiEnabled(false);
+            wifiManager.setWifiEnabled(true);
         } else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
         if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
         else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);

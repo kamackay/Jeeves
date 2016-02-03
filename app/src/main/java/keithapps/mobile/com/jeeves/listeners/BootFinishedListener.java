@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.listeners;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Handler;
+
+import keithapps.mobile.com.jeeves.MainService;
 
 /**
  * Created by Keith on 1/17/2016.

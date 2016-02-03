@@ -139,8 +139,7 @@ public class MainActivity extends AppCompatActivity {
         t.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                SharedPreferences prefs = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences prefs = getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
                 if (prefs.getBoolean(getString(R.string.settings_isKeith), false)) {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean(getString(R.string.settings_isKeith), false);
@@ -160,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(getString(
-                        R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
                 SharedPreferences.Editor edit = preferences.edit();
                 edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
                 edit.apply();
@@ -174,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
         switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(getString(
-                        R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
                 SharedPreferences.Editor edit = preferences.edit();
                 edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
                 edit.apply();
@@ -188,8 +185,7 @@ public class MainActivity extends AppCompatActivity {
         switchShowHeadphones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(getString(
-                        R.string.sharedPrefrences_code), MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
                 SharedPreferences.Editor edit = preferences.edit();
                 edit.putBoolean(getString(R.string.settings_showHeadphonesPopup), isChecked);
                 edit.apply();
@@ -212,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
         mcv_home_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_home_wifiAction), mcv_home_wifi.getSelection());
                 edit.apply();
             }
@@ -221,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
         mcv_out_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_out_wifiAction), mcv_out_wifi.getSelection());
                 edit.apply();
             }
@@ -230,8 +226,8 @@ public class MainActivity extends AppCompatActivity {
         mcv_class_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_class_wifiAction), mcv_class_wifi.getSelection());
                 edit.apply();
             }
@@ -239,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
         mcv_home_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_home_bluetoothAction), mcv_home_bluetooth.getSelection());
                 edit.apply();
             }
@@ -248,8 +244,8 @@ public class MainActivity extends AppCompatActivity {
         mcv_class_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_class_bluetoothAction), mcv_class_bluetooth.getSelection());
                 edit.apply();
             }
@@ -257,23 +253,24 @@ public class MainActivity extends AppCompatActivity {
         mcv_out_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
-                SharedPreferences.Editor edit = getSharedPreferences(
-                        getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
+                SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                        MODE_PRIVATE).edit();
                 edit.putInt(getString(R.string.settings_out_bluetoothAction), mcv_out_bluetooth.getSelection());
                 edit.apply();
             }
         });
-        mcv_home_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_home_wifi.showReboot(true);
+        mcv_home_wifi.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_home_wifiAction), SELECTED_ON));
-        mcv_class_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_class_wifi.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_class_wifiAction), SELECTED_ON));
-        mcv_out_wifi.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_out_wifi.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_out_wifiAction), SELECTED_OFF));
-        mcv_home_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_home_bluetooth.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_home_bluetoothAction), SELECTED_LEAVE));
-        mcv_class_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_class_bluetooth.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_class_bluetoothAction), SELECTED_LEAVE));
-        mcv_out_bluetooth.setSelection(getSharedPreferences(getString(R.string.sharedPrefrences_code),
+        mcv_out_bluetooth.setSelection(getSharedPreferences(Global.SHAREDPREF_CODE,
                 MODE_PRIVATE).getInt(getString(R.string.settings_out_bluetoothAction), SELECTED_LEAVE));
     }
 
@@ -402,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
      * @return Shared Preferences
      */
     private SharedPreferences getPrefs() {
-        return getSharedPreferences(getString(R.string.sharedPrefrences_code), MODE_PRIVATE);
+        return getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
     }
 
     /**

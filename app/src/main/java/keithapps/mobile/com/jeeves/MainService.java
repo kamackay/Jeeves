@@ -1,6 +1,5 @@
 package keithapps.mobile.com.jeeves;
 
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,19 +10,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.ContentObserver;
+import android.media.AudioManager;
+import android.os.Handler;
 import android.os.IBinder;
-import android.os.Process;
 import android.widget.RemoteViews;
 
 import java.util.Calendar;
-import java.util.List;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
-
-import static keithapps.mobile.com.jeeves.Global.PACKAGE_SNAPCHAT;
-import static keithapps.mobile.com.jeeves.Global.isKeith;
+import keithapps.mobile.com.jeeves.listeners.HeadphoneListener;
+import keithapps.mobile.com.jeeves.listeners.NotificationListener;
 
 public class MainService extends Service {
+
+    private SettingsContentObserver mSettingsContentObserver;
+
+    /**
+     * The Current Mode
+     */
 
     /**
      * Constructor
@@ -33,16 +38,12 @@ public class MainService extends Service {
     }
 
     /**
-     * The Current Mode
-     */
-
-    /**
      * Get the current mode to show in the notification
      *
      * @return the current mode
      */
     public static int getMode(Context c) {
-        return c.getSharedPreferences(c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE)
+        return c.getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE)
                 .getInt(c.getString(R.string.current_mode), Mode.Home);
     }
 
@@ -53,8 +54,7 @@ public class MainService extends Service {
      * @param c    the calling context
      */
     public static void showNotification(int mode, Context c) {
-        SharedPreferences prefs = c.getSharedPreferences(
-                c.getString(R.string.sharedPrefrences_code), MODE_PRIVATE);
+        SharedPreferences prefs = c.getSharedPreferences(Global.SHAREDPREF_CODE, MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
         edit.putInt(c.getString(R.string.current_mode), mode);
         edit.apply();
@@ -101,22 +101,23 @@ public class MainService extends Service {
                         new Intent(c, CarButtonListener.class), 0));
         if (prefs.getBoolean(c.getString(R.string.settings_showBigContentView), false))
             notification.bigContentView = bigContent;
-        NotificationManager notificationManger =
+        NotificationManager nMan =
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManger.notify(992944, notification);
+        nMan.cancelAll();
+        nMan.notify(992944, notification);
 
     }
 
     public static void startBackgroundProcess(Context c) {
         Intent myIntent = new Intent(c, BackgroundProcessListener.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(c, 0, myIntent, 0);
-
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0); // first time
         long frequency = 60 * 1000; // in ms
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frequency, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                frequency, pendingIntent);
     }
 
     /**
@@ -137,22 +138,22 @@ public class MainService extends Service {
     public void onCreate() {
         super.onCreate();
         HeadphoneListener headphoneListener = new HeadphoneListener();
-        IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        registerReceiver(headphoneListener, filter);
+        IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(headphoneListener, headsetFilter);
+
+        IntentFilter notificationFilter = new IntentFilter(NOTIFICATION_SERVICE);
+        NotificationListener notificationListener = new NotificationListener();
+        registerReceiver(notificationListener, notificationFilter);
+
+        mSettingsContentObserver = new SettingsContentObserver(getApplicationContext(), new Handler());
+
+        getApplicationContext().getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, mSettingsContentObserver);
 
         BackgroundProcessListener backListener = new BackgroundProcessListener();
         IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
         registerReceiver(backListener, f);
-        showNotification();
-        startBackgroundProcess(getApplicationContext());
-    }
-
-    /**
-     * Can't remember why I made this.
-     * Calls the show Notification and uses Home as a default
-     */
-    public void showNotification() {
         showNotification(Mode.Home, getApplicationContext());
+        startBackgroundProcess(getApplicationContext());
     }
 
     /**
@@ -160,8 +161,7 @@ public class MainService extends Service {
      */
     @Override
     public void onDestroy() {
-        Context c = getApplicationContext();
-        showNotification(getMode(c), c);
+        getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
         super.onDestroy();
     }
 
@@ -213,7 +213,6 @@ public class MainService extends Service {
         }
     }
 
-
     /**
      * Created by Keith on 1/19/2016.
      * Background Process Listener
@@ -221,34 +220,6 @@ public class MainService extends Service {
     public static class BackgroundProcessListener extends BroadcastReceiver {
         @Override
         public void onReceive(final Context c, Intent intent) {
-            if (isKeith(c))
-                try {
-                    boolean triedToKill = false;
-                    final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-                    List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
-                    for (ActivityManager.RunningAppProcessInfo process : listOfProcesses) {
-                        if (process.processName.contains(PACKAGE_SNAPCHAT)) {
-                            try {
-                                triedToKill = true;
-                                Process.killProcess(process.pid);
-                                android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
-                            } catch (Exception e) {
-                                //I doubt this'll ever happen
-                            }
-                        }
-                    }
-                    if (triedToKill) {
-                        boolean alive = false;
-                        List<ActivityManager.RunningAppProcessInfo> l =
-                                ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
-                                        .getRunningAppProcesses();
-                        for (ActivityManager.RunningAppProcessInfo process : l)
-                            if (process.processName.contains(PACKAGE_SNAPCHAT)) alive = true;
-                        if (!alive) KeithToast.show("Snapchat was killed", c);
-                    }
-                } catch (Exception e) {
-                    //Don't do anything
-                }
             showNotification(getMode(c), c); //May or may not want to do this.
             // It looks as if the icon is being cleared from the Notification when the
             // main activity closes. IDK, man
@@ -256,6 +227,27 @@ public class MainService extends Service {
 
             //Add functions that should be performed periodically in the background here
 
+        }
+    }
+
+    public class SettingsContentObserver extends ContentObserver {
+        private AudioManager audioManager;
+        private SharedPreferences prefs;
+
+        public SettingsContentObserver(Context context, Handler handler) {
+            super(handler);
+            audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            prefs = context.getSharedPreferences(Global.SHAREDPREF_CODE, Context.MODE_PRIVATE);
+        }
+
+        @Override
+        public boolean deliverSelfNotifications() {
+            return false;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
         }
     }
 }

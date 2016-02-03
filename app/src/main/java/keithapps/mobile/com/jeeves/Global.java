@@ -37,6 +37,10 @@ public class Global {
      * Snapchat's package name
      */
     public final static String PACKAGE_SNAPCHAT = "com.snapchat.android";
+    /**
+     * Code to use to access the Shared Prefrences
+     */
+    public static final String SHAREDPREF_CODE = "jeeves.prefs";
 
     /**
      * Is the given service running.
@@ -200,8 +204,7 @@ public class Global {
      * @return Shared Preferences
      */
     public static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(context.getString(R.string.sharedPrefrences_code),
-                Context.MODE_PRIVATE);
+        return context.getSharedPreferences(Global.SHAREDPREF_CODE, Context.MODE_PRIVATE);
     }
 
     /**
@@ -222,8 +225,7 @@ public class Global {
     }
 
     public static boolean isKeith(Context c) {
-        SharedPreferences prefs = c.getSharedPreferences(
-                c.getString(R.string.sharedPrefrences_code), Context.MODE_PRIVATE);
+        SharedPreferences prefs = c.getSharedPreferences(Global.SHAREDPREF_CODE, Context.MODE_PRIVATE);
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false);
     }
 

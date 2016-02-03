@@ -1,10 +1,15 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.listeners;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+
+import keithapps.mobile.com.jeeves.Global;
+import keithapps.mobile.com.jeeves.HeadphoneQueryPopup;
+import keithapps.mobile.com.jeeves.KeithToast;
+import keithapps.mobile.com.jeeves.R;
 
 /**
  * Created by Keith on 1/18/2016.
@@ -25,8 +30,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                         previouslyPlugged = false;
                         AudioManager audioManager =
                                 (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-                        SharedPreferences prefs = c.getSharedPreferences(c.getString(
-                                        R.string.sharedPrefrences_code),
+                        SharedPreferences prefs = c.getSharedPreferences(Global.SHAREDPREF_CODE,
                                 Context.MODE_PRIVATE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
@@ -35,9 +39,8 @@ public class HeadphoneListener extends BroadcastReceiver {
                     }
                     break;
                 case 1:
-                    if (!previouslyPlugged && c.getSharedPreferences(
-                            c.getString(R.string.sharedPrefrences_code), Context.MODE_PRIVATE)
-                            .getBoolean(c.getString(R.string.settings_showHeadphonesPopup), true)) {
+                    if (!previouslyPlugged && c.getSharedPreferences(Global.SHAREDPREF_CODE,
+                            Context.MODE_PRIVATE).getBoolean(c.getString(R.string.settings_showHeadphonesPopup), true)) {
                         previouslyPlugged = true;
                         Intent i = new Intent(c, HeadphoneQueryPopup.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

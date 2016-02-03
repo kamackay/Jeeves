@@ -28,15 +28,24 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name="listeners.NotificationListener"
+            android:label="@string/text_notificationListener"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </receiver>
+
         <receiver android:name=".MainService$ClassButtonListener" />
         <receiver android:name=".MainService$HomeButtonListener" />
-        <receiver android:name=".BootFinishedListener">
+        <receiver android:name=".listeners.BootFinishedListener">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver android:name=".MainService$BackgroundProcessListener" />
-        <receiver android:name=".HeadphoneListener">
+        <receiver android:name=".listeners.HeadphoneListener">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
                 <action android:name="android.intent.action.TIME_TICK" />
@@ -46,7 +55,8 @@
         <service
             android:name=".MainService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/app_name" />
 
         <activity
             android:name=".HeadphoneQueryPopup"

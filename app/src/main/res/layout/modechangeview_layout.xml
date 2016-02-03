@@ -75,4 +75,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/modeChangeView_rebootParent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/zero"
+        android:paddingStart="@dimen/ten"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/modeChangeView_textBoxREBOOT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_reboot"
+            android:textAlignment="center"
+            android:textSize="@dimen/mcv_textSmall" />
+
+        <RadioButton
+            android:id="@+id/modeChangeView_radioButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

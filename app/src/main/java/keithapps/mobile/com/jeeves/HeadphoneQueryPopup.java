@@ -67,9 +67,9 @@ public class HeadphoneQueryPopup extends Activity {
                 t.purge();
             }
         }, 10000);
-        SharedPreferences.Editor edit = getSharedPreferences(
-                getString(R.string.sharedPrefrences_code), MODE_PRIVATE).edit();
-        edit.putBoolean(getString(R.string.volume_settofull), false);
+        SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                MODE_PRIVATE).edit();
+        edit.putBoolean(getString(R.string.volume_settofull), true);
         edit.apply();
         finish();
     }
@@ -84,11 +84,15 @@ public class HeadphoneQueryPopup extends Activity {
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
-                        (getSharedPreferences(getString(R.string.sharedPrefrences_code),
+                        (getSharedPreferences(Global.SHAREDPREF_CODE,
                                 MODE_PRIVATE).getInt(Global.SETTINGS.HOME.mediaVolume,
                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+        SharedPreferences.Editor edit = getSharedPreferences(Global.SHAREDPREF_CODE,
+                MODE_PRIVATE).edit();
+        edit.putBoolean(getString(R.string.volume_settofull), false);
+        edit.apply();
         finish();
     }
 }

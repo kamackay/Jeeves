@@ -26,6 +26,7 @@ import static keithapps.mobile.com.jeeves.ManageVolume.setSystemVolume;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
+import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_REBOOT;
 
 /**
  * Created by Keith on 1/19/2016.
@@ -76,8 +77,10 @@ public class SetState {
         int wifiAction = prefs.getInt(c.getString(R.string.settings_home_wifiAction),
                 SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                 R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
-        if (wifiAction == SELECTED_ON) {
-            WifiManager wifiManager = (WifiManager)c.getSystemService(Context.WIFI_SERVICE);
+        if (wifiAction == SELECTED_ON)
+            ((WifiManager) c.getSystemService(Context.WIFI_SERVICE)).setWifiEnabled(true);
+        if (wifiAction == SELECTED_REBOOT) {
+            WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(false);
             wifiManager.setWifiEnabled(true);
         } else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
@@ -103,8 +106,9 @@ public class SetState {
         setNotificationVolume(a, prefs, ManageVolume.Mode.Class);
         if (isVibrateOn(a)) turnOffVibrate(a);
         int wifiAction = prefs.getInt(c.getString(R.string.settings_class_wifiAction),
-                SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
-                R.string.settings_class_bluetoothAction), SELECTED_LEAVE);
+                SELECTED_LEAVE),
+                bluetoothAction = prefs.getInt(c.getString(
+                        R.string.settings_class_bluetoothAction), SELECTED_LEAVE);
         if (wifiAction == SELECTED_ON) turnOnWiFi(c);
         else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
         if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);

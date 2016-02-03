@@ -6,7 +6,6 @@
     <string name="text_mediaVolume">Media Volume</string>
     <string name="text_ringtoneVolume">Ringtone Volume</string>
     <string name="text_systemVolume">System Volume</string>
-    <string name="sharedPrefrences_code">jeeves.prefs</string>
     <string name="text_alarmVolume">Alarm Volume</string>
     <string name="text_car">Car\n(Does nothing)</string>
     <string name="text_idkYet">IDK Yet\n(Does nothing)</string>
@@ -59,4 +58,6 @@
     <string name="settings_showNotification">settings.showNotification</string>
     <string name="text_showHeadphonesPopup">Show Headphones popup</string>
     <string name="settings_showHeadphonesPopup">settings_showHeadphonesPopup</string>
+    <string name="text_reboot">Reboot</string>
+    <string name="text_notificationListener">Notification Listener</string>
 </resources>

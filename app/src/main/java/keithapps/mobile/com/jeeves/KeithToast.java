@@ -97,7 +97,7 @@ public class KeithToast {
     }
 
     /**
-     * Get the version of the keithapps logo that should be shown with the given color
+     * Get the versionCode of the keithapps logo that should be shown with the given color
      *
      * @param color the color to find an image that is associated with it
      * @return code to one of the

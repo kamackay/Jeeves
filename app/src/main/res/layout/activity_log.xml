@@ -15,23 +15,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Switch
+            android:id="@+id/logScreen_switchLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ten"
+            android:text="@string/text_log"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/fifteen" />
+
         <ImageView
-            android:layout_width="@dimen/zero"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:src="@android:drawable/ic_menu_search" />
 
         <EditText
             android:id="@+id/logScreen_searchTextbox"
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:inputType="text" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text|textFilter"
+            android:maxWidth="@dimen/one_hundred_fifty"
+            android:minWidth="@dimen/one_hundred"
+            android:textSize="@dimen/twenty" />
 
         <ImageView
-            android:layout_width="@dimen/zero"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:onClick="clearSearch"
             android:src="@android:drawable/ic_menu_close_clear_cancel" />
     </LinearLayout>

@@ -1,5 +1,7 @@
 package keithapps.mobile.com.jeeves;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +13,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
 
 import static keithapps.mobile.com.jeeves.Global.clearLog;
+import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 public class LogActivity extends AppCompatActivity {
 
@@ -33,6 +38,20 @@ public class LogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
+        Switch switch_log = (Switch) findViewById(R.id.logScreen_switchLog);
+        switch_log.setChecked(prefs.getBoolean(Settings.record_log, true));
+        switch_log.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) writeToLog("Logging Turned Off", getApplicationContext());
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        Context.MODE_PRIVATE).edit();
+                edit.putBoolean(Settings.record_log, isChecked);
+                edit.apply();
+                if (isChecked) writeToLog("Logging Turned Back on", getApplicationContext());
+            }
+        });
         ((EditText) findViewById(R.id.logScreen_searchTextbox))
                 .addTextChangedListener(new TextWatcher() {
                     @Override
@@ -58,22 +77,26 @@ public class LogActivity extends AppCompatActivity {
     private void showLog() {
         final TextView tv = (TextView) findViewById(R.id.log_text);
         final EditText et = (EditText) findViewById(R.id.logScreen_searchTextbox);
-        final String search = et.getText().toString();
         try {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         final StringBuilder sb = new StringBuilder(), chars = new StringBuilder();
+                        String search = et.getText().toString().toLowerCase().trim();
                         int ch;
-                        boolean s = !search.trim().isEmpty();
+                        boolean s = !search.trim().isEmpty(), not = search.startsWith("not ");
+                        if (not) search = search.replace("not ", "").trim();
                         FileInputStream fis = openFileInput(Global.LOGFILE_NAME);
                         while ((ch = fis.read()) != -1) chars.append((char) ch);
                         fis.close();
                         String[] lines = chars.toString().split("\n");
-                        for (int i = lines.length - 1; i >= 0; i--)
-                            if (!s || lines[i].contains(search))
+                        for (int i = lines.length - 1; i >= 0; i--) {
+                            if (not && !(!s || lines[i].toLowerCase().contains(search)))
                                 sb.append(lines[i]).append("\n\n");
+                            else if (!not && (!s || lines[i].toLowerCase().contains(search)))
+                                sb.append(lines[i]).append("\n\n");
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

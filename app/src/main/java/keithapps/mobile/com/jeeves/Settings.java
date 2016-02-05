@@ -6,12 +6,14 @@ package keithapps.mobile.com.jeeves;
 public class Settings {
     public static final String current_mode = "curr.mode",
             headset_full = "vol.setToFull", headset_pluggedIn = "headset.plugged",
-            adderall_count = "adderall.count", adderall_clear = "adderall.clear";
+            adderall_count = "adderall.count", adderall_clear = "adderall.clear",
+            versionCode ="version.code", versionName = "version.name";
     /**
      * Code to use to access the Shared Preferences
      */
     public static final String sharedPrefs_code = "jeeves.prefs";
     public static final String text_home = "home", text_out = "out", text_class = "class", text_add = "add";
+    public static final String record_log = "log.record";
 
     public class Class {
         public static final String notificationVolume = "settings_class_notificationVolume",

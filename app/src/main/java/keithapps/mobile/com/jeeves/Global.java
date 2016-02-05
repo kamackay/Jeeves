@@ -57,7 +57,7 @@ public class Global {
         return false;
     }
 
-    public static boolean isJeevesRunning(Context c){
+    public static boolean isJeevesRunning(Context c) {
         ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo s : manager.getRunningServices(Integer.MAX_VALUE))
             if (s.service.getClassName().contains("keithapps")) return true;
@@ -72,12 +72,8 @@ public class Global {
     public static void turnOnWiFi(Context c) {
         try {
             WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-            NetworkInfo mWifi = ((ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE))
-                    .getActiveNetworkInfo();
-            if (mWifi == null || !mWifi.isConnected()) {
-                wm.setWifiEnabled(true);
-                writeToLog("Turned on WiFi", c);
-            }
+            wm.setWifiEnabled(true);
+            writeToLog("Turned on WiFi", c);
         } catch (Exception e) {
             writeToLog(e.getLocalizedMessage(), c);
         }
@@ -126,7 +122,7 @@ public class Global {
     }
 
     /**
-     * Get the version name of this app
+     * Get the versionCode name of this app
      *
      * @param context The calling context
      * @return the Name of this app, Unknown if it could not be found
@@ -308,6 +304,8 @@ public class Global {
      */
     public static void writeToLog(String text, Context c) {
         try {
+            if (!c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
+                    .getBoolean(Settings.record_log, true)) return;
             FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
             String toPrint = String.format("%s- %s\n", getTimeStamp(), text);
             fos.write(toPrint.getBytes(Charset.forName("UTF-8")));

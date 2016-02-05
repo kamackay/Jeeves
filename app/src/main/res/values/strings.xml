@@ -66,4 +66,5 @@
     <string name="desc_notification_outButton">Out Button</string>
     <string name="text_addAdderall">Add One Adderall</string>
     <string name="text_search">Search</string>
+    <string name="text_log">"Log    "</string>
 </resources>

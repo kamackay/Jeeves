@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -94,7 +95,7 @@ public class MainService extends Service {
             contentView.setImageViewResource(R.id.notification_buttonHome,
                     R.drawable.notification_button_background_selected);
             builder.setSmallIcon(android.R.color.transparent);
-            builder.setPriority(Notification.PRIORITY_MIN);
+            //builder.setPriority(Notification.PRIORITY_MIN);
         } else if (mode == Mode.Class) {
             contentView.setTextColor(R.id.notification_textClass, Color.BLACK);
             contentView.setImageViewResource(R.id.notification_buttonClass,
@@ -122,6 +123,8 @@ public class MainService extends Service {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(c, 0, myIntent, 0);
         AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_CONNECTED));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_DISCONNECTED));
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0); // first time
         long frequency = 60 * 1000; // in ms
@@ -160,29 +163,25 @@ public class MainService extends Service {
 
         c.getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI,
                 true, mVolumeChangeListener);
-
+        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
         BackgroundProcessListener backListener = new BackgroundProcessListener();
         IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
         registerReceiver(backListener, f);
-        showNotification(getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
-                .getInt(Settings.current_mode, Mode.Home), getApplicationContext());
+        showNotification(prefs.getInt(Settings.current_mode, Mode.Home), getApplicationContext());
         startBackgroundProcess(getApplicationContext());
-
-        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(c, SetStateButtonListener.class);
-        i.setAction(Settings.adderall_clear);
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, i, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 20);
-        calendar.set(Calendar.HOUR,9);
-        calendar.set(Calendar.AM_PM, Calendar.AM);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-
-        mgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis(), pi);
-
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            if (prefs.getInt(Settings.versionCode, 5) < info.versionCode) {
+                writeToLog(String.format("Updated to version %s from %s",
+                        info.versionName, prefs.getString(Settings.versionName, "1.1.6a")), c);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putInt(Settings.versionCode, info.versionCode);
+                edit.putString(Settings.versionName, info.versionName);
+                edit.apply();
+            }
+        } catch (Exception e) {
+            writeToLog(e.getLocalizedMessage(), c);
+        }
         writeToLog("MainService Startup", getApplicationContext());
     }
 

@@ -10,4 +10,7 @@
     <dimen name="ten">10sp</dimen>
     <dimen name="seventyFive">75sp</dimen>
     <dimen name="twelve">12sp</dimen>
+    <dimen name="thirty">30sp</dimen>
+    <dimen name="one_hundred">100sp</dimen>
+    <dimen name="one_hundred_fifty">150sp</dimen>
 </resources>

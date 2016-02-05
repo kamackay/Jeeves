@@ -12,7 +12,7 @@
             <solid android:color="@android:color/darker_gray" />
             <stroke
                 android:width="3px"
-                android:color="@color/button_forecolor" />
+                android:color="@color/button_foreColor" />
         </shape>
     </item>
 </layer-list>

@@ -9,6 +9,8 @@ import android.os.Handler;
 
 import keithapps.mobile.com.jeeves.MainService;
 
+import static keithapps.mobile.com.jeeves.Global.writeToLog;
+
 /**
  * Created by Keith on 1/17/2016.
  * Listens for the boot to complete
@@ -46,12 +48,12 @@ public class BootFinishedListener extends BroadcastReceiver {
      * implementations should respond only to known actions, ignoring any unexpected
      * Intents that they may receive.
      *
-     * @param context The Context in which the receiver is running.
+     * @param c The Context in which the receiver is running.
      * @param intent  The Intent being received.
      */
     @Override
-    public void onReceive(Context context, Intent intent) {
-        Intent startServiceIntent = new Intent(context, MainService.class);
-        context.startService(startServiceIntent);
+    public void onReceive(Context c, Intent intent) {
+        writeToLog("Device Booted On", c);
+        c.startService(new Intent(c, MainService.class));
     }
 }

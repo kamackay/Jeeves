@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/logMenu_sync"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="@string/text_sync"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/logMenu_clearLog"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/text_clearLog"
+        app:showAsAction="ifRoom" />
+</menu>

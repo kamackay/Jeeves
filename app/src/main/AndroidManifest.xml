@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,6 +26,7 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,19 +39,17 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".MainService$ClassButtonListener" />
-        <receiver android:name=".MainService$HomeButtonListener" />
+        <receiver android:name=".listeners.SetStateButtonListener" />
         <receiver android:name=".listeners.BootFinishedListener">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".MainService$BackgroundProcessListener" />
+        <receiver android:name=".listeners.BackgroundProcessListener" />
         <receiver android:name=".listeners.HeadphoneListener">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
-                <action android:name="android.intent.action.TIME_TICK" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
 
@@ -62,8 +63,9 @@
             android:name=".HeadphoneQueryPopup"
             android:theme="@style/AppTheme.Dialog" />
 
-        <receiver android:name=".MainService$OutButtonListener" />
-        <receiver android:name=".MainService$CarButtonListener" />
+        <activity
+            android:name=".LogActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

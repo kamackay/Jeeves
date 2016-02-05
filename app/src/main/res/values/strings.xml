@@ -41,7 +41,6 @@
     <string name="text_lockScreen">Lock Screen</string>
     <string name="text_jeeves">Jeeves</string>
     <string name="volume_settofull">vol.settofull</string>
-    <string name="current_mode">curr.mode</string>
     <string name="text_dontChange">Don\'t Change</string>
     <string name="text_off">Off</string>
     <string name="text_on">On</string>
@@ -60,4 +59,11 @@
     <string name="settings_showHeadphonesPopup">settings_showHeadphonesPopup</string>
     <string name="text_reboot">Reboot</string>
     <string name="text_notificationListener">Notification Listener</string>
+    <string name="text_showLog">Show Log</string>
+    <string name="text_clearLog">Clear Log</string>
+    <string name="desc_notification_classButton">Class Button</string>
+    <string name="desc_notification_homeButton">Home Button</string>
+    <string name="desc_notification_outButton">Out Button</string>
+    <string name="text_addAdderall">Add One Adderall</string>
+    <string name="text_search">Search</string>
 </resources>

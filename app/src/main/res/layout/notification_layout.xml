@@ -20,15 +20,25 @@
         android:layout_weight="1"
         android:background="@android:color/transparent" />
 
-    <Button
-        android:id="@+id/notification_button1"
+    <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:background="@drawable/notification_button_background"
-        android:text="@string/text_home"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:layout_weight="5">
+
+        <ImageView
+            android:id="@+id/notification_buttonHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/desc_notification_homeButton"
+            android:src="@drawable/notification_button_background" />
+
+        <TextView
+            android:id="@+id/notification_textHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_home" />
+    </RelativeLayout>
 
     <Button
         android:layout_width="0sp"
@@ -36,15 +46,25 @@
         android:layout_weight="1"
         android:background="@android:color/transparent" />
 
-    <Button
-        android:id="@+id/notification_button2"
+    <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:background="@drawable/notification_button_background"
-        android:text="@string/text_class"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:layout_weight="5">
+
+        <ImageView
+            android:id="@+id/notification_buttonClass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/desc_notification_classButton"
+            android:src="@drawable/notification_button_background" />
+
+        <TextView
+            android:id="@+id/notification_textClass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_class" />
+    </RelativeLayout>
 
     <Button
         android:layout_width="0sp"
@@ -52,20 +72,30 @@
         android:layout_weight="1"
         android:background="@android:color/transparent" />
 
-    <Button
-        android:id="@+id/notification_button3"
+    <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:background="@drawable/notification_button_background"
-        android:text="@string/text_out"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:layout_weight="5">
 
-    <ImageView
-        android:id="@+id/notification_settings"
+        <ImageView
+            android:id="@+id/notification_buttonOut"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/desc_notification_outButton"
+            android:src="@drawable/notification_button_background" />
+
+        <TextView
+            android:id="@+id/notification_textOut"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_out" />
+    </RelativeLayout>
+
+    <ImageView android:paddingStart="@dimen/ten" android:paddingEnd="@dimen/zero"
+        android:id="@+id/notification_add"
         android:layout_width="0sp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:src="@drawable/overflow" />
+        android:layout_height="match_parent" android:contentDescription="@string/text_addAdderall"
+        android:layout_weight="3"
+        android:src="@android:drawable/ic_menu_add" />
 </LinearLayout>

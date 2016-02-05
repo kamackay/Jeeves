@@ -21,7 +21,7 @@
 
     <style name="ButtonText" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/button_forecolor</item>
+        <item name="android:background">@color/button_foreColor</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">20sp</item>
         <item name="android:padding">10sp</item>
@@ -31,7 +31,7 @@
 
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
-        <item name="android:windowBackground">@color/button_forecolor</item>
+        <item name="android:windowBackground">@color/button_foreColor</item>
         <item name="android:windowActionBar">false</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>

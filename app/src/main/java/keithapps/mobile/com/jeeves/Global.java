@@ -2,31 +2,29 @@ package keithapps.mobile.com.jeeves;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.AudioManager;
-import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NfcAdapter;
 import android.os.Process;
-import android.provider.Settings;
 import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
 
+import java.io.FileOutputStream;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.provider.Settings.Secure.LOCATION_PROVIDERS_ALLOWED;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -38,9 +36,9 @@ public class Global {
      */
     public final static String PACKAGE_SNAPCHAT = "com.snapchat.android";
     /**
-     * Code to use to access the Shared Prefrences
+     * The name of the Logfile
      */
-    public static final String SHAREDPREF_CODE = "jeeves.prefs";
+    public static final String LOGFILE_NAME = "log.txt";
 
     /**
      * Is the given service running.
@@ -59,18 +57,11 @@ public class Global {
         return false;
     }
 
-    /**
-     * Change the WiFi state
-     *
-     * @param c  the calling context
-     * @param on whether to turn the WiFi on or off
-     */
-    private static void changeWiFiState(Context c, boolean on) {
-        try { //Try to turn on the WiFi
-            ((WifiManager) c.getSystemService(Context.WIFI_SERVICE)).setWifiEnabled(on);
-        } catch (Exception e) {
-            //Nothing is wrong
-        }
+    public static boolean isJeevesRunning(Context c){
+        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo s : manager.getRunningServices(Integer.MAX_VALUE))
+            if (s.service.getClassName().contains("keithapps")) return true;
+        return false;
     }
 
     /**
@@ -79,7 +70,17 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOnWiFi(Context c) {
-        changeWiFiState(c, true);
+        try {
+            WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+            NetworkInfo mWifi = ((ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE))
+                    .getActiveNetworkInfo();
+            if (mWifi == null || !mWifi.isConnected()) {
+                wm.setWifiEnabled(true);
+                writeToLog("Turned on WiFi", c);
+            }
+        } catch (Exception e) {
+            writeToLog(e.getLocalizedMessage(), c);
+        }
     }
 
     /**
@@ -88,53 +89,16 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOffWiFi(Context c) {
-        changeWiFiState(c, false);
-    }
-
-    /**
-     * Turn on the GPS
-     * <p/>
-     * NOTE: May not work
-     *
-     * @param c The calling context
-     */
-    public static void turnGPSOn(Context c) {
         try {
-            String provider = Settings.Secure.getString(c.getContentResolver(),
-                    LOCATION_PROVIDERS_ALLOWED);
-            if (!provider.contains("gps")) { //if gps is disabled
-                final Intent poke = new Intent();
-                poke.setClassName("com.android.settings",
-                        "com.android.settings.widget.SettingsAppWidgetProvider");
-                poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-                poke.setData(Uri.parse("3"));
-                c.sendBroadcast(poke);
+            WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+            NetworkInfo mWifi = ((ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE))
+                    .getActiveNetworkInfo();
+            if (mWifi == null || mWifi.isConnected()) {
+                wm.setWifiEnabled(false);
+                writeToLog("Turned off WiFi", c);
             }
         } catch (Exception e) {
-            //It's all good
-        }
-    }
-
-    /**
-     * Turn off the GPS
-     * <p/>
-     * NOTE: May not work
-     *
-     * @param c The calling context
-     */
-    public static void turnGPSOff(Context c) {
-        try {
-            String provider = Settings.Secure.getString(c.getContentResolver(),
-                    LOCATION_PROVIDERS_ALLOWED);
-            if (provider.contains("gps")) { //if gps is enabled
-                final Intent poke = new Intent();
-                poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
-                poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-                poke.setData(Uri.parse("3"));
-                c.sendBroadcast(poke);
-            }
-        } catch (Exception e) {
-            KeithToast.show("didn't work", c);
+            writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
@@ -152,59 +116,13 @@ public class Global {
     }
 
     /**
-     * Can the GPS be toggled off?
-     *
-     * @param c the calling context
-     * @return false if the system is unable to turn off the GPS
-     */
-    public static boolean canToggleGPS(Context c) {
-        PackageManager pacman = c.getPackageManager();
-        PackageInfo pacInfo;
-        try {
-            pacInfo = pacman.getPackageInfo("com.android.settings", PackageManager.GET_RECEIVERS);
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-        if (pacInfo != null)
-            for (ActivityInfo actInfo : pacInfo.receivers)
-                if (actInfo.name.equals("com.android.settings.widget.SettingsAppWidgetProvider") && actInfo.exported)
-                    return true;
-        return false; //default
-    }
-
-    /**
-     * Get All Children of the given view
-     *
-     * @param v the view to search for children of
-     * @return All children of the given view
-     */
-    public static ArrayList<View> getAllChildren(View v) {
-        if (!(v instanceof ViewGroup)) {
-            ArrayList<View> viewArrayList = new ArrayList<>();
-            viewArrayList.add(v);
-            return viewArrayList;
-        } else {
-            ArrayList<View> result = new ArrayList<>();
-            ViewGroup vg = (ViewGroup) v;
-            for (int i = 0; i < vg.getChildCount(); i++) {
-                View child = vg.getChildAt(i);
-                ArrayList<View> viewArrayList = new ArrayList<>();
-                viewArrayList.add(v);
-                viewArrayList.addAll(getAllChildren(child));
-                result.addAll(viewArrayList);
-            }
-            return result;
-        }
-    }
-
-    /**
      * Get the shared preferences
      *
      * @param context The calling Context
      * @return Shared Preferences
      */
     public static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(Global.SHAREDPREF_CODE, Context.MODE_PRIVATE);
+        return context.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
     }
 
     /**
@@ -225,7 +143,7 @@ public class Global {
     }
 
     public static boolean isKeith(Context c) {
-        SharedPreferences prefs = c.getSharedPreferences(Global.SHAREDPREF_CODE, Context.MODE_PRIVATE);
+        SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false);
     }
 
@@ -275,7 +193,16 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOffBluetooth(Context c) {
-        ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter().disable();
+        BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+        int state = bt.getState();
+        if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_CONNECTED
+                || state == BluetoothAdapter.STATE_TURNING_ON
+                || state == BluetoothAdapter.STATE_CONNECTING
+                || state == BluetoothAdapter.STATE_DISCONNECTED
+                || state == BluetoothAdapter.STATE_DISCONNECTING) {
+            bt.disable();
+            writeToLog("Turned off Bluetooth", c);
+        }
     }
 
     /**
@@ -284,7 +211,12 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOnBluetooth(Context c) {
-        ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter().enable();
+        BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+        int state = bt.getState();
+        if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) {
+            bt.enable();
+            writeToLog("Turned on Bluetooth", c);
+        }
     }
 
     public static void turnOffVibrate(AudioManager a) {
@@ -369,31 +301,49 @@ public class Global {
     }
 
     /**
-     * Settings Strings without having to call from a Context
+     * Write to the Log file
+     *
+     * @param text the text to write to the log file
+     * @param c    the context of the calling method
      */
-    public class SETTINGS {
-        public class CLASS {
-            public static final String notificationVolume = "settings_class_notificationVolume",
-                    ringtoneVolume = "settings_class_ringtoneVolume",
-                    systemVolume = "settings_class_systemVolume",
-                    alarmVolume = "settings_class_alarmVolume",
-                    mediaVolume = "settings_class_mediaVolume";
-        }
-
-        public class OUT {
-            public static final String notificationVolume = "settings_out_notificationVolume",
-                    ringtoneVolume = "settings_out_ringtoneVolume",
-                    systemVolume = "settings_out_systemVolume",
-                    alarmVolume = "settings_out_alarmVolume",
-                    mediaVolume = "settings_out_mediaVolume";
-        }
-
-        public class HOME {
-            public static final String notificationVolume = "settings_home_notificationVolume",
-                    ringtoneVolume = "settings_home_ringtoneVolume",
-                    systemVolume = "settings_home_systemVolume",
-                    alarmVolume = "settings_home_alarmVolume",
-                    mediaVolume = "settings_home_mediaVolume";
+    public static void writeToLog(String text, Context c) {
+        try {
+            FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
+            String toPrint = String.format("%s- %s\n", getTimeStamp(), text);
+            fos.write(toPrint.getBytes(Charset.forName("UTF-8")));
+            fos.close();
+        } catch (Exception e) {
+            //Don't do anything
         }
     }
+
+    /**
+     * Get the current Timestamp in the format
+     * <p/>
+     * MM/dd/yyyy:HH:mm:ss
+     *
+     * @return the current timestamp in string form
+     */
+    public static String getTimeStamp() {
+        return new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US).format(new Date());
+    }
+
+    /**
+     * Clear Log FIle
+     *
+     * @param c the Calling context
+     * @return false if clearing the file did not work
+     */
+    public static boolean clearLog(Context c) {
+        try {
+            FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_PRIVATE);
+            String toPrint = String.format("%s: Cleared the Log File\n", getTimeStamp());
+            fos.write(toPrint.getBytes(Charset.forName("UTF-8")));
+            fos.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

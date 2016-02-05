@@ -11,11 +11,11 @@ public class ManageVolume {
 
     public static void setSystemVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setSystemVolume(a, prefs.getInt(Global.SETTINGS.CLASS.systemVolume, 0));
+            setSystemVolume(a, prefs.getInt(Settings.Class.systemVolume, 0));
         else if (mode == Mode.Home)
-            setSystemVolume(a, prefs.getInt(Global.SETTINGS.HOME.systemVolume, 5));
+            setSystemVolume(a, prefs.getInt(Settings.Home.systemVolume, 5));
         else if (mode == Mode.Out)
-            setSystemVolume(a, prefs.getInt(Global.SETTINGS.OUT.systemVolume, 5));
+            setSystemVolume(a, prefs.getInt(Settings.Out.systemVolume, 5));
     }
 
     public static void setSystemVolume(AudioManager a, int setTo) {
@@ -27,11 +27,11 @@ public class ManageVolume {
 
     public static void setNotificationVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.CLASS.notificationVolume, 0));
+            setNotificationVolume(a, prefs.getInt(Settings.Class.notificationVolume, 0));
         else if (mode == Mode.Home)
-            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.HOME.notificationVolume, 5));
+            setNotificationVolume(a, prefs.getInt(Settings.Home.notificationVolume, 5));
         else if (mode == Mode.Out)
-            setNotificationVolume(a, prefs.getInt(Global.SETTINGS.OUT.notificationVolume, 5));
+            setNotificationVolume(a, prefs.getInt(Settings.Out.notificationVolume, 5));
     }
 
     public static void setNotificationVolume(AudioManager a, int setTo) {
@@ -43,11 +43,11 @@ public class ManageVolume {
 
     public static void setAlarmVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.CLASS.alarmVolume, 0));
+            setAlarmVolume(a, prefs.getInt(Settings.Class.alarmVolume, 0));
         else if (mode == Mode.Home)
-            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.HOME.alarmVolume, 5));
+            setAlarmVolume(a, prefs.getInt(Settings.Home.alarmVolume, 5));
         else if (mode == Mode.Out)
-            setAlarmVolume(a, prefs.getInt(Global.SETTINGS.OUT.alarmVolume, 5));
+            setAlarmVolume(a, prefs.getInt(Settings.Out.alarmVolume, 5));
     }
 
     public static void setAlarmVolume(AudioManager a, int setTo) {
@@ -59,11 +59,11 @@ public class ManageVolume {
 
     public static void setMediaVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setMediaVolume(a, prefs.getInt(Global.SETTINGS.CLASS.mediaVolume, 0));
+            setMediaVolume(a, prefs.getInt(Settings.Class.mediaVolume, 0));
         else if (mode == Mode.Home)
-            setMediaVolume(a, prefs.getInt(Global.SETTINGS.HOME.mediaVolume, 5));
+            setMediaVolume(a, prefs.getInt(Settings.Home.mediaVolume, 5));
         else if (mode == Mode.Out)
-            setMediaVolume(a, prefs.getInt(Global.SETTINGS.OUT.mediaVolume, 5));
+            setMediaVolume(a, prefs.getInt(Settings.Out.mediaVolume, 5));
     }
 
     public static void setMediaVolume(AudioManager a, int setTo) {
@@ -75,11 +75,11 @@ public class ManageVolume {
 
     public static void setRingtoneVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.Class)
-            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.CLASS.ringtoneVolume, 0));
+            setRingtoneVolume(a, prefs.getInt(Settings.Class.ringtoneVolume, 0));
         else if (mode == Mode.Home)
-            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.HOME.ringtoneVolume, 5));
+            setRingtoneVolume(a, prefs.getInt(Settings.Home.ringtoneVolume, 5));
         else if (mode == Mode.Out)
-            setRingtoneVolume(a, prefs.getInt(Global.SETTINGS.OUT.ringtoneVolume, 10));
+            setRingtoneVolume(a, prefs.getInt(Settings.Out.ringtoneVolume, 10));
     }
 
     public static void setRingtoneVolume(AudioManager a, int setTo) {

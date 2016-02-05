@@ -5,6 +5,9 @@
     <dimen name="mcv_textSmall">10sp</dimen>
     <dimen name="fifteen">15sp</dimen>
     <dimen name="twenty">20sp</dimen>
-    <dimen name="main_textSmall">15sp</dimen><dimen name="zero">0sp</dimen>
-    <dimen name="ten">10sp</dimen><dimen name="seventyFive">75sp</dimen>
+    <dimen name="main_textSmall">15sp</dimen>
+    <dimen name="zero">0sp</dimen>
+    <dimen name="ten">10sp</dimen>
+    <dimen name="seventyFive">75sp</dimen>
+    <dimen name="twelve">12sp</dimen>
 </resources>

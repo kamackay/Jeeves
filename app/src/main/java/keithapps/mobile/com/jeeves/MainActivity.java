@@ -10,19 +10,25 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
@@ -60,21 +66,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private Spinner[] getSpinners() {
         return new Spinner[]{
-                (Spinner) findViewById(R.id.settingsScreen_home_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_home_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_home_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_home_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_home_alarmVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_class_alarmVolume),
-                (Spinner) findViewById(R.id.settingsScreen_out_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_out_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_out_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_out_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_out_alarmVolume)
+                (Spinner) findViewById(R.id.settingsScreen_A_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_alarmVolume)
         };
     }
 
@@ -82,6 +88,40 @@ public class MainActivity extends AppCompatActivity {
      * Initialize
      */
     private void init() {
+        SharedPreferences prefs = getPrefs();
+        EditText et_A = (EditText) findViewById(R.id.main_text_A),
+                et_B = (EditText) findViewById(R.id.main_text_B),
+                et_C = (EditText) findViewById(R.id.main_text_C);
+        et_A.setText(prefs.getString(Settings.action_a_name, getString(R.string.text_home)));
+        et_B.setText(prefs.getString(Settings.action_b_name, getString(R.string.text_class)));
+        et_C.setText(prefs.getString(Settings.action_c_name, getString(R.string.text_out)));
+        et_A.addTextChangedListener(new TextChangeListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        Context.MODE_PRIVATE).edit();
+                edit.putString(Settings.action_a_name, s.toString().trim());
+                edit.apply();
+            }
+        });
+        et_B.addTextChangedListener(new TextChangeListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        Context.MODE_PRIVATE).edit();
+                edit.putString(Settings.action_b_name, s.toString().trim());
+                edit.apply();
+            }
+        });
+        et_C.addTextChangedListener(new TextChangeListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        Context.MODE_PRIVATE).edit();
+                edit.putString(Settings.action_c_name, s.toString().trim());
+                edit.apply();
+            }
+        });
         mainShowing = true;
         final Spinner[] spinners = getSpinners();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -91,21 +131,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences.Editor prefs = getPrefs().edit();
-                prefs.putInt(Settings.Home.ringtoneVolume, spinners[0].getSelectedItemPosition());
-                prefs.putInt(Settings.Home.mediaVolume, spinners[1].getSelectedItemPosition());
-                prefs.putInt(Settings.Home.systemVolume, spinners[2].getSelectedItemPosition());
-                prefs.putInt(Settings.Home.notificationVolume, spinners[3].getSelectedItemPosition());
-                prefs.putInt(Settings.Home.alarmVolume, spinners[4].getSelectedItemPosition());
-                prefs.putInt(Settings.Class.ringtoneVolume, spinners[5].getSelectedItemPosition());
-                prefs.putInt(Settings.Class.mediaVolume, spinners[6].getSelectedItemPosition());
-                prefs.putInt(Settings.Class.systemVolume, spinners[7].getSelectedItemPosition());
-                prefs.putInt(Settings.Class.notificationVolume, spinners[8].getSelectedItemPosition());
-                prefs.putInt(Settings.Class.alarmVolume, spinners[9].getSelectedItemPosition());
-                prefs.putInt(Settings.Out.ringtoneVolume, spinners[10].getSelectedItemPosition());
-                prefs.putInt(Settings.Out.mediaVolume, spinners[11].getSelectedItemPosition());
-                prefs.putInt(Settings.Out.systemVolume, spinners[12].getSelectedItemPosition());
-                prefs.putInt(Settings.Out.notificationVolume, spinners[13].getSelectedItemPosition());
-                prefs.putInt(Settings.Out.alarmVolume, spinners[14].getSelectedItemPosition());
+                prefs.putInt(Settings.A.ringtoneVolume, spinners[0].getSelectedItemPosition());
+                prefs.putInt(Settings.A.mediaVolume, spinners[1].getSelectedItemPosition());
+                prefs.putInt(Settings.A.systemVolume, spinners[2].getSelectedItemPosition());
+                prefs.putInt(Settings.A.notificationVolume, spinners[3].getSelectedItemPosition());
+                prefs.putInt(Settings.A.alarmVolume, spinners[4].getSelectedItemPosition());
+                prefs.putInt(Settings.B.ringtoneVolume, spinners[5].getSelectedItemPosition());
+                prefs.putInt(Settings.B.mediaVolume, spinners[6].getSelectedItemPosition());
+                prefs.putInt(Settings.B.systemVolume, spinners[7].getSelectedItemPosition());
+                prefs.putInt(Settings.B.notificationVolume, spinners[8].getSelectedItemPosition());
+                prefs.putInt(Settings.B.alarmVolume, spinners[9].getSelectedItemPosition());
+                prefs.putInt(Settings.C.ringtoneVolume, spinners[10].getSelectedItemPosition());
+                prefs.putInt(Settings.C.mediaVolume, spinners[11].getSelectedItemPosition());
+                prefs.putInt(Settings.C.systemVolume, spinners[12].getSelectedItemPosition());
+                prefs.putInt(Settings.C.notificationVolume, spinners[13].getSelectedItemPosition());
+                prefs.putInt(Settings.C.alarmVolume, spinners[14].getSelectedItemPosition());
                 prefs.apply();
             }
 
@@ -118,22 +158,21 @@ public class MainActivity extends AppCompatActivity {
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(saveListener);
         }
-        SharedPreferences prefs = getPrefs();
-        spinners[0].setSelection(prefs.getInt(Settings.Home.ringtoneVolume, 5));
-        spinners[1].setSelection(prefs.getInt(Settings.Home.mediaVolume, 5));
-        spinners[2].setSelection(prefs.getInt(Settings.Home.systemVolume, 5));
-        spinners[3].setSelection(prefs.getInt(Settings.Home.notificationVolume, 1));
-        spinners[4].setSelection(prefs.getInt(Settings.Home.alarmVolume, 10));
-        spinners[5].setSelection(prefs.getInt(Settings.Class.ringtoneVolume, 0));
-        spinners[6].setSelection(prefs.getInt(Settings.Class.mediaVolume, 0));
-        spinners[7].setSelection(prefs.getInt(Settings.Class.systemVolume, 0));
-        spinners[8].setSelection(prefs.getInt(Settings.Class.notificationVolume, 0));
-        spinners[9].setSelection(prefs.getInt(Settings.Class.alarmVolume, 0));
-        spinners[10].setSelection(prefs.getInt(Settings.Out.ringtoneVolume, 5));
-        spinners[11].setSelection(prefs.getInt(Settings.Out.mediaVolume, 5));
-        spinners[12].setSelection(prefs.getInt(Settings.Out.systemVolume, 5));
-        spinners[13].setSelection(prefs.getInt(Settings.Out.notificationVolume, 5));
-        spinners[14].setSelection(prefs.getInt(Settings.Out.alarmVolume, 10));
+        spinners[0].setSelection(prefs.getInt(Settings.A.ringtoneVolume, 5));
+        spinners[1].setSelection(prefs.getInt(Settings.A.mediaVolume, 5));
+        spinners[2].setSelection(prefs.getInt(Settings.A.systemVolume, 5));
+        spinners[3].setSelection(prefs.getInt(Settings.A.notificationVolume, 1));
+        spinners[4].setSelection(prefs.getInt(Settings.A.alarmVolume, 10));
+        spinners[5].setSelection(prefs.getInt(Settings.B.ringtoneVolume, 0));
+        spinners[6].setSelection(prefs.getInt(Settings.B.mediaVolume, 0));
+        spinners[7].setSelection(prefs.getInt(Settings.B.systemVolume, 0));
+        spinners[8].setSelection(prefs.getInt(Settings.B.notificationVolume, 0));
+        spinners[9].setSelection(prefs.getInt(Settings.B.alarmVolume, 0));
+        spinners[10].setSelection(prefs.getInt(Settings.C.ringtoneVolume, 5));
+        spinners[11].setSelection(prefs.getInt(Settings.C.mediaVolume, 5));
+        spinners[12].setSelection(prefs.getInt(Settings.C.systemVolume, 5));
+        spinners[13].setSelection(prefs.getInt(Settings.C.notificationVolume, 5));
+        spinners[14].setSelection(prefs.getInt(Settings.C.alarmVolume, 10));
         TextView t = (TextView) findViewById(R.id.activity_main_versionText);
         t.setText(String.format("Version: %s", getVersionName(getApplicationContext())));
         t.setOnLongClickListener(new View.OnLongClickListener() {
@@ -164,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
                 edit.apply();
                 showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.Home), getApplicationContext());
+                        ManageVolume.Mode.A), getApplicationContext());
             }
         });
         Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
@@ -177,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
                 edit.apply();
                 showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.Home), getApplicationContext());
+                        ManageVolume.Mode.A), getApplicationContext());
             }
         });
         Switch switchShowHeadphones = (Switch) findViewById(R.id.settingsScreen_showHeadphonePopup);
@@ -190,88 +229,96 @@ public class MainActivity extends AppCompatActivity {
                 edit.putBoolean(getString(R.string.settings_showHeadphonesPopup), isChecked);
                 edit.apply();
                 showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.Home), getApplicationContext());
+                        ManageVolume.Mode.A), getApplicationContext());
             }
         });
-        final ModeChangeView mcv_home_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_home_WiFiOption),
-                mcv_class_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_class_WiFiOption),
-                mcv_out_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_out_WiFiOption),
-                mcv_home_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_home_bluetoothOption),
-                mcv_out_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_out_bluetoothOption),
-                mcv_class_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_class_bluetoothOption);
-        mcv_home_wifi.setText("WiFi");
-        mcv_class_wifi.setText("WiFi");
-        mcv_out_wifi.setText("WiFi");
-        mcv_home_bluetooth.setText("Bluetooth");
-        mcv_class_bluetooth.setText("Bluetooth");
-        mcv_out_bluetooth.setText("Bluetooth");
-        mcv_home_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        final ModeChangeView mcv_A_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_A_WiFiOption),
+                mcv_B_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_B_WiFiOption),
+                mcv_C_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_C_WiFiOption),
+                mcv_A_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_A_bluetoothOption),
+                mcv_C_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_C_bluetoothOption),
+                mcv_B_bluetooth = (ModeChangeView) findViewById(R.id.settingsScreen_B_bluetoothOption);
+        mcv_A_wifi.setText("WiFi");
+        mcv_B_wifi.setText("WiFi");
+        mcv_C_wifi.setText("WiFi");
+        mcv_A_bluetooth.setText("Bluetooth");
+        mcv_B_bluetooth.setText("Bluetooth");
+        mcv_C_bluetooth.setText("Bluetooth");
+        mcv_A_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_home_wifiAction), mcv_home_wifi.getSelection());
+                edit.putInt(getString(R.string.settings_a_wifiAction), mcv_A_wifi.getSelection());
                 edit.apply();
             }
         });
-        mcv_out_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        mcv_C_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_out_wifiAction), mcv_out_wifi.getSelection());
+                edit.putInt(getString(R.string.settings_c_wifiAction), mcv_C_wifi.getSelection());
                 edit.apply();
             }
         });
-        mcv_class_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        mcv_B_wifi.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_class_wifiAction), mcv_class_wifi.getSelection());
+                edit.putInt(getString(R.string.settings_b_wifiAction), mcv_B_wifi.getSelection());
                 edit.apply();
             }
         });
-        mcv_home_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        mcv_A_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_home_bluetoothAction), mcv_home_bluetooth.getSelection());
+                edit.putInt(getString(R.string.settings_a_bluetoothAction), mcv_A_bluetooth.getSelection());
                 edit.apply();
             }
         });
-        mcv_class_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        mcv_B_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_class_bluetoothAction), mcv_class_bluetooth.getSelection());
+                edit.putInt(getString(R.string.settings_b_bluetoothAction), mcv_B_bluetooth.getSelection());
                 edit.apply();
             }
         });
-        mcv_out_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
+        mcv_C_bluetooth.setItemChangedListener(new ModeChangeView.ItemChangedListener() {
             @Override
             public void run() {
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         MODE_PRIVATE).edit();
-                edit.putInt(getString(R.string.settings_out_bluetoothAction), mcv_out_bluetooth.getSelection());
+                edit.putInt(getString(R.string.settings_c_bluetoothAction), mcv_C_bluetooth.getSelection());
                 edit.apply();
             }
         });
-        mcv_home_wifi.showReboot(true);
-        mcv_home_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_home_wifiAction), SELECTED_ON));
-        mcv_class_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_class_wifiAction), SELECTED_ON));
-        mcv_out_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_out_wifiAction), SELECTED_OFF));
-        mcv_home_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_home_bluetoothAction), SELECTED_LEAVE));
-        mcv_class_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_class_bluetoothAction), SELECTED_LEAVE));
-        mcv_out_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).getInt(getString(R.string.settings_out_bluetoothAction), SELECTED_LEAVE));
+        mcv_A_wifi.showReboot(true);
+        mcv_B_wifi.showReboot(true);
+        mcv_C_wifi.showReboot(true);
+        mcv_A_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_a_wifiAction), SELECTED_ON));
+        mcv_B_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_b_wifiAction), SELECTED_ON));
+        mcv_C_wifi.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_c_wifiAction), SELECTED_OFF));
+        mcv_A_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_a_bluetoothAction), SELECTED_LEAVE));
+        mcv_B_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_b_bluetoothAction), SELECTED_LEAVE));
+        mcv_C_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
+                MODE_PRIVATE).getInt(getString(R.string.settings_c_bluetoothAction), SELECTED_LEAVE));
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     /**

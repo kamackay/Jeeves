@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
-import keithapps.mobile.com.jeeves.HeadphoneQueryPopup;
+import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
@@ -33,7 +33,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                                 (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
                                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
-                                        (prefs.getInt(Settings.Home.notificationVolume,
+                                        (prefs.getInt(Settings.A.notificationVolume,
                                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
                         SharedPreferences.Editor edit = prefs.edit();
                         if (prefs.getBoolean(Settings.headset_full, false))

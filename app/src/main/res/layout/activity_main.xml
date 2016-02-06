@@ -47,9 +47,11 @@
                 android:orientation="vertical"
                 android:padding="@dimen/ten">
 
-                <TextView
+                <EditText
+                    android:id="@+id/main_text_A"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
                     android:paddingBottom="@dimen/twenty"
                     android:text="@string/text_home"
                     android:textAlignment="center"
@@ -72,7 +74,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_home_ringtoneVolume"
+                        android:id="@+id/settingsScreen_A_ringtoneVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -93,7 +95,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_home_mediaVolume"
+                        android:id="@+id/settingsScreen_A_mediaVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -114,7 +116,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_home_notificationVolume"
+                        android:id="@+id/settingsScreen_A_notificationVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -135,7 +137,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_home_systemVolume"
+                        android:id="@+id/settingsScreen_A_systemVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -156,18 +158,18 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_home_alarmVolume"
+                        android:id="@+id/settingsScreen_A_alarmVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_home_WiFiOption"
+                    android:id="@+id/settingsScreen_A_WiFiOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_home_bluetoothOption"
+                    android:id="@+id/settingsScreen_A_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -184,9 +186,11 @@
                 android:orientation="vertical"
                 android:padding="@dimen/twenty">
 
-                <TextView
+                <EditText
+                    android:id="@+id/main_text_B"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
                     android:paddingBottom="@dimen/twenty"
                     android:text="@string/text_class"
                     android:textAlignment="center"
@@ -208,7 +212,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_class_ringtoneVolume"
+                        android:id="@+id/settingsScreen_B_ringtoneVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -229,7 +233,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_class_mediaVolume"
+                        android:id="@+id/settingsScreen_B_mediaVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -250,7 +254,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_class_notificationVolume"
+                        android:id="@+id/settingsScreen_B_notificationVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -271,7 +275,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_class_systemVolume"
+                        android:id="@+id/settingsScreen_B_systemVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -292,18 +296,18 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_class_alarmVolume"
+                        android:id="@+id/settingsScreen_B_alarmVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_class_WiFiOption"
+                    android:id="@+id/settingsScreen_B_WiFiOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_class_bluetoothOption"
+                    android:id="@+id/settingsScreen_B_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -320,9 +324,11 @@
                 android:orientation="vertical"
                 android:padding="@dimen/twenty">
 
-                <TextView
+                <EditText
+                    android:id="@+id/main_text_C"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
                     android:paddingBottom="@dimen/twenty"
                     android:text="@string/text_out"
                     android:textAlignment="center"
@@ -345,7 +351,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_out_ringtoneVolume"
+                        android:id="@+id/settingsScreen_C_ringtoneVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -366,7 +372,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_out_mediaVolume"
+                        android:id="@+id/settingsScreen_C_mediaVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -387,7 +393,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_out_notificationVolume"
+                        android:id="@+id/settingsScreen_C_notificationVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -408,7 +414,7 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_out_systemVolume"
+                        android:id="@+id/settingsScreen_C_systemVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -429,18 +435,18 @@
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
-                        android:id="@+id/settingsScreen_out_alarmVolume"
+                        android:id="@+id/settingsScreen_C_alarmVolume"
                         android:layout_width="@dimen/seventyFive"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_out_WiFiOption"
+                    android:id="@+id/settingsScreen_C_WiFiOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <keithapps.mobile.com.jeeves.ModeChangeView
-                    android:id="@+id/settingsScreen_out_bluetoothOption"
+                    android:id="@+id/settingsScreen_C_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

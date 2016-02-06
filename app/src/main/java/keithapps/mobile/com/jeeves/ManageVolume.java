@@ -10,12 +10,12 @@ import android.media.AudioManager;
 public class ManageVolume {
 
     public static void setSystemVolume(AudioManager a, SharedPreferences prefs, int mode) {
-        if (mode == Mode.Class)
-            setSystemVolume(a, prefs.getInt(Settings.Class.systemVolume, 0));
-        else if (mode == Mode.Home)
-            setSystemVolume(a, prefs.getInt(Settings.Home.systemVolume, 5));
-        else if (mode == Mode.Out)
-            setSystemVolume(a, prefs.getInt(Settings.Out.systemVolume, 5));
+        if (mode == Mode.B)
+            setSystemVolume(a, prefs.getInt(Settings.B.systemVolume, 0));
+        else if (mode == Mode.A)
+            setSystemVolume(a, prefs.getInt(Settings.A.systemVolume, 5));
+        else if (mode == Mode.C)
+            setSystemVolume(a, prefs.getInt(Settings.C.systemVolume, 5));
     }
 
     public static void setSystemVolume(AudioManager a, int setTo) {
@@ -26,12 +26,12 @@ public class ManageVolume {
     }
 
     public static void setNotificationVolume(AudioManager a, SharedPreferences prefs, int mode) {
-        if (mode == Mode.Class)
-            setNotificationVolume(a, prefs.getInt(Settings.Class.notificationVolume, 0));
-        else if (mode == Mode.Home)
-            setNotificationVolume(a, prefs.getInt(Settings.Home.notificationVolume, 5));
-        else if (mode == Mode.Out)
-            setNotificationVolume(a, prefs.getInt(Settings.Out.notificationVolume, 5));
+        if (mode == Mode.B)
+            setNotificationVolume(a, prefs.getInt(Settings.B.notificationVolume, 0));
+        else if (mode == Mode.A)
+            setNotificationVolume(a, prefs.getInt(Settings.A.notificationVolume, 5));
+        else if (mode == Mode.C)
+            setNotificationVolume(a, prefs.getInt(Settings.C.notificationVolume, 5));
     }
 
     public static void setNotificationVolume(AudioManager a, int setTo) {
@@ -42,12 +42,12 @@ public class ManageVolume {
     }
 
     public static void setAlarmVolume(AudioManager a, SharedPreferences prefs, int mode) {
-        if (mode == Mode.Class)
-            setAlarmVolume(a, prefs.getInt(Settings.Class.alarmVolume, 0));
-        else if (mode == Mode.Home)
-            setAlarmVolume(a, prefs.getInt(Settings.Home.alarmVolume, 5));
-        else if (mode == Mode.Out)
-            setAlarmVolume(a, prefs.getInt(Settings.Out.alarmVolume, 5));
+        if (mode == Mode.B)
+            setAlarmVolume(a, prefs.getInt(Settings.B.alarmVolume, 0));
+        else if (mode == Mode.A)
+            setAlarmVolume(a, prefs.getInt(Settings.A.alarmVolume, 5));
+        else if (mode == Mode.C)
+            setAlarmVolume(a, prefs.getInt(Settings.C.alarmVolume, 5));
     }
 
     public static void setAlarmVolume(AudioManager a, int setTo) {
@@ -58,12 +58,12 @@ public class ManageVolume {
     }
 
     public static void setMediaVolume(AudioManager a, SharedPreferences prefs, int mode) {
-        if (mode == Mode.Class)
-            setMediaVolume(a, prefs.getInt(Settings.Class.mediaVolume, 0));
-        else if (mode == Mode.Home)
-            setMediaVolume(a, prefs.getInt(Settings.Home.mediaVolume, 5));
-        else if (mode == Mode.Out)
-            setMediaVolume(a, prefs.getInt(Settings.Out.mediaVolume, 5));
+        if (mode == Mode.B)
+            setMediaVolume(a, prefs.getInt(Settings.B.mediaVolume, 0));
+        else if (mode == Mode.A)
+            setMediaVolume(a, prefs.getInt(Settings.A.mediaVolume, 5));
+        else if (mode == Mode.C)
+            setMediaVolume(a, prefs.getInt(Settings.C.mediaVolume, 5));
     }
 
     public static void setMediaVolume(AudioManager a, int setTo) {
@@ -74,12 +74,12 @@ public class ManageVolume {
     }
 
     public static void setRingtoneVolume(AudioManager a, SharedPreferences prefs, int mode) {
-        if (mode == Mode.Class)
-            setRingtoneVolume(a, prefs.getInt(Settings.Class.ringtoneVolume, 0));
-        else if (mode == Mode.Home)
-            setRingtoneVolume(a, prefs.getInt(Settings.Home.ringtoneVolume, 5));
-        else if (mode == Mode.Out)
-            setRingtoneVolume(a, prefs.getInt(Settings.Out.ringtoneVolume, 10));
+        if (mode == Mode.B)
+            setRingtoneVolume(a, prefs.getInt(Settings.B.ringtoneVolume, 0));
+        else if (mode == Mode.A)
+            setRingtoneVolume(a, prefs.getInt(Settings.A.ringtoneVolume, 5));
+        else if (mode == Mode.C)
+            setRingtoneVolume(a, prefs.getInt(Settings.C.ringtoneVolume, 10));
     }
 
     public static void setRingtoneVolume(AudioManager a, int setTo) {
@@ -90,9 +90,9 @@ public class ManageVolume {
     }
 
     public class Mode {
-        public static final int Class = 0;
+        public static final int B = 0;
         public static final int Car = 1;
-        public static final int Out = 2;
-        public static final int Home = 3;
+        public static final int C = 2;
+        public static final int A = 3;
     }
 }

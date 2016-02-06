@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.popups;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.Settings;
 
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
@@ -23,15 +23,6 @@ public class HeadphoneQueryPopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_headphone_query_popup);
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                timer.cancel();
-                timer.purge();
-                finish();
-            }
-        }, 5000);
     }
 
     /**
@@ -65,7 +56,7 @@ public class HeadphoneQueryPopup extends Activity {
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                 (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) *
                         (getSharedPreferences(Settings.sharedPrefs_code,
-                                MODE_PRIVATE).getInt(Settings.Home.mediaVolume,
+                                MODE_PRIVATE).getInt(Settings.A.mediaVolume,
                                 5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);

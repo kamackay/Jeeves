@@ -4,98 +4,112 @@
     android:layout_height="match_parent"
     android:background="@drawable/notification_background"
     android:orientation="horizontal"
-    android:padding="5sp">
+    android:paddingBottom="@dimen/five"
+    android:paddingLeft="@dimen/ten"
+    android:paddingTop="@dimen/five">
 
     <ImageView
         android:id="@+id/notification_image"
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:scaleType="fitCenter"
         android:src="@drawable/icon" />
-
-    <Button
-        android:layout_width="0sp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
 
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:paddingEnd="@dimen/five"
+        android:paddingStart="@dimen/five">
 
         <ImageView
-            android:id="@+id/notification_buttonHome"
+            android:id="@+id/notification_buttonA"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_homeButton"
+            android:contentDescription="@string/desc_notification_AButton"
             android:src="@drawable/notification_button_background" />
 
         <TextView
-            android:id="@+id/notification_textHome"
+            android:id="@+id/notification_textA"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/text_home" />
     </RelativeLayout>
 
-    <Button
-        android:layout_width="0sp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
-
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:paddingEnd="@dimen/five"
+        android:paddingStart="@dimen/five">
 
         <ImageView
-            android:id="@+id/notification_buttonClass"
+            android:id="@+id/notification_buttonB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_classButton"
+            android:contentDescription="@string/desc_notification_BButton"
             android:src="@drawable/notification_button_background" />
 
         <TextView
-            android:id="@+id/notification_textClass"
+            android:id="@+id/notification_textB"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/text_class" />
     </RelativeLayout>
 
-    <Button
-        android:layout_width="0sp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
-
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:paddingEnd="@dimen/five"
+        android:paddingStart="@dimen/five">
 
         <ImageView
-            android:id="@+id/notification_buttonOut"
+            android:id="@+id/notification_buttonC"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_outButton"
+            android:contentDescription="@string/desc_notification_CButton"
             android:src="@drawable/notification_button_background" />
 
         <TextView
-            android:id="@+id/notification_textOut"
+            android:id="@+id/notification_textC"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/text_out" />
     </RelativeLayout>
 
-    <ImageView android:paddingStart="@dimen/ten" android:paddingEnd="@dimen/zero"
-        android:id="@+id/notification_add"
-        android:layout_width="0sp"
-        android:layout_height="match_parent" android:contentDescription="@string/text_addAdderall"
+    <LinearLayout
+        android:layout_width="@dimen/zero"
+        android:layout_height="match_parent"
         android:layout_weight="3"
-        android:src="@android:drawable/ic_menu_add" />
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notification_text_adderallSoFar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+        <!--
+                <ImageView
+                    android:id="@+id/notification_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:contentDescription="@string/text_addAdderall"
+                    android:src="@android:drawable/ic_menu_add" />-->
+        <TextView
+            android:id="@+id/notification_text_timeSinceAdderall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="idk"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
 </LinearLayout>

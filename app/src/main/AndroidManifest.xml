@@ -39,17 +39,23 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".listeners.SetStateButtonListener" />
-        <receiver android:name=".listeners.BootFinishedListener">
+        <receiver android:name=".listeners.NotificationButtonListener" />
+        <receiver android:name=".listeners.BootListener">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".listeners.BackgroundProcessListener"/>
+        <receiver android:name=".listeners.BackgroundProcessListener" />
         <receiver android:name=".listeners.HeadphoneListener">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".listeners.WiFiChangeListener">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
@@ -60,12 +66,14 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".HeadphoneQueryPopup"
+            android:name=".popups.HeadphoneQueryPopup"
             android:theme="@style/AppTheme.Dialog" />
-
         <activity
             android:name=".LogActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".popups.AdderallPopup"
+            android:theme="@style/AppTheme.Dialog" />
     </application>
 
 </manifest>

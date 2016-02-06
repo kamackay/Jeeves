@@ -17,15 +17,18 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.listeners.BackgroundProcessListener;
 import keithapps.mobile.com.jeeves.listeners.HeadphoneListener;
+import keithapps.mobile.com.jeeves.listeners.NotificationButtonListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationListener;
-import keithapps.mobile.com.jeeves.listeners.SetStateButtonListener;
 import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
 
+import static keithapps.mobile.com.jeeves.Global.getTimeStamp;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 public class MainService extends Service {
@@ -50,7 +53,7 @@ public class MainService extends Service {
      */
     public static int getMode(Context c) {
         return c.getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE)
-                .getInt(Settings.current_mode, Mode.Home);
+                .getInt(Settings.current_mode, Mode.A);
     }
 
     /**
@@ -68,43 +71,65 @@ public class MainService extends Service {
         builder.setContentIntent(pendingIntent);
         builder.setPriority(Notification.PRIORITY_LOW);
         RemoteViews contentView = new RemoteViews(c.getPackageName(), R.layout.notification_layout);
-        Intent i = new Intent(c, SetStateButtonListener.class);
+        Intent i = new Intent(c, NotificationButtonListener.class);
         i.setAction(Settings.text_home);
-        contentView.setOnClickPendingIntent(R.id.notification_buttonHome,
+        contentView.setOnClickPendingIntent(R.id.notification_buttonA,
                 PendingIntent.getBroadcast(c, 0, i, 0));
         i.setAction(Settings.text_class);
-        contentView.setOnClickPendingIntent(R.id.notification_buttonClass,
+        contentView.setOnClickPendingIntent(R.id.notification_buttonB,
                 PendingIntent.getBroadcast(c, 0, i, 0));
         i.setAction(Settings.text_out);
-        contentView.setOnClickPendingIntent(R.id.notification_buttonOut,
+        contentView.setOnClickPendingIntent(R.id.notification_buttonC,
                 PendingIntent.getBroadcast(c, 0, i, 0));
         i.setAction(Settings.text_add);
-        contentView.setOnClickPendingIntent(R.id.notification_add,
+        contentView.setOnClickPendingIntent(R.id.notification_text_timeSinceAdderall,
+                PendingIntent.getBroadcast(c, 0, i,0));
+        contentView.setOnClickPendingIntent(R.id.notification_text_adderallSoFar,
                 PendingIntent.getBroadcast(c, 0, i, 0));
-        contentView.setImageViewResource(R.id.notification_buttonHome,
+        contentView.setImageViewResource(R.id.notification_buttonA,
                 R.drawable.notification_button_background);
-        contentView.setImageViewResource(R.id.notification_buttonClass,
+        contentView.setImageViewResource(R.id.notification_buttonB,
                 R.drawable.notification_button_background);
-        contentView.setImageViewResource(R.id.notification_buttonOut,
+        contentView.setImageViewResource(R.id.notification_buttonC,
                 R.drawable.notification_button_background);
-        contentView.setTextColor(R.id.notification_textOut, Color.WHITE);
-        contentView.setTextColor(R.id.notification_textClass, Color.WHITE);
-        contentView.setTextColor(R.id.notification_textHome, Color.WHITE);
-        if (mode == Mode.Home) {
-            contentView.setTextColor(R.id.notification_textHome, Color.BLACK);
-            contentView.setImageViewResource(R.id.notification_buttonHome,
+        contentView.setTextColor(R.id.notification_textC, Color.WHITE);
+        contentView.setTextColor(R.id.notification_textB, Color.WHITE);
+        contentView.setTextColor(R.id.notification_textA, Color.WHITE);
+        contentView.setTextViewText(R.id.notification_textA,
+                prefs.getString(Settings.action_a_name, c.getString(R.string.text_home)));
+        contentView.setTextViewText(R.id.notification_textB,
+                prefs.getString(Settings.action_b_name, c.getString(R.string.text_class)));
+        contentView.setTextViewText(R.id.notification_textC,
+                prefs.getString(Settings.action_c_name, c.getString(R.string.text_out)));
+        contentView.setTextViewText(R.id.notification_text_adderallSoFar,
+                String.format("%d mg", 10 * prefs.getInt(Settings.Adderall.adderall_count, 0)));
+        String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
+        if (!timestamp_last.equals("")) {
+            try {
+                String timestamp_now = getTimeStamp();
+                SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
+                long difference = format.parse(timestamp_now).getTime() -
+                        format.parse(timestamp_last).getTime();
+                String s = String.format("%02d:%02d", (difference / (1000 * 60 * 60)) % 24, (difference / (1000 * 60)) % 60);
+                contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
+            } catch (Exception e) {//Give Up Immediately}
+            }
+        }
+        if (mode == Mode.A) {
+            contentView.setTextColor(R.id.notification_textA, Color.BLACK);
+            contentView.setImageViewResource(R.id.notification_buttonA,
                     R.drawable.notification_button_background_selected);
             builder.setSmallIcon(android.R.color.transparent);
             //builder.setPriority(Notification.PRIORITY_MIN);
-        } else if (mode == Mode.Class) {
-            contentView.setTextColor(R.id.notification_textClass, Color.BLACK);
-            contentView.setImageViewResource(R.id.notification_buttonClass,
+        } else if (mode == Mode.B) {
+            contentView.setTextColor(R.id.notification_textB, Color.BLACK);
+            contentView.setImageViewResource(R.id.notification_buttonB,
                     R.drawable.notification_button_background_selected);
             builder.setSmallIcon(R.drawable.icon_class);
-        } else if (mode == Mode.Out) {
-            contentView.setImageViewResource(R.id.notification_buttonOut,
+        } else if (mode == Mode.C) {
+            contentView.setImageViewResource(R.id.notification_buttonC,
                     R.drawable.notification_button_background_selected);
-            contentView.setTextColor(R.id.notification_textOut, Color.BLACK);
+            contentView.setTextColor(R.id.notification_textC, Color.BLACK);
             builder.setSmallIcon(R.drawable.icon_small);
         } else builder.setSmallIcon(R.drawable.icon_small);
         if (prefs.getBoolean(c.getString(R.string.settings_showNotification), true))
@@ -115,7 +140,6 @@ public class MainService extends Service {
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
         nMan.cancelAll();
         nMan.notify(992944, builder.build());
-
     }
 
     public static void startBackgroundProcess(Context c) {
@@ -167,7 +191,7 @@ public class MainService extends Service {
         BackgroundProcessListener backListener = new BackgroundProcessListener();
         IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
         registerReceiver(backListener, f);
-        showNotification(prefs.getInt(Settings.current_mode, Mode.Home), getApplicationContext());
+        showNotification(prefs.getInt(Settings.current_mode, Mode.A), getApplicationContext());
         startBackgroundProcess(getApplicationContext());
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);

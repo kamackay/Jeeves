@@ -34,59 +34,65 @@ import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_REBOOT;
  */
 public class SetState {
     /**
-     * Set the state to out
+     * Call for changing to state C
      *
      * @param c the calling context
      */
-    public static void out(Context c) {
+    public static void stateC(Context c) {
         try {
-            writeToLog("Mode Set to \"Out\"", c);
-            closeNotificationTray(c);
             SharedPreferences prefs = getPrefs(c);
+            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
+                    c.getString(R.string.text_out)) + "\"", c);
+            closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-            setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
-            setSystemVolume(a, prefs, ManageVolume.Mode.Home);
-            setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
-            setMediaVolume(a, prefs, ManageVolume.Mode.Home);
-            setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
+            setSystemVolume(a, prefs, ManageVolume.Mode.A);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.A);
+            setMediaVolume(a, prefs, ManageVolume.Mode.A);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.A);
             if (!isVibrateOn(a)) turnOnVibrate(a);
-            int wifiAction = prefs.getInt(c.getString(R.string.settings_out_wifiAction),
+            int wifiAction = prefs.getInt(c.getString(R.string.settings_c_wifiAction),
                     SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
-                    R.string.settings_out_bluetoothAction), SELECTED_LEAVE);
-            if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+                    R.string.settings_c_bluetoothAction), SELECTED_LEAVE);
+            if (wifiAction == SELECTED_REBOOT) {
+                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
+                wifiManager.setWifiEnabled(true);
+            } else if (wifiAction == SELECTED_ON) turnOnWiFi(c);
             else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
             if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
             else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
             //tryToKillSnapchat(c);
             SharedPreferences.Editor prefsEdit = prefs.edit();
-            prefsEdit.putInt(Settings.current_mode, Mode.Out);
+            prefsEdit.putInt(Settings.current_mode, Mode.C);
             prefsEdit.apply();
-            showNotification(Mode.Out, c);
+            showNotification(Mode.C, c);
         } catch (Exception e) {
             writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
     /**
-     * Call when at home
+     * Call for changing to state A
      *
      * @param c the calling context
      */
-    public static void atHome(Context c) {
+    public static void stateA(Context c) {
         try {
-            writeToLog("Mode Set to \"At Home\"", c);
+            SharedPreferences prefs = getPrefs(c);
+            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_a_name,
+                    c.getString(R.string.text_home)) + "\"", c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
             closeNotificationTray(c);
-            SharedPreferences prefs = getPrefs(c);
-            setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
-            setSystemVolume(a, prefs, ManageVolume.Mode.Home);
-            setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
-            setMediaVolume(a, prefs, ManageVolume.Mode.Home);
-            setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
+            setSystemVolume(a, prefs, ManageVolume.Mode.A);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.A);
+            setMediaVolume(a, prefs, ManageVolume.Mode.A);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.A);
             if (!isVibrateOn(a)) turnOnVibrate(a);
-            int wifiAction = prefs.getInt(c.getString(R.string.settings_home_wifiAction),
+            int wifiAction = prefs.getInt(c.getString(R.string.settings_a_wifiAction),
                     SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
-                    R.string.settings_home_bluetoothAction), SELECTED_LEAVE);
+                    R.string.settings_a_bluetoothAction), SELECTED_LEAVE);
             if (wifiAction == SELECTED_ON) turnOnWiFi(c);
             if (wifiAction == SELECTED_REBOOT) {
                 WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
@@ -96,43 +102,48 @@ public class SetState {
             if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
             else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
             SharedPreferences.Editor prefsEdit = prefs.edit();
-            prefsEdit.putInt(Settings.current_mode, Mode.Home);
+            prefsEdit.putInt(Settings.current_mode, Mode.A);
             prefsEdit.apply();
-            showNotification(Mode.Home, c);
+            showNotification(Mode.A, c);
         } catch (Exception e) {
             writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
     /**
-     * Call when in class is pressed
+     * Call for changing to state B
      *
      * @param c the calling context
      */
-    public static void inClass(Context c) {
+    public static void stateB(Context c) {
         try {
-            writeToLog("Mode Set to \"In Class\"", c);
-            closeNotificationTray(c);
             SharedPreferences prefs = getPrefs(c);
+            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_b_name,
+                    c.getString(R.string.text_class)) + "\"", c);
+            closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-            setRingtoneVolume(a, prefs, ManageVolume.Mode.Class);
-            setSystemVolume(a, prefs, ManageVolume.Mode.Class);
-            setAlarmVolume(a, prefs, ManageVolume.Mode.Class);
-            setMediaVolume(a, prefs, ManageVolume.Mode.Class);
-            setNotificationVolume(a, prefs, ManageVolume.Mode.Class);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.B);
+            setSystemVolume(a, prefs, ManageVolume.Mode.B);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.B);
+            setMediaVolume(a, prefs, ManageVolume.Mode.B);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.B);
             if (isVibrateOn(a)) turnOffVibrate(a);
-            int wifiAction = prefs.getInt(c.getString(R.string.settings_class_wifiAction),
+            int wifiAction = prefs.getInt(c.getString(R.string.settings_b_wifiAction),
                     SELECTED_LEAVE),
                     bluetoothAction = prefs.getInt(c.getString(
-                            R.string.settings_class_bluetoothAction), SELECTED_LEAVE);
-            if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+                            R.string.settings_b_bluetoothAction), SELECTED_LEAVE);
+            if (wifiAction == SELECTED_REBOOT) {
+                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
+                wifiManager.setWifiEnabled(true);
+            } else if (wifiAction == SELECTED_ON) turnOnWiFi(c);
             else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
             if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
             else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
             SharedPreferences.Editor prefsEdit = prefs.edit();
-            prefsEdit.putInt(Settings.current_mode, Mode.Class);
+            prefsEdit.putInt(Settings.current_mode, Mode.B);
             prefsEdit.apply();
-            showNotification(Mode.Class, c);
+            showNotification(Mode.B, c);
         } catch (Exception e) {
             writeToLog(e.getLocalizedMessage(), c);
         }
@@ -148,11 +159,11 @@ public class SetState {
         turnOffWiFi(c);
         SharedPreferences prefs = getPrefs(c);
         AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        setRingtoneVolume(a, prefs, ManageVolume.Mode.Home);
-        setSystemVolume(a, prefs, ManageVolume.Mode.Home);
-        setAlarmVolume(a, prefs, ManageVolume.Mode.Home);
-        setMediaVolume(a, prefs, ManageVolume.Mode.Home);
-        setNotificationVolume(a, prefs, ManageVolume.Mode.Home);
+        setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
+        setSystemVolume(a, prefs, ManageVolume.Mode.A);
+        setAlarmVolume(a, prefs, ManageVolume.Mode.A);
+        setMediaVolume(a, prefs, ManageVolume.Mode.A);
+        setNotificationVolume(a, prefs, ManageVolume.Mode.A);
         //tryToKillSnapchat(c);
         showNotification(Mode.Car, c);
     }

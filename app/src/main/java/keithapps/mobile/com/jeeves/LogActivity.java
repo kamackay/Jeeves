@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +18,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
+
+import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 
 import static keithapps.mobile.com.jeeves.Global.clearLog;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
@@ -53,17 +54,7 @@ public class LogActivity extends AppCompatActivity {
             }
         });
         ((EditText) findViewById(R.id.logScreen_searchTextbox))
-                .addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
+                .addTextChangedListener(new TextChangeListener() {
                     @Override
                     public void afterTextChanged(Editable s) {
                         showLog();
@@ -72,6 +63,7 @@ public class LogActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mHandler = new Handler();
         mHandlerTask.run();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void showLog() {

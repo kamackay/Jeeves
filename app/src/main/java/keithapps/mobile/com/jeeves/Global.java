@@ -306,9 +306,10 @@ public class Global {
         try {
             if (!c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
                     .getBoolean(Settings.record_log, true)) return;
-            FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
             String toPrint = String.format("%s- %s\n", getTimeStamp(), text);
-            fos.write(toPrint.getBytes(Charset.forName("UTF-8")));
+            byte[] bytes = toPrint.getBytes(Charset.forName("UTF-8"));
+            FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
+            fos.write(bytes);
             fos.close();
         } catch (Exception e) {
             //Don't do anything

@@ -32,7 +32,7 @@ public class ProcessView extends TextView {
         String[] temp = service.service.toString().split("/");
         String c = temp[temp.length - 1].replace("}", "").split(":")[0];
         setText(String.format("Service -\n    Name: %s\n    PID: %d\n    Client Count: %d" +
-                        "\n    Class: %s\n    Is Foreground: %s\n",
+                        "\n    B: %s\n    Is Foreground: %s\n",
                 breakIntoLines(service.process), service.pid, service.clientCount, breakIntoLines(c),
                 (service.foreground ? "Yes" : "No")));
         setPadding(40, 50, 20, 20);
@@ -86,7 +86,7 @@ public class ProcessView extends TextView {
                     break;
             }
             setText(String.format("App Process -\n    Name: %s\n    PID: %d" +
-                            "\n    Class: %s\n    Memory: %fMB\n    Importance: %s\n",
+                            "\n    B: %s\n    Memory: %fMB\n    Importance: %s\n",
                     breakIntoLines(process.processName), process.pid, breakIntoLines(c),
                     (memInfo[0].getTotalPss() * .001), importance));
         } catch (Exception e) {  //Everything's ok

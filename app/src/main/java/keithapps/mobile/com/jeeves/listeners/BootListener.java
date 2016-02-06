@@ -15,7 +15,7 @@ import static keithapps.mobile.com.jeeves.Global.writeToLog;
  * Created by Keith on 1/17/2016.
  * Listens for the boot to complete
  */
-public class BootFinishedListener extends BroadcastReceiver {
+public class BootListener extends BroadcastReceiver {
     /**
      * This method is called when the BroadcastReceiver is receiving an Intent
      * broadcast.  During this time you can use the other methods on
@@ -53,7 +53,16 @@ public class BootFinishedListener extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context c, Intent intent) {
-        writeToLog("Device Booted On", c);
-        c.startService(new Intent(c, MainService.class));
+        String s = intent.getAction();
+        if (s != null){
+            if (s.equals(Intent.ACTION_REBOOT))
+                writeToLog("Device Restarting", c);
+            else if (s.equals(Intent.ACTION_SHUTDOWN))
+                writeToLog("Device Shutting Down", c);
+            else if (s.equals(Intent.ACTION_BOOT_COMPLETED)){
+                writeToLog("Device Boot Finished", c);
+                c.startService(new Intent(c, MainService.class));
+            }
+        }
     }
 }

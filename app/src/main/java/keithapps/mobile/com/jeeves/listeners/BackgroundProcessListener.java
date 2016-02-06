@@ -40,9 +40,9 @@ public class BackgroundProcessListener extends BroadcastReceiver {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if (hour == 0 && cal.get(Calendar.MINUTE) < 10 &&
                 c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
-                        .getInt(Settings.adderall_count, 0) > 0) {
-            Intent i = new Intent(c, SetStateButtonListener.class);
-            i.setAction(Settings.adderall_clear);
+                        .getInt(Settings.Adderall.adderall_count, 0) > 0) {
+            Intent i = new Intent(c, NotificationButtonListener.class);
+            i.setAction(Settings.Adderall.adderall_clear);
             c.sendBroadcast(i);
             KeithToast.show("Adderall Amount Reset", c);
         }

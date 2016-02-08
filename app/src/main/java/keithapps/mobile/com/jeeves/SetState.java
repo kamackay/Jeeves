@@ -150,21 +150,41 @@ public class SetState {
     }
 
     /**
-     * When you get into the car
+     * Call for changing to state B
      *
      * @param c the calling context
      */
-    public static void inCar(Context c) {
-        closeNotificationTray(c);
-        turnOffWiFi(c);
-        SharedPreferences prefs = getPrefs(c);
-        AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
-        setSystemVolume(a, prefs, ManageVolume.Mode.A);
-        setAlarmVolume(a, prefs, ManageVolume.Mode.A);
-        setMediaVolume(a, prefs, ManageVolume.Mode.A);
-        setNotificationVolume(a, prefs, ManageVolume.Mode.A);
-        //tryToKillSnapchat(c);
-        showNotification(Mode.Car, c);
+    public static void stateD(Context c) {
+        try {
+            SharedPreferences prefs = getPrefs(c);
+            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_d_name,
+                    c.getString(R.string.text_class)) + "\"", c);
+            closeNotificationTray(c);
+            AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.D);
+            setSystemVolume(a, prefs, ManageVolume.Mode.D);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.D);
+            setMediaVolume(a, prefs, ManageVolume.Mode.D);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.D);
+            if (isVibrateOn(a)) turnOffVibrate(a);
+            int wifiAction = prefs.getInt(c.getString(R.string.settings_d_wifiAction),
+                    SELECTED_LEAVE),
+                    bluetoothAction = prefs.getInt(c.getString(
+                            R.string.settings_d_bluetoothAction), SELECTED_LEAVE);
+            if (wifiAction == SELECTED_REBOOT) {
+                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
+                wifiManager.setWifiEnabled(true);
+            } else if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+            else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+            if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
+            else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.putInt(Settings.current_mode, Mode.D);
+            prefsEdit.apply();
+            showNotification(Mode.D, c);
+        } catch (Exception e) {
+            writeToLog(e.getLocalizedMessage(), c);
+        }
     }
 }

@@ -451,6 +451,145 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notification_button_background"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/ten">
+
+                <EditText
+                    android:id="@+id/main_text_D"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
+                    android:paddingBottom="@dimen/twenty"
+                    android:text="@string/text_home"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/twenty">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingStart="@dimen/ten"
+                        android:text="@string/text_ringtoneVolume"
+                        android:textSize="@dimen/main_textSmall" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_D_ringtoneVolume"
+                        android:layout_width="@dimen/seventyFive"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/twenty">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingStart="@dimen/ten"
+                        android:text="@string/text_mediaVolume"
+                        android:textSize="@dimen/main_textSmall" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_D_mediaVolume"
+                        android:layout_width="@dimen/seventyFive"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/twenty">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingStart="@dimen/ten"
+                        android:text="@string/text_notificationVolume"
+                        android:textSize="@dimen/main_textSmall" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_D_notificationVolume"
+                        android:layout_width="@dimen/seventyFive"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/twenty">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingStart="@dimen/ten"
+                        android:text="@string/text_systemVolume"
+                        android:textSize="@dimen/main_textSmall" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_D_systemVolume"
+                        android:layout_width="@dimen/seventyFive"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/twenty">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/ten"
+                        android:paddingStart="@dimen/ten"
+                        android:text="@string/text_alarmVolume"
+                        android:textSize="@dimen/main_textSmall" />
+
+                    <Spinner
+                        android:id="@+id/settingsScreen_D_alarmVolume"
+                        android:layout_width="@dimen/seventyFive"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_D_WiFiOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <keithapps.mobile.com.jeeves.ModeChangeView
+                    android:id="@+id/settingsScreen_D_bluetoothOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
             <Switch
                 android:id="@+id/settingsScreen_showBCV"
                 android:layout_width="wrap_content"

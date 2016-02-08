@@ -7,7 +7,7 @@
     <string name="text_ringtoneVolume">Ringtone Volume</string>
     <string name="text_systemVolume">System Volume</string>
     <string name="text_alarmVolume">Alarm Volume</string>
-    <string name="text_car">Car\n(Does nothing)</string>
+    <string name="text_car">Car</string>
     <string name="text_idkYet">IDK Yet\n(Does nothing)</string>
     <string name="headphone_popup_title">Headset Detected\n\nFull volume or partial volume?</string>
     <string name="text_full">Full</string>
@@ -47,8 +47,10 @@
     <string name="settings_a_wifiAction">settings_home_wifiAction</string>
     <string name="settings_b_wifiAction">settings_class_wifiAction</string>
     <string name="settings_c_wifiAction">settings_out_wifiAction</string>
+    <string name="settings_d_wifiAction">settings_d_wifiAction</string>
     <string name="settings_a_bluetoothAction">settings_home_bluetoothAction</string>
     <string name="settings_b_bluetoothAction">settings_class_bluetoothAction</string>
+    <string name="settings_d_bluetoothAction">settings_d_bluetoothAction</string>
     <string name="settings_c_bluetoothAction">settings_out_bluetoothAction</string>
     <string name="text_showBCV">Show Big Content View</string>
     <string name="settings_showBigContentView">settings_showBigContentView</string>
@@ -67,4 +69,16 @@
     <string name="text_addAdderall">Add One Adderall</string>
     <string name="text_search">Search</string>
     <string name="text_log">"Log    "</string>
+    <string name="adderallPopup_lastTaken">"Last taken "</string>
+    <string name="text_add">Add</string>
+    <string name="text_add10">+10</string>
+    <string name="text_add20">+20</string>
+    <string name="text_add5">+5</string>
+    <string name="text_clear">Clear</string>
+    <string name="text_minutesAgo">" minutes ago "</string>
+    <string name="text_hoursAnd">" hours and "</string>
+    <string name="text_soFarToday">So far today:</string>
+    <string name="text_Adderall">Adderall</string>
+    <string name="text_idk">idk</string>
+    <string name="text_eithApps">eithApps</string>
 </resources>

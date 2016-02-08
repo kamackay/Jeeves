@@ -5,23 +5,26 @@
     android:background="@drawable/notification_background"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/five"
-    android:paddingLeft="@dimen/ten"
+    android:paddingEnd="@dimen/zero"
+    android:paddingStart="@dimen/ten"
     android:paddingTop="@dimen/five">
 
     <ImageView
         android:id="@+id/notification_image"
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="7"
+        android:paddingEnd="@dimen/ten"
+        android:paddingStart="@dimen/zero"
         android:scaleType="fitCenter"
         android:src="@drawable/icon" />
 
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:paddingEnd="@dimen/five"
-        android:paddingStart="@dimen/five">
+        android:layout_weight="10"
+        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
+        android:paddingStart="@dimen/notification_paddingBetweenButtons">
 
         <ImageView
             android:id="@+id/notification_buttonA"
@@ -41,9 +44,9 @@
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:paddingEnd="@dimen/five"
-        android:paddingStart="@dimen/five">
+        android:layout_weight="10"
+        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
+        android:paddingStart="@dimen/notification_paddingBetweenButtons">
 
         <ImageView
             android:id="@+id/notification_buttonB"
@@ -63,9 +66,9 @@
     <RelativeLayout
         android:layout_width="0sp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:paddingEnd="@dimen/five"
-        android:paddingStart="@dimen/five">
+        android:layout_weight="10"
+        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
+        android:paddingStart="@dimen/notification_paddingBetweenButtons">
 
         <ImageView
             android:id="@+id/notification_buttonC"
@@ -82,12 +85,35 @@
             android:text="@string/text_out" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="0sp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
+        android:paddingStart="@dimen/notification_paddingBetweenButtons">
+
+        <ImageView
+            android:id="@+id/notification_buttonD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/notification_button_background" />
+
+        <TextView
+            android:id="@+id/notification_textD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/text_car" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="@dimen/zero"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="8"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/five"
+        android:paddingStart="@dimen/zero">
 
         <TextView
             android:id="@+id/notification_text_adderallSoFar"
@@ -95,19 +121,11 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
-        <!--
-                <ImageView
-                    android:id="@+id/notification_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:contentDescription="@string/text_addAdderall"
-                    android:src="@android:drawable/ic_menu_add" />-->
         <TextView
             android:id="@+id/notification_text_timeSinceAdderall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="idk"
+            android:text="@string/text_idk"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
     </LinearLayout>

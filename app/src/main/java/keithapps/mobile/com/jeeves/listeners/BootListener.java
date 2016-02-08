@@ -55,13 +55,17 @@ public class BootListener extends BroadcastReceiver {
     public void onReceive(Context c, Intent intent) {
         String s = intent.getAction();
         if (s != null){
-            if (s.equals(Intent.ACTION_REBOOT))
-                writeToLog("Device Restarting", c);
-            else if (s.equals(Intent.ACTION_SHUTDOWN))
-                writeToLog("Device Shutting Down", c);
-            else if (s.equals(Intent.ACTION_BOOT_COMPLETED)){
-                writeToLog("Device Boot Finished", c);
-                c.startService(new Intent(c, MainService.class));
+            switch (s) {
+                case Intent.ACTION_REBOOT:
+                    writeToLog("Device Restarting", c);
+                    break;
+                case Intent.ACTION_SHUTDOWN:
+                    writeToLog("Device Shutting Down", c);
+                    break;
+                case Intent.ACTION_BOOT_COMPLETED:
+                    writeToLog("Device Boot Finished", c);
+                    c.startService(new Intent(c, MainService.class));
+                    break;
             }
         }
     }

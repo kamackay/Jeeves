@@ -21,6 +21,10 @@
         <item name="android:buttonStyle">@style/ButtonText</item>
     </style>
 
+    <style name="AppTheme.Dialog.Headphone" parent="AppTheme.Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
     <style name="ButtonText" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/button_foreColor</item>

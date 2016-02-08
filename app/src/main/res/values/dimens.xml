@@ -6,7 +6,8 @@
     <dimen name="fifteen">15sp</dimen>
     <dimen name="twenty">20sp</dimen>
     <dimen name="main_textSmall">15sp</dimen>
-    <dimen name="zero">0sp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="notification_paddingBetweenButtons">3px</dimen>
     <dimen name="ten">10sp</dimen>
     <dimen name="seventyFive">75sp</dimen>
     <dimen name="twelve">12sp</dimen>
@@ -15,4 +16,6 @@
     <dimen name="one_hundred_fifty">150sp</dimen>
     <dimen name="five">5sp</dimen>
     <dimen name="twenty_five">25sp</dimen>
+    <dimen name="fifty">50sp</dimen>
+    <dimen name="one_pixel">1px</dimen>
 </resources>

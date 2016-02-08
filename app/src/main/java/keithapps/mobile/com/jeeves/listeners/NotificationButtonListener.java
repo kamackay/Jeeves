@@ -10,7 +10,6 @@ import keithapps.mobile.com.jeeves.SetState;
 import keithapps.mobile.com.jeeves.Settings;
 import keithapps.mobile.com.jeeves.popups.AdderallPopup;
 
-import static keithapps.mobile.com.jeeves.Global.getTimeStamp;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 /**
@@ -29,24 +28,20 @@ public class NotificationButtonListener extends BroadcastReceiver {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
                 Context.MODE_PRIVATE);
         switch (intent.getAction()) {
-            case Settings.text_home:
+            case Settings.modeA:
                 SetState.stateA(c);
                 break;
-            case Settings.text_out:
+            case Settings.modeC:
                 SetState.stateC(c);
                 break;
-            case Settings.text_class:
+            case Settings.modeB:
                 SetState.stateB(c);
                 break;
+            case Settings.modeD:
+                SetState.stateD(c);
+                break;
             case Settings.text_add:
-                int count = prefs.getInt(Settings.Adderall.adderall_count, 0);
                 Global.closeNotificationTray(c);
-                //KeithToast.show(String.format("That makes %d mg today", 10 * (++count)), c);
-                SharedPreferences.Editor edit = prefs.edit();
-                edit.putInt(Settings.Adderall.adderall_count, count);
-                edit.putString(Settings.Adderall.timeSince, getTimeStamp());
-                edit.apply();
-                //writeToLog(String.format("Took 10 mg of Adderall (%d mg total)", 10 * count), c);
                 Intent i = new Intent(c, AdderallPopup.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

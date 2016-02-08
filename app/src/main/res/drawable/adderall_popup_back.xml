@@ -8,8 +8,8 @@
         android:height="20pt"
         android:top="5pt">
         <shape android:shape="rectangle">
-            <corners android:radius="15sp" />
-            <solid android:color="@color/button_foreColor" />
+            <corners android:radius="@dimen/twenty_five" />
+            <solid android:color="@color/background" />
             <stroke
                 android:width="5px"
                 android:color="@android:color/darker_gray" />

@@ -56,6 +56,11 @@ public class MainService extends Service {
                 .getInt(Settings.current_mode, Mode.A);
     }
 
+    public static void updateNotification(Context c) {
+        showNotification(c.getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE)
+                .getInt(Settings.current_mode, Mode.A), c);
+    }
+
     /**
      * Show the Notification
      *
@@ -72,18 +77,21 @@ public class MainService extends Service {
         builder.setPriority(Notification.PRIORITY_LOW);
         RemoteViews contentView = new RemoteViews(c.getPackageName(), R.layout.notification_layout);
         Intent i = new Intent(c, NotificationButtonListener.class);
-        i.setAction(Settings.text_home);
+        i.setAction(Settings.modeA);
         contentView.setOnClickPendingIntent(R.id.notification_buttonA,
                 PendingIntent.getBroadcast(c, 0, i, 0));
-        i.setAction(Settings.text_class);
+        i.setAction(Settings.modeB);
         contentView.setOnClickPendingIntent(R.id.notification_buttonB,
                 PendingIntent.getBroadcast(c, 0, i, 0));
-        i.setAction(Settings.text_out);
+        i.setAction(Settings.modeC);
         contentView.setOnClickPendingIntent(R.id.notification_buttonC,
+                PendingIntent.getBroadcast(c, 0, i, 0));
+        i.setAction(Settings.modeD);
+        contentView.setOnClickPendingIntent(R.id.notification_buttonD,
                 PendingIntent.getBroadcast(c, 0, i, 0));
         i.setAction(Settings.text_add);
         contentView.setOnClickPendingIntent(R.id.notification_text_timeSinceAdderall,
-                PendingIntent.getBroadcast(c, 0, i,0));
+                PendingIntent.getBroadcast(c, 0, i, 0));
         contentView.setOnClickPendingIntent(R.id.notification_text_adderallSoFar,
                 PendingIntent.getBroadcast(c, 0, i, 0));
         contentView.setImageViewResource(R.id.notification_buttonA,
@@ -92,17 +100,22 @@ public class MainService extends Service {
                 R.drawable.notification_button_background);
         contentView.setImageViewResource(R.id.notification_buttonC,
                 R.drawable.notification_button_background);
+        contentView.setImageViewResource(R.id.notification_buttonD,
+                R.drawable.notification_button_background);
         contentView.setTextColor(R.id.notification_textC, Color.WHITE);
         contentView.setTextColor(R.id.notification_textB, Color.WHITE);
         contentView.setTextColor(R.id.notification_textA, Color.WHITE);
+        contentView.setTextColor(R.id.notification_textD, Color.WHITE);
         contentView.setTextViewText(R.id.notification_textA,
                 prefs.getString(Settings.action_a_name, c.getString(R.string.text_home)));
         contentView.setTextViewText(R.id.notification_textB,
                 prefs.getString(Settings.action_b_name, c.getString(R.string.text_class)));
         contentView.setTextViewText(R.id.notification_textC,
                 prefs.getString(Settings.action_c_name, c.getString(R.string.text_out)));
+        contentView.setTextViewText(R.id.notification_textD,
+                prefs.getString(Settings.action_d_name, c.getString(R.string.text_car)));
         contentView.setTextViewText(R.id.notification_text_adderallSoFar,
-                String.format("%d mg", 10 * prefs.getInt(Settings.Adderall.adderall_count, 0)));
+                String.format("%d mg", prefs.getInt(Settings.Adderall.adderall_count, 0)));
         String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
         if (!timestamp_last.equals("")) {
             try {
@@ -110,12 +123,14 @@ public class MainService extends Service {
                 SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
                 long difference = format.parse(timestamp_now).getTime() -
                         format.parse(timestamp_last).getTime();
-                String s = String.format("%02d:%02d", (difference / (1000 * 60 * 60)) % 24, (difference / (1000 * 60)) % 60);
+                String s = String.format("%02d:%02d", (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
                 contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
             } catch (Exception e) {//Give Up Immediately}
             }
         }
-        if (mode == Mode.A) {
+        if (prefs.getBoolean(Settings.headset_full, false))
+            builder.setSmallIcon(android.R.color.transparent);
+        else if (mode == Mode.A) {
             contentView.setTextColor(R.id.notification_textA, Color.BLACK);
             contentView.setImageViewResource(R.id.notification_buttonA,
                     R.drawable.notification_button_background_selected);
@@ -131,6 +146,11 @@ public class MainService extends Service {
                     R.drawable.notification_button_background_selected);
             contentView.setTextColor(R.id.notification_textC, Color.BLACK);
             builder.setSmallIcon(R.drawable.icon_small);
+        } else if (mode == Mode.D) {
+            contentView.setImageViewResource(R.id.notification_buttonD,
+                    R.drawable.notification_button_background_selected);
+            contentView.setTextColor(R.id.notification_textD, Color.BLACK);
+            builder.setSmallIcon(R.drawable.icon_car_white);
         } else builder.setSmallIcon(R.drawable.icon_small);
         if (prefs.getBoolean(c.getString(R.string.settings_showNotification), true))
             builder.setOngoing(true);
@@ -151,7 +171,7 @@ public class MainService extends Service {
         c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_DISCONNECTED));
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0); // first time
-        long frequency = 60 * 1000; // in ms
+        long frequency = 60 * 5000; // in ms
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 frequency, pendingIntent);
         writeToLog("Background Process Started", c);

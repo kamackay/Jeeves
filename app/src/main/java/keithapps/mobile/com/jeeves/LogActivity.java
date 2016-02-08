@@ -1,6 +1,7 @@
 package keithapps.mobile.com.jeeves;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -147,5 +148,21 @@ public class LogActivity extends AppCompatActivity {
     public void clearSearch(View view) {
         ((EditText) findViewById(R.id.logScreen_searchTextbox)).setText("");
         showLog();
+    }
+
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 }

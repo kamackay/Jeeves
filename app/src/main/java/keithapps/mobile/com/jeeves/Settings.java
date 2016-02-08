@@ -16,14 +16,14 @@ public class Settings {
      * Code to use to access the Shared Preferences
      */
     public static final String sharedPrefs_code = "jeeves.prefs";
-    public static final String text_home = "home", text_out = "stateC", text_class = "class", text_add = "add";
+    public static final String modeA = "ModeA", modeC = "ModeB", modeB = "ModeC", modeD = "ModeD", text_add = "add";
     public static final String record_log = "log.record";
 
     public static final String action_a_name = "action.a.n", action_b_name = "action.b.n",
-            action_c_name = "action.c.n";
+            action_c_name = "action.c.n", action_d_name = "action.d.n";
 
 
-    public class Adderall{
+    public class Adderall {
         public static final String timeSince = "Adderall.timeSince";
         public static final String adderall_count = "adderall.count";
         public static final String adderall_clear = "adderall.clear";
@@ -43,6 +43,14 @@ public class Settings {
                 systemVolume = "settings_out_systemVolume",
                 alarmVolume = "settings_out_alarmVolume",
                 mediaVolume = "settings_out_mediaVolume";
+    }
+
+    public class D {
+        public static final String notificationVolume = "settings_d_notificationVolume",
+                ringtoneVolume = "settings_d_ringtoneVolume",
+                systemVolume = "settings_d_systemVolume",
+                alarmVolume = "settings_d_alarmVolume",
+                mediaVolume = "settings_d_mediaVolume";
     }
 
     public class A {

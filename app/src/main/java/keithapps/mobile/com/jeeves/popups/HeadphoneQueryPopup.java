@@ -1,11 +1,15 @@
 package keithapps.mobile.com.jeeves.popups;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
@@ -23,6 +27,13 @@ public class HeadphoneQueryPopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_headphone_query_popup);
+        ActionBar a = getActionBar();
+        if (a != null) a.hide();
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
+        writeToLog("Headphone Query Popup", getApplicationContext());
     }
 
     /**

@@ -16,6 +16,8 @@ public class ManageVolume {
             setSystemVolume(a, prefs.getInt(Settings.A.systemVolume, 5));
         else if (mode == Mode.C)
             setSystemVolume(a, prefs.getInt(Settings.C.systemVolume, 5));
+        else if (mode == Mode.D)
+            setSystemVolume(a, prefs.getInt(Settings.D.systemVolume, 5));
     }
 
     public static void setSystemVolume(AudioManager a, int setTo) {
@@ -32,6 +34,8 @@ public class ManageVolume {
             setNotificationVolume(a, prefs.getInt(Settings.A.notificationVolume, 5));
         else if (mode == Mode.C)
             setNotificationVolume(a, prefs.getInt(Settings.C.notificationVolume, 5));
+        else if (mode == Mode.D)
+            setNotificationVolume(a, prefs.getInt(Settings.D.notificationVolume, 5));
     }
 
     public static void setNotificationVolume(AudioManager a, int setTo) {
@@ -48,6 +52,8 @@ public class ManageVolume {
             setAlarmVolume(a, prefs.getInt(Settings.A.alarmVolume, 5));
         else if (mode == Mode.C)
             setAlarmVolume(a, prefs.getInt(Settings.C.alarmVolume, 5));
+        else if (mode == Mode.D)
+            setAlarmVolume(a, prefs.getInt(Settings.D.alarmVolume, 5));
     }
 
     public static void setAlarmVolume(AudioManager a, int setTo) {
@@ -64,6 +70,8 @@ public class ManageVolume {
             setMediaVolume(a, prefs.getInt(Settings.A.mediaVolume, 5));
         else if (mode == Mode.C)
             setMediaVolume(a, prefs.getInt(Settings.C.mediaVolume, 5));
+        else if (mode == Mode.D)
+            setMediaVolume(a, prefs.getInt(Settings.D.mediaVolume, 5));
     }
 
     public static void setMediaVolume(AudioManager a, int setTo) {
@@ -80,6 +88,8 @@ public class ManageVolume {
             setRingtoneVolume(a, prefs.getInt(Settings.A.ringtoneVolume, 5));
         else if (mode == Mode.C)
             setRingtoneVolume(a, prefs.getInt(Settings.C.ringtoneVolume, 10));
+        else if (mode == Mode.D)
+            setRingtoneVolume(a, prefs.getInt(Settings.D.ringtoneVolume, 5));
     }
 
     public static void setRingtoneVolume(AudioManager a, int setTo) {
@@ -91,7 +101,7 @@ public class ManageVolume {
 
     public class Mode {
         public static final int B = 0;
-        public static final int Car = 1;
+        public static final int D = 1;
         public static final int C = 2;
         public static final int A = 3;
     }

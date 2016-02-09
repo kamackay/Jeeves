@@ -71,12 +71,14 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_ringtoneVolume"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_ringtoneVolume"
                         android:layout_width="@dimen/seventyFive"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,12 +94,14 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_mediaVolume"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_mediaVolume"
                         android:layout_width="@dimen/seventyFive"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,12 +117,14 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_notificationVolume"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_notificationVolume"
                         android:layout_width="@dimen/seventyFive"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -126,7 +132,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/twenty">
+                    android:paddingBottom="@dimen/twenty"
+                    android:textColor="@android:color/white">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -134,6 +141,7 @@
                         android:paddingEnd="@dimen/ten"
                         android:paddingStart="@dimen/ten"
                         android:text="@string/text_systemVolume"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/main_textSmall" />
 
                     <Spinner
@@ -172,6 +180,56 @@
                     android:id="@+id/settingsScreen_A_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/ten"
+                    android:text="@string/text_notificationPriority"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/twenty" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_A"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min" android:id="@+id/main_prioRB_A_min"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_low"
+                            android:layout_height="wrap_content"
+                            android:text="Low"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_def"
+                            android:layout_height="wrap_content"
+                            android:text="Normal"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_high"
+                            android:layout_height="wrap_content"
+                            android:text="High"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_max"
+                            android:layout_height="wrap_content"
+                            android:text="Max"
+                            android:textColor="@android:color/white" />
+                    </RadioGroup>
+                </HorizontalScrollView>
             </LinearLayout>
 
             <View
@@ -310,6 +368,55 @@
                     android:id="@+id/settingsScreen_B_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/ten"
+                    android:text="@string/text_notificationPriority"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/twenty" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_B"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min" android:id="@+id/main_prioRB_B_min"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_low"
+                            android:layout_height="wrap_content"
+                            android:text="Low"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_def"
+                            android:layout_height="wrap_content"
+                            android:text="Normal"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_high"
+                            android:layout_height="wrap_content"
+                            android:text="High"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_max"
+                            android:layout_height="wrap_content"
+                            android:text="Max"
+                            android:textColor="@android:color/white" />
+                    </RadioGroup>
+                </HorizontalScrollView>
             </LinearLayout>
 
             <View
@@ -449,6 +556,55 @@
                     android:id="@+id/settingsScreen_C_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/ten"
+                    android:text="@string/text_notificationPriority"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/twenty" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_C"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min" android:id="@+id/main_prioRB_C_min"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_low"
+                            android:layout_height="wrap_content"
+                            android:text="Low"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_def"
+                            android:layout_height="wrap_content"
+                            android:text="Normal"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_high"
+                            android:layout_height="wrap_content"
+                            android:text="High"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_max"
+                            android:layout_height="wrap_content"
+                            android:text="Max"
+                            android:textColor="@android:color/white" />
+                    </RadioGroup>
+                </HorizontalScrollView>
             </LinearLayout>
 
             <View
@@ -588,6 +744,55 @@
                     android:id="@+id/settingsScreen_D_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/ten"
+                    android:text="@string/text_notificationPriority"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/twenty" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_D"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Min" android:id="@+id/main_prioRB_D_min"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_low"
+                            android:layout_height="wrap_content"
+                            android:text="Low"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_def"
+                            android:layout_height="wrap_content"
+                            android:text="Normal"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_high"
+                            android:layout_height="wrap_content"
+                            android:text="High"
+                            android:textColor="@android:color/white" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_max"
+                            android:layout_height="wrap_content"
+                            android:text="Max"
+                            android:textColor="@android:color/white" />
+                    </RadioGroup>
+                </HorizontalScrollView>
             </LinearLayout>
 
             <Switch

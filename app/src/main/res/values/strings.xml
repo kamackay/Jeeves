@@ -81,4 +81,6 @@
     <string name="text_Adderall">Adderall</string>
     <string name="text_idk">idk</string>
     <string name="text_eithApps">eithApps</string>
+    <string name="text_showSystemInfo">Show System Info</string>
+    <string name="text_notificationPriority">Notification Priority</string>
 </resources>

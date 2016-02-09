@@ -69,14 +69,17 @@ public class MainService extends Service {
      */
     public static void showNotification(int mode, Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-        Intent intent = new Intent(c, MainActivity.class);
+        Intent intent = new Intent(c, BackgroundProcessListener.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(c, 1,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(c);
         builder.setContentIntent(pendingIntent);
-        builder.setPriority(Notification.PRIORITY_LOW);
+        int priority = Notification.PRIORITY_LOW;
         RemoteViews contentView = new RemoteViews(c.getPackageName(), R.layout.notification_layout);
         Intent i = new Intent(c, NotificationButtonListener.class);
+        i.setAction(Settings.showJeevesMain);
+        contentView.setOnClickPendingIntent(R.id.notification_image,
+                PendingIntent.getBroadcast(c, 0, i, 0));
         i.setAction(Settings.modeA);
         contentView.setOnClickPendingIntent(R.id.notification_buttonA,
                 PendingIntent.getBroadcast(c, 0, i, 0));
@@ -131,27 +134,48 @@ public class MainService extends Service {
         if (prefs.getBoolean(Settings.headset_full, false))
             builder.setSmallIcon(android.R.color.transparent);
         else if (mode == Mode.A) {
+            priority = prefs.getInt(Settings.A.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setTextColor(R.id.notification_textA, Color.BLACK);
             contentView.setImageViewResource(R.id.notification_buttonA,
                     R.drawable.notification_button_background_selected);
             builder.setSmallIcon(android.R.color.transparent);
             //builder.setPriority(Notification.PRIORITY_MIN);
         } else if (mode == Mode.B) {
+            priority = prefs.getInt(Settings.B.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setTextColor(R.id.notification_textB, Color.BLACK);
             contentView.setImageViewResource(R.id.notification_buttonB,
                     R.drawable.notification_button_background_selected);
             builder.setSmallIcon(R.drawable.icon_class);
         } else if (mode == Mode.C) {
+            priority = prefs.getInt(Settings.C.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setImageViewResource(R.id.notification_buttonC,
                     R.drawable.notification_button_background_selected);
             contentView.setTextColor(R.id.notification_textC, Color.BLACK);
             builder.setSmallIcon(R.drawable.icon_small);
         } else if (mode == Mode.D) {
+            priority = prefs.getInt(Settings.D.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setImageViewResource(R.id.notification_buttonD,
                     R.drawable.notification_button_background_selected);
             contentView.setTextColor(R.id.notification_textD, Color.BLACK);
             builder.setSmallIcon(R.drawable.icon_car_white);
         } else builder.setSmallIcon(R.drawable.icon_small);
+        switch (priority) {
+            case Notification.PRIORITY_MIN:
+                builder.setPriority(Notification.PRIORITY_MIN);
+                break;
+            case Notification.PRIORITY_LOW:
+                builder.setPriority(Notification.PRIORITY_LOW);
+                break;
+            case Notification.PRIORITY_DEFAULT:
+                builder.setPriority(Notification.PRIORITY_DEFAULT);
+                break;
+            case Notification.PRIORITY_HIGH:
+                builder.setPriority(Notification.PRIORITY_HIGH);
+                break;
+            case Notification.PRIORITY_MAX:
+                builder.setPriority(Notification.PRIORITY_MAX);
+                break;
+        }
         if (prefs.getBoolean(c.getString(R.string.settings_showNotification), true))
             builder.setOngoing(true);
         builder.setAutoCancel(false);

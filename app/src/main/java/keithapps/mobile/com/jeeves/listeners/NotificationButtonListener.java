@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import keithapps.mobile.com.jeeves.Global;
+import keithapps.mobile.com.jeeves.MainActivity;
 import keithapps.mobile.com.jeeves.SetState;
 import keithapps.mobile.com.jeeves.Settings;
 import keithapps.mobile.com.jeeves.popups.AdderallPopup;
@@ -28,6 +29,13 @@ public class NotificationButtonListener extends BroadcastReceiver {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
                 Context.MODE_PRIVATE);
         switch (intent.getAction()) {
+            case Settings.showJeevesMain:
+                Global.closeNotificationTray(c);
+                Intent i = new Intent(c, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                c.startActivity(i);
+                break;
             case Settings.modeA:
                 SetState.stateA(c);
                 break;
@@ -42,10 +50,10 @@ public class NotificationButtonListener extends BroadcastReceiver {
                 break;
             case Settings.text_add:
                 Global.closeNotificationTray(c);
-                Intent i = new Intent(c, AdderallPopup.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                c.startActivity(i);
+                Intent i2 = new Intent(c, AdderallPopup.class);
+                i2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                c.startActivity(i2);
                 break;
             case Settings.Adderall.adderall_clear:
                 writeToLog(String.format("You took %d mg of Adderall today",

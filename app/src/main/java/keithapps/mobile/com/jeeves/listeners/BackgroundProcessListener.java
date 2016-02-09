@@ -30,12 +30,6 @@ public class BackgroundProcessListener extends BroadcastReceiver {
                 return;
             }
         }
-
-        MainService.showNotification(MainService.getMode(c), c); //May or may not want to do this.
-        // It looks as if the icon is being cleared from the Notification when the
-        // main activity closes. IDK, man
-        //writeToLog("Background Process Run", c);
-
         Calendar cal = Calendar.getInstance(Locale.US);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if (hour == 0 && cal.get(Calendar.MINUTE) < 10 &&
@@ -46,5 +40,6 @@ public class BackgroundProcessListener extends BroadcastReceiver {
             c.sendBroadcast(i);
             KeithToast.show("Adderall Amount Reset", c);
         }
+        MainService.showNotification(MainService.getMode(c), c);
     }
 }

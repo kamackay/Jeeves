@@ -24,6 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -366,12 +368,113 @@ public class MainActivity extends AppCompatActivity {
                 MODE_PRIVATE).getInt(getString(R.string.settings_c_bluetoothAction), SELECTED_LEAVE));
         mcv_D_bluetooth.setSelection(getSharedPreferences(Settings.sharedPrefs_code,
                 MODE_PRIVATE).getInt(getString(R.string.settings_d_bluetoothAction), SELECTED_LEAVE));
+        final RadioGroup rdogrp_priorityA = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_A),
+                rdogrp_priorityB = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_B),
+                rdogrp_priorityC = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_C),
+                rdogrp_priorityD = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_D);
+        rdogrp_priorityA.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        MODE_PRIVATE).edit();
+                if (checkedId == R.id.main_prioRB_A_min)
+                    edit.putInt(Settings.A.notificationPriority, -2);
+                else if (checkedId == R.id.main_prioRB_A_low)
+                    edit.putInt(Settings.A.notificationPriority, -1);
+                else if (checkedId == R.id.main_prioRB_A_def)
+                    edit.putInt(Settings.A.notificationPriority, 0);
+                else if (checkedId == R.id.main_prioRB_A_high)
+                    edit.putInt(Settings.A.notificationPriority, 1);
+                else if (checkedId == R.id.main_prioRB_A_max)
+                    edit.putInt(Settings.A.notificationPriority, 2);
+                edit.apply();
+            }
+        });
+        rdogrp_priorityB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        MODE_PRIVATE).edit();
+                if (checkedId == R.id.main_prioRB_B_min)
+                    edit.putInt(Settings.B.notificationPriority, -2);
+                else if (checkedId == R.id.main_prioRB_B_low)
+                    edit.putInt(Settings.B.notificationPriority, -1);
+                else if (checkedId == R.id.main_prioRB_B_def)
+                    edit.putInt(Settings.B.notificationPriority, 0);
+                else if (checkedId == R.id.main_prioRB_B_high)
+                    edit.putInt(Settings.B.notificationPriority, 1);
+                else if (checkedId == R.id.main_prioRB_B_max)
+                    edit.putInt(Settings.B.notificationPriority, 2);
+                edit.apply();
+            }
+        });
+        rdogrp_priorityC.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        MODE_PRIVATE).edit();
+                if (checkedId == R.id.main_prioRB_C_min)
+                    edit.putInt(Settings.C.notificationPriority, -2);
+                else if (checkedId == R.id.main_prioRB_C_low)
+                    edit.putInt(Settings.C.notificationPriority, -1);
+                else if (checkedId == R.id.main_prioRB_C_def)
+                    edit.putInt(Settings.C.notificationPriority, 0);
+                else if (checkedId == R.id.main_prioRB_C_high)
+                    edit.putInt(Settings.C.notificationPriority, 1);
+                else if (checkedId == R.id.main_prioRB_C_max)
+                    edit.putInt(Settings.C.notificationPriority, 2);
+                edit.apply();
+            }
+        });
+        rdogrp_priorityD.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                        MODE_PRIVATE).edit();
+                if (checkedId == R.id.main_prioRB_D_min)
+                    edit.putInt(Settings.D.notificationPriority, -2);
+                else if (checkedId == R.id.main_prioRB_D_low)
+                    edit.putInt(Settings.D.notificationPriority, -1);
+                else if (checkedId == R.id.main_prioRB_D_def)
+                    edit.putInt(Settings.D.notificationPriority, 0);
+                else if (checkedId == R.id.main_prioRB_D_high)
+                    edit.putInt(Settings.D.notificationPriority, 1);
+                else if (checkedId == R.id.main_prioRB_D_max)
+                    edit.putInt(Settings.D.notificationPriority, 2);
+                edit.apply();
+            }
+        });
+        int iA = prefs.getInt(Settings.A.notificationPriority, -2),
+                iB = prefs.getInt(Settings.B.notificationPriority, -2),
+                iC = prefs.getInt(Settings.C.notificationPriority, -2),
+                iD = prefs.getInt(Settings.D.notificationPriority, -2);
+        if (iA == -2) ((RadioButton) findViewById(R.id.main_prioRB_A_min)).setChecked(true);
+        else if (iA == -1) ((RadioButton) findViewById(R.id.main_prioRB_A_low)).setChecked(true);
+        else if (iA == 0) ((RadioButton) findViewById(R.id.main_prioRB_A_def)).setChecked(true);
+        else if (iA == 1) ((RadioButton) findViewById(R.id.main_prioRB_A_high)).setChecked(true);
+        else if (iA == 2) ((RadioButton) findViewById(R.id.main_prioRB_A_max)).setChecked(true);
+        if (iB == -2) ((RadioButton) findViewById(R.id.main_prioRB_B_min)).setChecked(true);
+        else if (iB == -1) ((RadioButton) findViewById(R.id.main_prioRB_B_low)).setChecked(true);
+        else if (iB == 0) ((RadioButton) findViewById(R.id.main_prioRB_B_def)).setChecked(true);
+        else if (iB == 1) ((RadioButton) findViewById(R.id.main_prioRB_B_high)).setChecked(true);
+        else if (iB == 2) ((RadioButton) findViewById(R.id.main_prioRB_B_max)).setChecked(true);
+        if (iC == -2) ((RadioButton) findViewById(R.id.main_prioRB_C_min)).setChecked(true);
+        else if (iC == -1) ((RadioButton) findViewById(R.id.main_prioRB_C_low)).setChecked(true);
+        else if (iC == 0) ((RadioButton) findViewById(R.id.main_prioRB_C_def)).setChecked(true);
+        else if (iC == 1) ((RadioButton) findViewById(R.id.main_prioRB_C_high)).setChecked(true);
+        else if (iC == 2) ((RadioButton) findViewById(R.id.main_prioRB_C_max)).setChecked(true);
+        if (iD == -2) ((RadioButton) findViewById(R.id.main_prioRB_D_min)).setChecked(true);
+        else if (iD == -1) ((RadioButton) findViewById(R.id.main_prioRB_D_low)).setChecked(true);
+        else if (iD == 0) ((RadioButton) findViewById(R.id.main_prioRB_D_def)).setChecked(true);
+        else if (iD == 1) ((RadioButton) findViewById(R.id.main_prioRB_D_high)).setChecked(true);
+        else if (iD == 2) ((RadioButton) findViewById(R.id.main_prioRB_D_max)).setChecked(true);
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //ActionBar bar = getActionBar();
     }
 
     /**
@@ -394,6 +497,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.mainMenu_showSysInfo:
+                showSystemInfo();
+                return true;
             case R.id.mainMenu_showAllRunningActions:
                 setContentView(R.layout.running_processes_screen);
                 populateProcesses(null);
@@ -407,6 +513,10 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showSystemInfo() {
+
     }
 
     /**
@@ -552,7 +662,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Save all appropriate fragment state.
      *
-     * @param outState
+     * @param outState Out State
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {

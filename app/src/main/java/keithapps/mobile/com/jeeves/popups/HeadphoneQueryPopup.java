@@ -15,6 +15,7 @@ import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 
 public class HeadphoneQueryPopup extends Activity {
 
@@ -54,6 +55,7 @@ public class HeadphoneQueryPopup extends Activity {
         edit.putBoolean(Settings.headset_full, true);
         edit.apply();
         writeToLog("Headset Popup - Full", getApplicationContext());
+        updateNotification(getApplicationContext());
         finish();
     }
 
@@ -76,6 +78,7 @@ public class HeadphoneQueryPopup extends Activity {
         edit.putBoolean(Settings.headset_full, false);
         edit.apply();
         writeToLog("Headset Popup - Partial", getApplicationContext());
+        updateNotification(getApplicationContext());
         finish();
     }
 }

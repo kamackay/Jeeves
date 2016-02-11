@@ -38,7 +38,6 @@ import keithapps.mobile.com.jeeves.popups.KeithToast;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
-import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
@@ -211,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showHeadphonesPopup(getApplicationContext());
+                //sendEmail("Test", "Please Send");
             }
         });
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);

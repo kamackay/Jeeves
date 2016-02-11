@@ -13,8 +13,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +31,8 @@ import keithapps.mobile.com.jeeves.listeners.NotificationButtonListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationListener;
 import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
 
-import static keithapps.mobile.com.jeeves.Global.getTimeStamp;
+import static keithapps.mobile.com.jeeves.Global.getTimestamp;
+import static keithapps.mobile.com.jeeves.Global.sendEmail;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 public class MainService extends Service {
@@ -123,7 +126,7 @@ public class MainService extends Service {
         String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
         if (!timestamp_last.equals("")) {
             try {
-                String timestamp_now = getTimeStamp();
+                String timestamp_now = getTimestamp();
                 SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
                 long difference = format.parse(timestamp_now).getTime() -
                         format.parse(timestamp_last).getTime();
@@ -247,6 +250,17 @@ public class MainService extends Service {
             if (prefs.getInt(Settings.versionCode, 5) < info.versionCode) {
                 writeToLog(String.format("Updated to version %s from %s",
                         info.versionName, prefs.getString(Settings.versionName, "1.1.6a")), c);
+                sendEmail("Jeeves Update", String.format("An Android device:\n\n    Build: %d\n    " +
+                                "Device: %s %s\n    Phone # %s\n\nUpdated from version" +
+                                " %s (code %d) to version %s (code %d)\n\n%s",
+                        Build.VERSION.SDK_INT, Build.MANUFACTURER,
+                        Build.MODEL,
+                        ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number(),
+                        prefs.getString(Settings.versionName, "1.1.6a"),
+                        prefs.getInt(Settings.versionCode, 5),
+                        info.versionName,
+                        info.versionCode,
+                        getTimestamp()));
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.versionCode, info.versionCode);
                 edit.putString(Settings.versionName, info.versionName);

@@ -16,7 +16,7 @@ import java.util.Locale;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.getTimeStamp;
+import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 
@@ -39,7 +39,7 @@ public class AdderallPopup extends Activity {
                 lastTime_hours = (TextView) findViewById(R.id.adderallPopup_lastTime_hours);
         try {
             String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
-            String timestamp_now = getTimeStamp();
+            String timestamp_now = getTimestamp();
             SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
             long difference = format.parse(timestamp_now).getTime() -
                     format.parse(timestamp_last).getTime();
@@ -71,7 +71,7 @@ public class AdderallPopup extends Activity {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.Adderall.adderall_count,
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 20);
-                edit.putString(Settings.Adderall.timeSince, getTimeStamp());
+                edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
                 writeToLog(String.format("Took 20 mg of Adderall (%d mg total)",
                                 prefs.getInt(Settings.Adderall.adderall_count, 0)),
@@ -88,7 +88,7 @@ public class AdderallPopup extends Activity {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.Adderall.adderall_count,
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 10);
-                edit.putString(Settings.Adderall.timeSince, getTimeStamp());
+                edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
                 writeToLog(String.format("Took 10 mg of Adderall (%d mg total)",
                                 prefs.getInt(Settings.Adderall.adderall_count, 0)),
@@ -105,7 +105,7 @@ public class AdderallPopup extends Activity {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.Adderall.adderall_count,
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 5);
-                edit.putString(Settings.Adderall.timeSince, getTimeStamp());
+                edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
                 writeToLog(String.format("Took 5 mg of Adderall (%d mg total)",
                                 prefs.getInt(Settings.Adderall.adderall_count, 0)),

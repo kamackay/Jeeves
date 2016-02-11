@@ -129,7 +129,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
+        android:background="@color/background"
         android:onClick="clearAdderall"
         android:text="@string/text_clear" />
 </LinearLayout>

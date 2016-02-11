@@ -23,20 +23,41 @@ public class WiFiChangeListener extends BroadcastReceiver {
         NetworkInfo netInfo = conMan.getActiveNetworkInfo();
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
                 Context.MODE_PRIVATE);
-        boolean connectedToWiFi = prefs.getBoolean(Settings.connectedToWiFi, false);
-        if (netInfo != null && netInfo.getType() == ConnectivityManager.TYPE_WIFI
-                && !connectedToWiFi) {
-            writeToLog("Connected to WiFi", c);
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(Settings.connectedToWiFi, true);
-            edit.apply();
-        } else if (netInfo == null && connectedToWiFi) {
-            writeToLog("No Longer Connected to WiFi", c);
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(Settings.connectedToWiFi, false);
-            edit.apply();
+        try {
+            boolean connectedToWiFi = prefs.getBoolean(Settings.connectedToWiFi, false);
+            if (!connectedToWiFi && netInfo != null && (netInfo.getType() ==
+                    ConnectivityManager.TYPE_WIFI && netInfo.isConnected())) {
+                writeToLog("Connected to WiFi", c);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Settings.connectedToWiFi, true);
+                edit.apply();
+            } else if (connectedToWiFi && (netInfo == null || (netInfo.getType() ==
+                    ConnectivityManager.TYPE_WIFI && !netInfo.isConnected()))) {
+                writeToLog("No Longer Connected to WiFi", c);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Settings.connectedToWiFi, false);
+                edit.apply();
+            }
+        } catch (Exception e) {
+            //do nothing
         }
-
-
+        try {
+            boolean connectedToMobile = prefs.getBoolean(Settings.connectedToMobile, false);
+            if (!connectedToMobile && netInfo != null && (netInfo.getType() ==
+                    ConnectivityManager.TYPE_MOBILE && netInfo.isConnected())) {
+                writeToLog("Connected to Mobile", c);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Settings.connectedToMobile, true);
+                edit.apply();
+            } else if (connectedToMobile && (netInfo == null || (netInfo.getType() ==
+                    ConnectivityManager.TYPE_MOBILE && !netInfo.isConnected()))) {
+                writeToLog("No Longer Connected to Mobile", c);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putBoolean(Settings.connectedToMobile, false);
+                edit.apply();
+            }
+        } catch (Exception e) {
+            //Do nothing
+        }
     }
 }

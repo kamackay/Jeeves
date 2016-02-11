@@ -14,7 +14,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="75sp"
+        android:layout_height="75sp" android:contentDescription="@string/text_jeevesImage"
         android:paddingBottom="15sp"
         android:src="@drawable/icon" />
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
@@ -30,9 +31,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
+import static keithapps.mobile.com.jeeves.Global.isKeith;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
@@ -203,24 +207,30 @@ public class MainActivity extends AppCompatActivity {
         spinners[19].setSelection(prefs.getInt(Settings.D.alarmVolume, 10));
         TextView t = (TextView) findViewById(R.id.activity_main_versionText);
         t.setText(String.format("Version: %s", getVersionName(getApplicationContext())));
-        t.setOnLongClickListener(new View.OnLongClickListener() {
+        t.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                if (prefs.getBoolean(getString(R.string.settings_isKeith), false)) {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean(getString(R.string.settings_isKeith), false);
-                    editor.apply();
-                    KeithToast.show("You are no longer a developer.", getApplicationContext());
-                } else {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean(getString(R.string.settings_isKeith), true);
-                    editor.apply();
-                    KeithToast.show("Hello, Keith", getApplicationContext());
-                }
-                return false;
+            public void onClick(View v) {
+                KeithToast.show(String.format("Is Keith: %b", isKeith(getApplicationContext())),
+                        getApplicationContext());
             }
         });
+/**        t.setOnLongClickListener(new View.OnLongClickListener() {
+@Override public boolean onLongClick(View v) {
+SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+if (prefs.getBoolean(getString(R.string.settings_isKeith), false)) {
+SharedPreferences.Editor editor = prefs.edit();
+editor.putBoolean(getString(R.string.settings_isKeith), false);
+editor.apply();
+KeithToast.show("You are no longer a developer.", getApplicationContext());
+} else {
+SharedPreferences.Editor editor = prefs.edit();
+editor.putBoolean(getString(R.string.settings_isKeith), true);
+editor.apply();
+KeithToast.show("Hello, Keith", getApplicationContext());
+}
+return false;
+}
+});//*/
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
         switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -516,7 +526,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSystemInfo() {
-
+        String name = "";
+        switch (Build.VERSION.SDK_INT) {
+            case Build.VERSION_CODES.KITKAT:
+                name = "KitKat";
+                break;
+            case Build.VERSION_CODES.LOLLIPOP:
+                name = "Lollipop";
+                break;
+            case Build.VERSION_CODES.LOLLIPOP_MR1:
+                name = "Lollipop";
+                break;
+            case Build.VERSION_CODES.M:
+                name = "Marshmallow";
+                break;
+        }
+        String s = String.format("Android %d: %s\n\n%s %s\n\n", Build.VERSION.SDK_INT, name,
+                WordUtils.capitalizeFully(Build.MANUFACTURER), Build.MODEL);
+        KeithToast.show(s, getApplicationContext());
     }
 
     /**

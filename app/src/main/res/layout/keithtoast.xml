@@ -18,7 +18,7 @@
 
             <ImageView
                 android:id="@+id/keithtoast_imageview"
-                android:layout_width="30sp"
+                android:layout_width="30sp" android:contentDescription="@string/text_keithappsImage"
                 android:layout_height="30sp"
                 android:src="@drawable/keithapps_white" />
 

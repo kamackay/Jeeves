@@ -83,4 +83,13 @@
     <string name="text_eithApps">eithApps</string>
     <string name="text_showSystemInfo">Show System Info</string>
     <string name="text_notificationPriority">Notification Priority</string>
+    <string name="text_low">Low</string>
+    <string name="text_default">Default</string>
+    <string name="text_high">High</string>
+    <string name="text_max">Max</string>
+    <string name="text_min">Min</string>
+    <string name="text_jeevesImage">Jeeves Image</string>
+    <string name="text_keithappsImage">KeithApps Image</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_buttonD">Button D</string>
 </resources>

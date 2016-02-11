@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_weight="7"
         android:paddingEnd="@dimen/ten"
-        android:paddingStart="@dimen/zero"
+        android:paddingStart="@dimen/zero" android:contentDescription="@string/text_jeevesImage"
         android:scaleType="fitCenter"
         android:src="@drawable/icon" />
 
@@ -94,7 +94,7 @@
 
         <ImageView
             android:id="@+id/notification_buttonD"
-            android:layout_width="match_parent"
+            android:layout_width="match_parent" android:contentDescription="@string/text_buttonD"
             android:layout_height="match_parent"
             android:src="@drawable/notification_button_background" />
 

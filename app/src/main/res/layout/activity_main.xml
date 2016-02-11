@@ -191,42 +191,49 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/ten">
 
                     <RadioGroup
+                        android:id="@+id/main_priorityRdoGrp_A"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_A"
-                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal|center_vertical"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/main_prioRB_A_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Min" android:id="@+id/main_prioRB_A_min"
+                            android:text="@string/text_min"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_low"
+                            android:id="@+id/main_prioRB_A_low"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Low"
+                            android:text="@string/text_low"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_def"
+                            android:id="@+id/main_prioRB_A_def"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal"
+                            android:text="@string/text_default"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_high"
+                            android:id="@+id/main_prioRB_A_high"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="High"
+                            android:text="@string/text_high"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_A_max"
+                            android:id="@+id/main_prioRB_A_max"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Max"
+                            android:text="@string/text_max"
                             android:textColor="@android:color/white" />
                     </RadioGroup>
                 </HorizontalScrollView>
@@ -368,6 +375,7 @@
                     android:id="@+id/settingsScreen_B_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -381,39 +389,45 @@
                     android:layout_height="wrap_content">
 
                     <RadioGroup
+                        android:id="@+id/main_priorityRdoGrp_B"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_B"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/main_prioRB_B_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Min" android:id="@+id/main_prioRB_B_min"
+                            android:text="@string/text_min"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_low"
+                            android:id="@+id/main_prioRB_B_low"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Low"
+                            android:text="@string/text_low"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_def"
+                            android:id="@+id/main_prioRB_B_def"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal"
+                            android:text="@string/text_default"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_high"
+                            android:id="@+id/main_prioRB_B_high"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="High"
+                            android:text="@string/text_high"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_B_max"
+                            android:id="@+id/main_prioRB_B_max"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Max"
+                            android:text="@string/text_max"
                             android:textColor="@android:color/white" />
                     </RadioGroup>
                 </HorizontalScrollView>
@@ -556,6 +570,7 @@
                     android:id="@+id/settingsScreen_C_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -569,39 +584,45 @@
                     android:layout_height="wrap_content">
 
                     <RadioGroup
+                        android:id="@+id/main_priorityRdoGrp_C"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_C"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/main_prioRB_C_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Min" android:id="@+id/main_prioRB_C_min"
+                            android:text="@string/text_min"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_low"
+                            android:id="@+id/main_prioRB_C_low"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Low"
+                            android:text="@string/text_low"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_def"
+                            android:id="@+id/main_prioRB_C_def"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal"
+                            android:text="@string/text_default"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_high"
+                            android:id="@+id/main_prioRB_C_high"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="High"
+                            android:text="@string/text_high"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_C_max"
+                            android:id="@+id/main_prioRB_C_max"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Max"
+                            android:text="@string/text_max"
                             android:textColor="@android:color/white" />
                     </RadioGroup>
                 </HorizontalScrollView>
@@ -744,6 +765,7 @@
                     android:id="@+id/settingsScreen_D_bluetoothOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -757,39 +779,45 @@
                     android:layout_height="wrap_content">
 
                     <RadioGroup
+                        android:id="@+id/main_priorityRdoGrp_D"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/main_priorityRdoGrp_D"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/main_prioRB_D_min"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Min" android:id="@+id/main_prioRB_D_min"
+                            android:text="@string/text_min"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_low"
+                            android:id="@+id/main_prioRB_D_low"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Low"
+                            android:text="@string/text_low"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_def"
+                            android:id="@+id/main_prioRB_D_def"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal"
+                            android:text="@string/text_default"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_high"
+                            android:id="@+id/main_prioRB_D_high"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="High"
+                            android:text="@string/text_high"
                             android:textColor="@android:color/white" />
 
                         <RadioButton
-                            android:layout_width="wrap_content" android:id="@+id/main_prioRB_D_max"
+                            android:id="@+id/main_prioRB_D_max"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Max"
+                            android:text="@string/text_max"
                             android:textColor="@android:color/white" />
                     </RadioGroup>
                 </HorizontalScrollView>

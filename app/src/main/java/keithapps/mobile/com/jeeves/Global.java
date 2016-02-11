@@ -12,19 +12,14 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.nfc.NfcAdapter;
-import android.os.Process;
+import android.os.Vibrator;
 import android.view.Display;
 
 import java.io.FileOutputStream;
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -140,47 +135,7 @@ public class Global {
 
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
-        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false);
-    }
-
-    /**
-     * I dislike Snapchat. If it has a background process, kill it.
-     *
-     * @param c the calling context
-     */
-    public static void tryToKillSnapchat(final Context c) {
-        try {
-            boolean b = false;
-            final ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-            List<ActivityManager.RunningAppProcessInfo> listOfProcesses = manager.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo process : listOfProcesses)
-                if (process.processName.contains(PACKAGE_SNAPCHAT)) {
-                    try {
-                        android.os.Process.sendSignal(process.pid, Process.SIGNAL_KILL);
-                        Process.killProcess(process.pid);
-                        b = true;
-                    } catch (Exception e) {
-                        KeithToast.show("Error occurred killing Snapchat background process", c);
-                    }
-                }
-            if (b) {
-                Timer t = new Timer();
-                t.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        boolean isAlive = false;
-                        List<ActivityManager.RunningAppProcessInfo> l = manager.getRunningAppProcesses();
-                        for (ActivityManager.RunningAppProcessInfo process : l)
-                            if (process.processName.toLowerCase().contains(PACKAGE_SNAPCHAT))
-                                isAlive = true;
-                        if (!isAlive) KeithToast.show("Snapchat background process killed", c);
-                        else KeithToast.show("Failed to kill a Snapchat background process", c);
-                    }
-                }, 4000);
-            }
-        } catch (Exception e) {
-            //Fuck you, snapchat
-        }
+        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) && BuildConfig.DEBUG;
     }
 
     /**
@@ -216,32 +171,15 @@ public class Global {
     }
 
     public static void turnOffVibrate(AudioManager a) {
-        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
-        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_OFF);
-    }
-
-    public static void turnOffVibrate(Context c) {
-        turnOffVibrate((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
-    }
-
-    public static void turnOnVibrate(AudioManager a) {
-        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
-        a.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ON);
-    }
-
-    public static boolean isVibrateOn(Context c) {
-        return isVibrateOn((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
-    }
-
-    public static boolean isVibrateOn(AudioManager a) {
-        if (a.getVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION) == AudioManager.VIBRATE_SETTING_OFF &&
-                a.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER) == AudioManager.VIBRATE_SETTING_OFF)
-            return false;
-        return a.getRingerMode() != AudioManager.RINGER_MODE_SILENT;
+        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }
 
     public static void turnOnVibrate(Context c) {
-        turnOnVibrate((AudioManager) c.getSystemService(Context.AUDIO_SERVICE));
+        AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+       Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
+
     }
 
     public static String breakIntoLines(String s) {
@@ -261,25 +199,6 @@ public class Global {
             }
         }
         return sb.toString().trim();
-    }
-
-    public static void turnOnNFC(final Context c) {
-        final NfcAdapter mNfcAdapter = NfcAdapter.getDefaultAdapter(c);
-        new Thread("toggleNFC") {
-            public void run() {
-                try {
-                    Class<?> NfcManagerClass;
-                    Method setNfcEnabled;
-                    NfcManagerClass = Class.forName(mNfcAdapter.getClass().getName());
-                    setNfcEnabled = NfcManagerClass.getDeclaredMethod("enable");
-                    setNfcEnabled.setAccessible(true);
-                    boolean Nfc = (Boolean) setNfcEnabled.invoke(mNfcAdapter);
-                    if (Nfc) KeithToast.show("Holy shit, it worked", c);
-                } catch (Exception e) {
-                    //Eh, worth a shot
-                }
-            }
-        }.start();
     }
 
     /**

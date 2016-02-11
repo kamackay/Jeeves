@@ -46,9 +46,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".listeners.BackgroundProcessListener" />
+        <receiver android:name=".listeners.BackgroundProcessListener">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            </intent-filter>
+        </receiver>
         <receiver android:name=".listeners.HeadphoneListener">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
@@ -64,7 +71,7 @@
         <service
             android:name=".MainService"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/app_name" />
 
         <activity

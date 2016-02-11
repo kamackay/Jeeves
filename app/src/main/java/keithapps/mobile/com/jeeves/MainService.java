@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.listeners.BackgroundProcessListener;
+import keithapps.mobile.com.jeeves.listeners.BootListener;
 import keithapps.mobile.com.jeeves.listeners.HeadphoneListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationButtonListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationListener;
@@ -193,6 +194,10 @@ public class MainService extends Service {
         Calendar calendar = Calendar.getInstance();
         c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_CONNECTED));
         c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_DISCONNECTED));
+        c.registerReceiver(new BootListener(), new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        c.registerReceiver(new BootListener(), new IntentFilter(Intent.ACTION_SCREEN_ON));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter((Intent.ACTION_UNINSTALL_PACKAGE)));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter((Intent.ACTION_INSTALL_PACKAGE)));
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0); // first time
         long frequency = 60 * 5000; // in ms

@@ -9,12 +9,9 @@ import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 
 import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
 import static keithapps.mobile.com.jeeves.Global.getPrefs;
-import static keithapps.mobile.com.jeeves.Global.isVibrateOn;
 import static keithapps.mobile.com.jeeves.Global.turnOffBluetooth;
-import static keithapps.mobile.com.jeeves.Global.turnOffVibrate;
 import static keithapps.mobile.com.jeeves.Global.turnOffWiFi;
 import static keithapps.mobile.com.jeeves.Global.turnOnBluetooth;
-import static keithapps.mobile.com.jeeves.Global.turnOnVibrate;
 import static keithapps.mobile.com.jeeves.Global.turnOnWiFi;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
@@ -34,45 +31,6 @@ import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_REBOOT;
  */
 public class SetState {
     /**
-     * Call for changing to state C
-     *
-     * @param c the calling context
-     */
-    public static void stateC(Context c) {
-        try {
-            SharedPreferences prefs = getPrefs(c);
-            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
-                    c.getString(R.string.text_out)) + "\"", c);
-            closeNotificationTray(c);
-            AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-            setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
-            setSystemVolume(a, prefs, ManageVolume.Mode.A);
-            setAlarmVolume(a, prefs, ManageVolume.Mode.A);
-            setMediaVolume(a, prefs, ManageVolume.Mode.A);
-            setNotificationVolume(a, prefs, ManageVolume.Mode.A);
-            if (!isVibrateOn(a)) turnOnVibrate(a);
-            int wifiAction = prefs.getInt(c.getString(R.string.settings_c_wifiAction),
-                    SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
-                    R.string.settings_c_bluetoothAction), SELECTED_LEAVE);
-            if (wifiAction == SELECTED_REBOOT) {
-                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
-                wifiManager.setWifiEnabled(true);
-            } else if (wifiAction == SELECTED_ON) turnOnWiFi(c);
-            else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
-            if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
-            else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
-            //tryToKillSnapchat(c);
-            SharedPreferences.Editor prefsEdit = prefs.edit();
-            prefsEdit.putInt(Settings.current_mode, Mode.C);
-            prefsEdit.apply();
-            showNotification(Mode.C, c);
-        } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
-        }
-    }
-
-    /**
      * Call for changing to state A
      *
      * @param c the calling context
@@ -89,7 +47,6 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.A);
             setMediaVolume(a, prefs, ManageVolume.Mode.A);
             setNotificationVolume(a, prefs, ManageVolume.Mode.A);
-            if (!isVibrateOn(a)) turnOnVibrate(a);
             int wifiAction = prefs.getInt(c.getString(R.string.settings_a_wifiAction),
                     SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                     R.string.settings_a_bluetoothAction), SELECTED_LEAVE);
@@ -127,7 +84,6 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.B);
             setMediaVolume(a, prefs, ManageVolume.Mode.B);
             setNotificationVolume(a, prefs, ManageVolume.Mode.B);
-            if (isVibrateOn(a)) turnOffVibrate(a);
             int wifiAction = prefs.getInt(c.getString(R.string.settings_b_wifiAction),
                     SELECTED_LEAVE),
                     bluetoothAction = prefs.getInt(c.getString(
@@ -150,6 +106,44 @@ public class SetState {
     }
 
     /**
+     * Call for changing to state C
+     *
+     * @param c the calling context
+     */
+    public static void stateC(Context c) {
+        try {
+            SharedPreferences prefs = getPrefs(c);
+            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
+                    c.getString(R.string.text_out)) + "\"", c);
+            closeNotificationTray(c);
+            AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
+            setSystemVolume(a, prefs, ManageVolume.Mode.A);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.A);
+            setMediaVolume(a, prefs, ManageVolume.Mode.A);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.A);
+            int wifiAction = prefs.getInt(c.getString(R.string.settings_c_wifiAction),
+                    SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
+                    R.string.settings_c_bluetoothAction), SELECTED_LEAVE);
+            if (wifiAction == SELECTED_REBOOT) {
+                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
+                wifiManager.setWifiEnabled(true);
+            } else if (wifiAction == SELECTED_ON) turnOnWiFi(c);
+            else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
+            if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
+            else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);
+            //tryToKillSnapchat(c);
+            SharedPreferences.Editor prefsEdit = prefs.edit();
+            prefsEdit.putInt(Settings.current_mode, Mode.C);
+            prefsEdit.apply();
+            showNotification(Mode.C, c);
+        } catch (Exception e) {
+            writeToLog(e.getLocalizedMessage(), c);
+        }
+    }
+
+    /**
      * Call for changing to state B
      *
      * @param c the calling context
@@ -166,7 +160,6 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.D);
             setMediaVolume(a, prefs, ManageVolume.Mode.D);
             setNotificationVolume(a, prefs, ManageVolume.Mode.D);
-            if (isVibrateOn(a)) turnOffVibrate(a);
             int wifiAction = prefs.getInt(c.getString(R.string.settings_d_wifiAction),
                     SELECTED_LEAVE),
                     bluetoothAction = prefs.getInt(c.getString(

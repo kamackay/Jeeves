@@ -85,7 +85,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/adderallPopup_5Button"
+            android:id="@+id/adderallPopup_20Button"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
             android:background="@android:color/white" />
 
         <Button
-            android:id="@+id/adderallPopup_20Button"
+            android:id="@+id/adderallPopup_5Button"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

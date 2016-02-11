@@ -15,6 +15,17 @@ import static keithapps.mobile.com.jeeves.Global.writeToLog;
  * Listens for the boot to complete
  */
 public class BootListener extends BroadcastReceiver {
+    public static void screenChange(boolean on, Context c) {
+        SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE);
+        if (on == prefs.getBoolean(Settings.screen_mode, false)) return;
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean(Settings.screen_mode, on);
+        edit.apply();
+        //    if (on) KeithToast.show(getForegroundAppName(c), c);
+        //writeToLog(String.format("Device Screen turned %s", on ? "On" : "Off"), c);
+    }
+
     @Override
     public void onReceive(Context c, Intent intent) {
         String s = intent.getAction();
@@ -38,15 +49,5 @@ public class BootListener extends BroadcastReceiver {
                     break;
             }
         }
-    }
-
-    public static void screenChange(boolean on, Context c) {
-        SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
-                Context.MODE_PRIVATE);
-        if (on == prefs.getBoolean(Settings.screen_mode, false)) return;
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean(Settings.screen_mode, on);
-        edit.apply();
-        writeToLog(String.format("Device Screen turned %s", on ? "On" : "Off"), c);
     }
 }

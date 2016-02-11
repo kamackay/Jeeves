@@ -14,7 +14,8 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="75sp" android:contentDescription="@string/text_jeevesImage"
+        android:layout_height="75sp"
+        android:contentDescription="@string/text_jeevesImage"
         android:paddingBottom="15sp"
         android:src="@drawable/icon" />
 
@@ -34,17 +35,21 @@
         android:padding="@dimen/ten">
 
         <Button
-            android:layout_width="@dimen/seventyFive"
+            android:id="@+id/headphone_popup_fullButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:minWidth="@dimen/seventyFive"
             android:onClick="clickFull"
             android:text="@string/text_full"
             android:textColor="@android:color/white" />
 
         <Button
-            android:layout_width="@dimen/seventyFive"
+            android:id="@+id/headphone_popup_partialButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:minWidth="@dimen/seventyFive"
             android:onClick="clickPartial"
             android:text="@string/text_partial"
             android:textColor="@android:color/white" />

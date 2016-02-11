@@ -255,7 +255,7 @@ public class MainService extends Service {
         } catch (Exception e) {
             writeToLog(e.getLocalizedMessage(), c);
         }
-        writeToLog("MainService Startup", getApplicationContext());
+        writeToLog("MainService Startup", getApplicationContext(), true);
     }
 
     @Override

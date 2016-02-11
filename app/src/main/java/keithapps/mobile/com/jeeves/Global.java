@@ -14,12 +14,17 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Vibrator;
 import android.view.Display;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
+import keithapps.mobile.com.jeeves.popups.KeithToast;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -133,6 +138,18 @@ public class Global {
         }
     }
 
+    public static boolean isJeevesActivityForeground(Context c) {
+        try {
+            List<ActivityManager.RunningAppProcessInfo> tasks = ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
+                    .getRunningAppProcesses();
+            if (tasks == null) return false;
+            String mainActivity = tasks.get(0).processName;
+            return mainActivity.toLowerCase().contains("keithapps");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) && BuildConfig.DEBUG;
@@ -238,6 +255,21 @@ public class Global {
      * @param c    the context of the calling method
      */
     public static void writeToLog(String text, Context c) {
+        writeToLog(text, c, false);
+    }
+
+    public static void showHeadphonesPopup(Context c) {
+        try {
+            Intent i = new Intent(c, HeadphoneQueryPopup.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            c.startActivity(i);
+        } catch (Exception e) {
+            writeToLog("Error Showing Headphone popup", c);
+        }
+    }
+
+    public static void writeToLog(String text, Context c, boolean showToast) {
         try {
             if (!c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
                     .getBoolean(Settings.record_log, true)) return;
@@ -246,8 +278,19 @@ public class Global {
             FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
             fos.write(bytes);
             fos.close();
+            if (showToast && isJeevesActivityForeground(c))
+                Toast.makeText(c, toPrint.trim(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //Don't do anything
+        }
+    }
+
+    public static String getForegroundAppName(Context c) {
+        try {
+            return ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
+                    .getRunningAppProcesses().get(0).processName;
+        } catch (Exception e) {
+            return "Unknown";
         }
     }
 

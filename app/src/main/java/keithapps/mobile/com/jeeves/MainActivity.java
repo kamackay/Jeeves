@@ -34,11 +34,12 @@ import android.widget.TextView;
 import org.apache.commons.lang3.text.WordUtils;
 
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
+import keithapps.mobile.com.jeeves.popups.KeithToast;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
@@ -210,21 +211,7 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            GmailSender sender = new GmailSender("android.jeeves@yahoo.com", "jeevspass");
-                            sender.sendMail("This is Subject",
-                                    "This is Body",
-                                    "android.jeeves@yahoo.com",
-                                    "android.jeeves@yahoo.com");
-                        } catch (Exception e) {
-                            writeToLog(String.format("Error sending email: %s", e.getMessage()),
-                                    getApplicationContext());
-                        }
-                    }
-                }).start();
+                showHeadphonesPopup(getApplicationContext());
             }
         });
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);

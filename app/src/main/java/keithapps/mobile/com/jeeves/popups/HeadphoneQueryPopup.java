@@ -5,11 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
@@ -35,6 +38,28 @@ public class HeadphoneQueryPopup extends Activity {
         getWindowManager().getDefaultDisplay().getSize(size);
         getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
         writeToLog("Headphone Query Popup", getApplicationContext());
+        Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
+        if (tf != null) {
+            ((Button) findViewById(R.id.headphone_popup_fullButton)).setTypeface(tf);
+            ((Button) findViewById(R.id.headphone_popup_partialButton)).setTypeface(tf);
+            ((TextView) findViewById(R.id.headphone_popup_text)).setTypeface(tf);
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(8000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    });
+                } catch (Exception e) {
+                    //Do nothing
+                }
+            }
+        }).start();
     }
 
     /**

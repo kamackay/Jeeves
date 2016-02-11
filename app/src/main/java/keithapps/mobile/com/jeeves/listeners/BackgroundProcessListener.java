@@ -7,7 +7,6 @@ import android.content.Intent;
 import java.util.Calendar;
 import java.util.Locale;
 
-import keithapps.mobile.com.jeeves.KeithToast;
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.Settings;
 
@@ -23,10 +22,10 @@ public class BackgroundProcessListener extends BroadcastReceiver {
         String s = intent.getAction();
         if (s != null) {
             if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {
-                writeToLog("Device Plugged in to charger", c);
+                writeToLog("Device Plugged in to charger", c, true);
                 return;
             } else if (intent.getAction().equals(Intent.ACTION_POWER_DISCONNECTED)) {
-                writeToLog("Device Unplugged from charger", c);
+                writeToLog("Device Unplugged from charger", c, true);
                 return;
             }
         }
@@ -38,7 +37,7 @@ public class BackgroundProcessListener extends BroadcastReceiver {
             Intent i = new Intent(c, NotificationButtonListener.class);
             i.setAction(Settings.Adderall.adderall_clear);
             c.sendBroadcast(i);
-            KeithToast.show("Adderall Amount Reset", c);
+            //KeithToast.show("Adderall Amount Reset", c);
         }
         MainService.showNotification(MainService.getMode(c), c);
     }

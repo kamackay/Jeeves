@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
-import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
+import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 /**
@@ -46,10 +46,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                 case 1:
                     if (!prefs.getBoolean(Settings.headset_pluggedIn, false)
                             && prefs.getBoolean(c.getString(R.string.settings_showHeadphonesPopup), true)) {
-                        Intent i = new Intent(c, HeadphoneQueryPopup.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(i);
+                        showHeadphonesPopup(c);
                     }
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean(Settings.headset_pluggedIn, true);

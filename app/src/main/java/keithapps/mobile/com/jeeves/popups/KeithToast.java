@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.popups;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import keithapps.mobile.com.jeeves.R;
 
 /**
  * Custom Toast Implementation

@@ -41,12 +41,12 @@ public class VolumeChangeListener extends ContentObserver {
             boolean full = c.getSharedPreferences(Settings.sharedPrefs_code,
                     Context.MODE_PRIVATE).getBoolean(Settings.headset_full, false);
             if (full && Math.abs(newVol - mediaVol) == 1) {
-                writeToLog("Volume Button Press", c);
+                writeToLog("Volume Button Press", c, true);
                 SharedPreferences.Editor edit = c.getSharedPreferences(Settings.sharedPrefs_code,
                         Context.MODE_PRIVATE).edit();
                 edit.putBoolean(Settings.headset_full, false);
                 edit.apply();
-                writeToLog("Stop Pushing Media Vol to Full", c);
+                writeToLog("Stop Pushing Media Vol to Full", c, true);
                 full = false;
             }
             if (full && mediaVol != music_max) {
@@ -64,7 +64,7 @@ public class VolumeChangeListener extends ContentObserver {
                     }
                 }).start();
             } else writeToLog(String.format("Media Vol set to %d out of %d (was %d)", newVol,
-                    aMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC), mediaVol), c);
+                    aMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC), mediaVol), c, true);
             mediaVol = newVol;
         }
     }

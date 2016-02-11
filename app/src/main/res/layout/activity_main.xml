@@ -76,7 +76,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_ringtoneVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
@@ -99,7 +99,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_mediaVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
@@ -122,7 +122,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_notificationVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
@@ -146,7 +146,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_systemVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_A_alarmVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -278,7 +278,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_B_ringtoneVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -299,7 +299,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_B_mediaVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -320,7 +320,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_B_notificationVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -341,7 +341,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_B_systemVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -362,7 +362,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_B_alarmVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -473,7 +473,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_C_ringtoneVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -494,7 +494,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_C_mediaVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -515,7 +515,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_C_notificationVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -536,7 +536,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_C_systemVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -557,7 +557,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_C_alarmVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -668,7 +668,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_D_ringtoneVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -689,7 +689,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_D_mediaVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -710,7 +710,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_D_notificationVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -731,7 +731,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_D_systemVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -752,7 +752,7 @@
 
                     <Spinner
                         android:id="@+id/settingsScreen_D_alarmVolume"
-                        android:layout_width="@dimen/seventyFive"
+                        android:layout_width="@dimen/spinnerWidth"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 

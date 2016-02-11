@@ -30,7 +30,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.commons.lang3.text.WordUtils;
 
@@ -39,6 +38,7 @@ import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
+import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
@@ -210,17 +210,21 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"keith.mackay3@gmail.com"});
-                i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                i.putExtra(Intent.EXTRA_TEXT, "body of email");
-                try {
-                    startActivity(Intent.createChooser(i, "Send mail..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(),
-                            "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            GmailSender sender = new GmailSender("android.jeeves@yahoo.com", "jeevspass");
+                            sender.sendMail("This is Subject",
+                                    "This is Body",
+                                    "android.jeeves@yahoo.com",
+                                    "android.jeeves@yahoo.com");
+                        } catch (Exception e) {
+                            writeToLog(String.format("Error sending email: %s", e.getMessage()),
+                                    getApplicationContext());
+                        }
+                    }
+                }).start();
             }
         });
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);

@@ -44,12 +44,15 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="setLastTime"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/ten">
+        android:paddingBottom="@dimen/twenty"
+        android:paddingTop="@dimen/twenty">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setLastTime"
             android:text="@string/adderallPopup_lastTaken"
             android:textColor="@android:color/white" />
 
@@ -57,11 +60,13 @@
             android:id="@+id/adderallPopup_lastTime_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setLastTime"
             android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setLastTime"
             android:text="@string/text_hoursAnd"
             android:textColor="@android:color/white" />
 
@@ -69,11 +74,13 @@
             android:id="@+id/adderallPopup_lastTime_minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setLastTime"
             android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="setLastTime"
             android:text="@string/text_minutesAgo"
             android:textColor="@android:color/white" />
     </LinearLayout>
@@ -82,7 +89,8 @@
         style="?android:attr/buttonBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/twenty">
 
         <Button
             android:id="@+id/adderallPopup_20Button"

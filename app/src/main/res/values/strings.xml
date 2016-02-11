@@ -92,4 +92,5 @@
     <string name="text_keithappsImage">KeithApps Image</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_buttonD">Button D</string>
+    <string name="text_resetAtMidnight">Reset at Midnight</string>
 </resources>

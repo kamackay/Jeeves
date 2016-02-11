@@ -3,6 +3,7 @@ package keithapps.mobile.com.jeeves.listeners;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -31,13 +32,15 @@ public class BackgroundProcessListener extends BroadcastReceiver {
         }
         Calendar cal = Calendar.getInstance(Locale.US);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        if (hour == 0 && cal.get(Calendar.MINUTE) < 10 &&
-                c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
-                        .getInt(Settings.Adderall.adderall_count, 0) > 0) {
-            Intent i = new Intent(c, NotificationButtonListener.class);
-            i.setAction(Settings.Adderall.adderall_clear);
-            c.sendBroadcast(i);
-            //KeithToast.show("Adderall Amount Reset", c);
+        if (hour == 0 && cal.get(Calendar.MINUTE) < 10) {
+            SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
+                    Context.MODE_PRIVATE);
+            if (prefs.getInt(Settings.Adderall.adderall_count, 0) > 0 &&
+                    prefs.getBoolean(Settings.Adderall.resetAtMidnight, false)) {
+                Intent i = new Intent(c, NotificationButtonListener.class);
+                i.setAction(Settings.Adderall.adderall_clear);
+                c.sendBroadcast(i);
+            }
         }
         MainService.showNotification(MainService.getMode(c), c);
     }

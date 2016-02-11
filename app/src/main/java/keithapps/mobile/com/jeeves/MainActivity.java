@@ -36,9 +36,12 @@ import org.apache.commons.lang3.text.WordUtils;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
 
+import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
+import static keithapps.mobile.com.jeeves.Global.testMethod;
+import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
@@ -210,7 +213,18 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendEmail("Test", "Please Send");
+                testMethod(getApplicationContext());
+            }
+        });
+        Switch switchResetAtMidnight = (Switch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight);
+        switchResetAtMidnight.setChecked(prefs.getBoolean(Settings.Adderall.resetAtMidnight, false));
+        switchResetAtMidnight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(Settings.Adderall.resetAtMidnight, isChecked);
+                edit.apply();
             }
         });
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
@@ -517,14 +531,14 @@ public class MainActivity extends AppCompatActivity {
                 name = "Lollipop";
                 break;
             case Build.VERSION_CODES.LOLLIPOP_MR1:
-                name = "Lollipop";
+                name = "Lollipop (MR1)";
                 break;
             case Build.VERSION_CODES.M:
                 name = "Marshmallow";
                 break;
         }
-        String s = String.format("Android %d: %s\n\n%s %s\n\n", Build.VERSION.SDK_INT, name,
-                WordUtils.capitalizeFully(Build.MANUFACTURER), Build.MODEL);
+        String s = String.format("Android %d: %s\n\n%s %s\n\n%s", Build.VERSION.SDK_INT, name,
+                WordUtils.capitalizeFully(Build.MANUFACTURER), Build.MODEL, getTimestamp());
         KeithToast.show(s, getApplicationContext());
     }
 
@@ -591,6 +605,9 @@ public class MainActivity extends AppCompatActivity {
                                 Process.killProcess(pid);
                             } catch (Exception e) {
                                 KeithToast.show("Error killing process", getApplicationContext());
+                                writeToLog(String.format("Error killing process %s\n%s",
+                                                e.getLocalizedMessage(), e.getMessage()),
+                                        getApplicationContext());
                                 populateProcesses(null);
                                 return;
                             }
@@ -604,7 +621,10 @@ public class MainActivity extends AppCompatActivity {
                                 KeithToast.show("Successfully Killed", getApplicationContext());
                             populateProcesses(null);
                         } catch (Exception exc) {
-                            //Something may be wrong
+                            KeithToast.show("Error killing process", getApplicationContext());
+                            writeToLog(String.format("Error killing process %s\n%s",
+                                            exc.getLocalizedMessage(), exc.getMessage()),
+                                    getApplicationContext());
                         }
                     }
                 });
@@ -656,9 +676,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keycode, KeyEvent e) {
         switch (keycode) {
-            case KeyEvent.KEYCODE_MENU:
-                //Absorb the key event
-                return true;
             case KeyEvent.KEYCODE_BACK:
                 if (!mainShowing) clickDone(null);
                 return true;

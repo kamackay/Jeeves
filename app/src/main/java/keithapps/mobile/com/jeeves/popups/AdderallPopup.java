@@ -2,6 +2,7 @@ package keithapps.mobile.com.jeeves.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,8 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
@@ -28,38 +31,7 @@ public class AdderallPopup extends Activity {
         ActionBar a = getActionBar();
         if (a != null) a.hide();
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-        TextView currentAmount = (TextView) findViewById(R.id.adderallPopup_current);
-        int current = prefs.getInt(Settings.Adderall.adderall_count, 0);
-        currentAmount.setText(String.format("%d mg", current));
-        if (current <= 30) currentAmount.setTextColor(Color.GREEN);
-        else if (current > 60) currentAmount.setTextColor(Color.RED);
-        else currentAmount.setTextColor(Color.YELLOW);
-        TextView lastTime_min = (TextView) findViewById(R.id.adderallPopup_lastTime_minutes),
-                lastTime_hours = (TextView) findViewById(R.id.adderallPopup_lastTime_hours);
-        try {
-            String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
-            String timestamp_now = getTimestamp();
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
-            long difference = format.parse(timestamp_now).getTime() -
-                    format.parse(timestamp_last).getTime();
-            long hours = difference / (1000 * 60 * 60), minutes = (difference / 60000) % 60;
-            lastTime_hours.setText(String.format("%d", hours));
-            lastTime_min.setText(String.format("%d", minutes));
-            if (hours == 0) {
-                lastTime_hours.setTextColor(Color.RED);
-                lastTime_min.setTextColor(Color.RED);
-            } else if (hours < 2) {
-                lastTime_hours.setTextColor(Color.YELLOW);
-                lastTime_min.setTextColor(Color.YELLOW);
-            } else {
-                lastTime_hours.setTextColor(Color.GREEN);
-                lastTime_min.setTextColor(Color.GREEN);
-            }
-        } catch (Exception e) {
-            lastTime_hours.setText("?");
-            lastTime_min.setText("?");
-        }
+        setValues();
         Button b20 = (Button) findViewById(R.id.adderallPopup_20Button),
                 b10 = (Button) findViewById(R.id.adderallPopup_10Button),
                 b5 = (Button) findViewById(R.id.adderallPopup_5Button);
@@ -124,7 +96,63 @@ public class AdderallPopup extends Activity {
         edit.putInt(Settings.Adderall.adderall_count, 0);
         edit.apply();
         writeToLog("Cleared Adderall Information", getApplicationContext());
-        finish();
         updateNotification(getApplicationContext());
+    }
+
+    public void setValues() {
+        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+        TextView currentAmount = (TextView) findViewById(R.id.adderallPopup_current);
+        int current = prefs.getInt(Settings.Adderall.adderall_count, 0);
+        currentAmount.setText(String.format("%d mg", current));
+        if (current <= 30) currentAmount.setTextColor(Color.GREEN);
+        else if (current > 60) currentAmount.setTextColor(Color.RED);
+        else currentAmount.setTextColor(Color.YELLOW);
+        TextView lastTime_min = (TextView) findViewById(R.id.adderallPopup_lastTime_minutes),
+                lastTime_hours = (TextView) findViewById(R.id.adderallPopup_lastTime_hours);
+        try {
+            String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
+            String timestamp_now = getTimestamp();
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
+            long difference = format.parse(timestamp_now).getTime() -
+                    format.parse(timestamp_last).getTime();
+            long hours = difference / (1000 * 60 * 60), minutes = (difference / 60000) % 60;
+            lastTime_hours.setText(String.format("%d", hours));
+            lastTime_min.setText(String.format("%d", minutes));
+            if (hours == 0) {
+                lastTime_hours.setTextColor(Color.RED);
+                lastTime_min.setTextColor(Color.RED);
+            } else if (hours < 2) {
+                lastTime_hours.setTextColor(Color.YELLOW);
+                lastTime_min.setTextColor(Color.YELLOW);
+            } else {
+                lastTime_hours.setTextColor(Color.GREEN);
+                lastTime_min.setTextColor(Color.GREEN);
+            }
+        } catch (Exception e) {
+            lastTime_hours.setText("?");
+            lastTime_min.setText("?");
+        }
+    }
+
+    public void setLastTime(View v) {///**
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(AdderallPopup.this, R.style.TimePickerDialogStyle,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                                MODE_PRIVATE).edit();
+                        edit.putString(Settings.Adderall.timeSince, String.format("%s%02d:%02d:00",
+                                getTimestamp().substring(0, 6), selectedHour, selectedMinute));
+                        edit.apply();
+                        updateNotification(getApplicationContext());
+                        setValues();
+                    }
+                }, hour, minute, false);
+        mTimePicker.setTitle("What time did you last take Adderall?");
+        mTimePicker.show();//*/
     }
 }

@@ -32,6 +32,7 @@ public class Settings {
     public class Adderall {
         public static final String timeSince = "Adderall.timeSince";
         public static final String adderall_count = "adderall.count";
+        public static final String resetAtMidnight = "adderall.ram";
         public static final String adderall_clear = "adderall.clear";
     }
 

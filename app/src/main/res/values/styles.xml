@@ -10,6 +10,16 @@
         <item name="android:buttonStyle">@style/ButtonText</item>
     </style>
 
+    <style name="TimePickerDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@android:color/holo_red_dark</item>
+        <item name="colorPrimaryDark">@android:color/holo_red_dark</item>
+        <item name="colorAccent">@android:color/holo_red_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:buttonStyle">@style/ButtonText</item>
+    </style>
+
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@android:color/holo_red_dark</item>
         <item name="android:windowActionBar">false</item>
@@ -25,6 +35,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="ButtonText" parent="@android:style/Widget.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/button_foreColor</item>

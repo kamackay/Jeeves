@@ -12,7 +12,7 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.os.Vibrator;
+import android.os.Build;
 import android.view.Display;
 import android.widget.Toast;
 
@@ -41,10 +41,6 @@ import static javax.mail.Session.getInstance;
  * Contains Global static methods and variables
  */
 public class Global {
-    /**
-     * Snapchat's package name
-     */
-    public final static String PACKAGE_SNAPCHAT = "com.snapchat.android";
     /**
      * The name of the Logfile
      */
@@ -162,7 +158,10 @@ public class Global {
 
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
-        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) && BuildConfig.DEBUG;
+        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) &&
+                BuildConfig.DEBUG_MODE &&
+                Build.BRAND.toLowerCase().equals("samsung") &&
+                Build.MODEL.toLowerCase().equals("sm-n900");
     }
 
     public static void makeKeith(Context c) {
@@ -218,11 +217,10 @@ public class Global {
         a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }
 
-    public static void turnOnVibrate(Context c) {
+    public static void turnOnVibrate(Context c) {/**
         AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
-
+     Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);//*/
     }
 
     public static String breakIntoLines(String s) {
@@ -279,7 +277,7 @@ public class Global {
         }
     }
 
-    public static void sendEmailTo(final String header, final String message, final String recipient) {
+    public static void sendEmailTo(final String header, final String message, final String recipient, final boolean resend) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -305,17 +303,17 @@ public class Global {
                     m.setFrom(new InternetAddress(username));
                     m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
                     m.setSubject(header);
-                    m.setText(message);
+                    m.setText(message + "\n\n" + getTimestamp());
                     Transport.send(m);
                 } catch (Exception e) {
-                    return;
+                    if (resend) sendEmailTo(header, message, recipient, false);
                 }
             }
         }).start();
     }
 
     public static void sendEmail(final String header, final String message) {
-        sendEmailTo(header, message, "android.jeeves@yahoo.com");
+        sendEmailTo(header, message, "android.jeeves@yahoo.com", true);
     }
 
     public static void writeToLog(String text, Context c, boolean showToast) {
@@ -327,7 +325,7 @@ public class Global {
             FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
             fos.write(bytes);
             fos.close();
-            if (showToast && isJeevesActivityForeground(c))
+            if (showToast && isKeith(c) && isJeevesActivityForeground(c))
                 Toast.makeText(c, toPrint.trim(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //Don't do anything
@@ -372,4 +370,9 @@ public class Global {
         }
     }
 
+
+    public static void testMethod(Context c) {
+        if (!isKeith(c)) return;
+        KeithToast.show("Test Method", c);
+    }
 }

@@ -19,6 +19,8 @@ import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.widget.RemoteViews;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -36,13 +38,10 @@ import static keithapps.mobile.com.jeeves.Global.sendEmail;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 public class MainService extends Service {
-
-    private VolumeChangeListener mVolumeChangeListener;
-
     /**
-     * The Current Mode
+     * Listens for the volume to change
      */
-
+    private VolumeChangeListener mVolumeChangeListener;
     /**
      * Constructor
      */
@@ -252,15 +251,15 @@ public class MainService extends Service {
                         info.versionName, prefs.getString(Settings.versionName, "1.1.6a")), c);
                 sendEmail("Jeeves Update", String.format("An Android device:\n\n    Build: %d\n    " +
                                 "Device: %s %s\n    Phone # %s\n\nUpdated from version" +
-                                " %s (code %d) to version %s (code %d)\n\n%s",
-                        Build.VERSION.SDK_INT, Build.MANUFACTURER,
+                                " %s (code %d) to version %s (code %d)",
+                        Build.VERSION.SDK_INT,
+                        WordUtils.capitalizeFully(Build.MANUFACTURER),
                         Build.MODEL,
                         ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number(),
                         prefs.getString(Settings.versionName, "1.1.6a"),
                         prefs.getInt(Settings.versionCode, 5),
                         info.versionName,
-                        info.versionCode,
-                        getTimestamp()));
+                        info.versionCode));
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.versionCode, info.versionCode);
                 edit.putString(Settings.versionName, info.versionName);

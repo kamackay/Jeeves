@@ -30,13 +30,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.lang3.text.WordUtils;
 
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
-import static keithapps.mobile.com.jeeves.Global.isKeith;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
@@ -210,27 +210,19 @@ public class MainActivity extends AppCompatActivity {
         t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KeithToast.show(String.format("Is Keith: %b", isKeith(getApplicationContext())),
-                        getApplicationContext());
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"keith.mackay3@gmail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+                i.putExtra(Intent.EXTRA_TEXT, "body of email");
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),
+                            "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-/**        t.setOnLongClickListener(new View.OnLongClickListener() {
-@Override public boolean onLongClick(View v) {
-SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-if (prefs.getBoolean(getString(R.string.settings_isKeith), false)) {
-SharedPreferences.Editor editor = prefs.edit();
-editor.putBoolean(getString(R.string.settings_isKeith), false);
-editor.apply();
-KeithToast.show("You are no longer a developer.", getApplicationContext());
-} else {
-SharedPreferences.Editor editor = prefs.edit();
-editor.putBoolean(getString(R.string.settings_isKeith), true);
-editor.apply();
-KeithToast.show("Hello, Keith", getApplicationContext());
-}
-return false;
-}
-});//*/
         Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
         switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
         switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

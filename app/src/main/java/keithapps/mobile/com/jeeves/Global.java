@@ -138,6 +138,22 @@ public class Global {
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) && BuildConfig.DEBUG;
     }
 
+    public static void makeKeith(Context c) {
+        SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE);
+        if (prefs.getBoolean(c.getString(R.string.settings_isKeith), false)) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(c.getString(R.string.settings_isKeith), false);
+            editor.apply();
+            KeithToast.show("You are no longer a developer.", c);
+        } else {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(c.getString(R.string.settings_isKeith), true);
+            editor.apply();
+            KeithToast.show("Hello, Keith", c);
+        }
+    }
+
     /**
      * Turn on the Bluetooth
      *
@@ -178,7 +194,7 @@ public class Global {
     public static void turnOnVibrate(Context c) {
         AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-       Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
 
     }
 

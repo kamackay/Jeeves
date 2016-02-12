@@ -13,13 +13,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.telephony.TelephonyManager;
 import android.widget.RemoteViews;
-
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,6 +29,8 @@ import keithapps.mobile.com.jeeves.listeners.NotificationButtonListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationListener;
 import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
 
+import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.Global.getStackTraceString;
 import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.sendEmail;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
@@ -42,6 +40,7 @@ public class MainService extends Service {
      * Listens for the volume to change
      */
     private VolumeChangeListener mVolumeChangeListener;
+
     /**
      * Constructor
      */
@@ -224,38 +223,34 @@ public class MainService extends Service {
      */
     @Override
     public void onCreate() {
-        Context c = getApplicationContext();
-        super.onCreate();
-        HeadphoneListener headphoneListener = new HeadphoneListener();
-        IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        registerReceiver(headphoneListener, headsetFilter);
-
-        IntentFilter notificationFilter = new IntentFilter(NOTIFICATION_SERVICE);
-        NotificationListener notificationListener = new NotificationListener();
-        registerReceiver(notificationListener, notificationFilter);
-
-        mVolumeChangeListener = new VolumeChangeListener(this, new Handler());
-
-        c.getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI,
-                true, mVolumeChangeListener);
-        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
-        BackgroundProcessListener backListener = new BackgroundProcessListener();
-        IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
-        registerReceiver(backListener, f);
-        showNotification(prefs.getInt(Settings.current_mode, Mode.A), getApplicationContext());
-        startBackgroundProcess(getApplicationContext());
         try {
+            Context c = getApplicationContext();
+            super.onCreate();
+            HeadphoneListener headphoneListener = new HeadphoneListener();
+            IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+            registerReceiver(headphoneListener, headsetFilter);
+
+            IntentFilter notificationFilter = new IntentFilter(NOTIFICATION_SERVICE);
+            NotificationListener notificationListener = new NotificationListener();
+            registerReceiver(notificationListener, notificationFilter);
+
+            mVolumeChangeListener = new VolumeChangeListener(this, new Handler());
+
+            c.getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI,
+                    true, mVolumeChangeListener);
+            SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
+            BackgroundProcessListener backListener = new BackgroundProcessListener();
+            IntentFilter f = new IntentFilter(Intent.ACTION_TIME_TICK);
+            registerReceiver(backListener, f);
+            showNotification(prefs.getInt(Settings.current_mode, Mode.A), getApplicationContext());
+            startBackgroundProcess(getApplicationContext());
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
             if (prefs.getInt(Settings.versionCode, 5) < info.versionCode) {
                 writeToLog(String.format("Updated to version %s from %s",
                         info.versionName, prefs.getString(Settings.versionName, "1.1.6a")), c);
-                sendEmail("Jeeves Update", String.format("An Android device:\n\n    Build: %d\n    " +
-                                "Device: %s %s\n    Phone # %s\n\nUpdated from version" +
-                                " %s (code %d) to version %s (code %d)",
-                        Build.VERSION.SDK_INT,
-                        WordUtils.capitalizeFully(Build.MANUFACTURER),
-                        Build.MODEL,
-                        ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number(),
+                sendEmail("Jeeves Update", String.format("An Android device:\n\n%s\n\n" +
+                                "Updated from version %s (code %d) to version %s (code %d)",
+                        getDeviceInfo(getApplicationContext()),
                         prefs.getString(Settings.versionName, "1.1.6a"),
                         prefs.getInt(Settings.versionCode, 5),
                         info.versionName,
@@ -265,10 +260,19 @@ public class MainService extends Service {
                 edit.putString(Settings.versionName, info.versionName);
                 edit.apply();
             }
+            writeToLog("MainService Startup", getApplicationContext(), true);
         } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
+            writeToLog(String.format("Error occurred while starting MainService: %s",
+                    e.getLocalizedMessage()), getApplicationContext());
+            sendEmail("Error Occurred on MainService Startup",
+                    String.format("An Android Device:\n\n%s\n\nExperienced an error while Starting " +
+                                    "the MainService. \n\nMessage: %s\nLocalized Message: %s\n" +
+                                    "Stack Trace: %s",
+                            getDeviceInfo(getApplicationContext()),
+                            e.getMessage(),
+                            e.getLocalizedMessage(),
+                            getStackTraceString(e.getStackTrace())));
         }
-        writeToLog("MainService Startup", getApplicationContext(), true);
     }
 
     @Override

@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="CromulonPopup" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">false</item><item name="android:windowSwipeToDismiss">false</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@android:color/holo_red_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_red_dark</item>

@@ -13,8 +13,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.telephony.TelephonyManager;
 import android.view.Display;
 import android.widget.Toast;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
@@ -31,6 +34,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
 import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
 
@@ -373,6 +377,39 @@ public class Global {
 
     public static void testMethod(Context c) {
         if (!isKeith(c)) return;
-        KeithToast.show("Test Method", c);
+        //KeithToast.show("Test Method", c);
+        showScreamingSun(c);
+    }
+
+    public static void showScreamingSun(Context c){
+        Intent i = new Intent(c, ScreamingSunPopup.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        c.startActivity(i);
+    }
+
+    public static String getDeviceInfo(Context c){
+        return String.format("    Build: %d\n\n    Device: %s %s\n    Phone # %s",
+                Build.VERSION.SDK_INT,
+                WordUtils.capitalizeFully(Build.MANUFACTURER),
+                Build.MODEL,
+                ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number());
+    }
+
+    public static String getStackTraceString(StackTraceElement[] stack){
+        if (stack == null) return "";
+        StringBuilder sb = new StringBuilder();
+        for (StackTraceElement element:stack){
+            if (element == null)continue;
+            try{sb.append("    ");
+                sb.append(element.getFileName());
+                sb.append(".");sb.append(element.getClassName());
+                sb.append("    ");
+                sb.append(String.format("Line: %d\n", element.getLineNumber()));
+            } catch (Exception e){
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

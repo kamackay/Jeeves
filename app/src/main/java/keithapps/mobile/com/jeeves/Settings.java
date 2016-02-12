@@ -13,6 +13,7 @@ public class Settings {
     public static final String connectedToWiFi = "conn.WiFi";
     public static final String connectedToBT = "conn.BT";
     public static final String connectedToMobile = "conn.Mobile";
+    public static final String showScreamingSunRandomly = "showSun";
     /**
      * Code to use to access the Shared Preferences
      */

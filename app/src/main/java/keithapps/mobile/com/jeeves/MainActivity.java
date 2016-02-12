@@ -240,6 +240,17 @@ public class MainActivity extends AppCompatActivity {
                         ManageVolume.Mode.A), getApplicationContext());
             }
         });
+        Switch switchShowSun = (Switch) findViewById(R.id.settingsScreen_showScreamingSun);
+        switchShowSun.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
+        switchShowSun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(Settings.showScreamingSunRandomly, isChecked);
+                edit.apply();
+            }
+        });
         Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
         switchShowBCV.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
         switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

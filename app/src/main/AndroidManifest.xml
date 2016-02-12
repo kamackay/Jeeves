@@ -85,6 +85,7 @@
         <activity
             android:name=".popups.AdderallPopup"
             android:theme="@style/AppTheme.Dialog" />
+        <activity android:name=".popups.ScreamingSunPopup" android:theme="@style/CromulonPopup"/>
     </application>
 
 </manifest>

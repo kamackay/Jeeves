@@ -11,6 +11,8 @@ import java.util.Locale;
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.Settings;
 
+import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
+import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
 /**
@@ -43,5 +45,12 @@ public class BackgroundProcessListener extends BroadcastReceiver {
             }
         }
         MainService.showNotification(MainService.getMode(c), c);
+        SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE);
+        if (prefs.getBoolean(Settings.showScreamingSunRandomly, false) &&
+                prefs.getBoolean(Settings.screen_mode, false)) {
+            closeNotificationTray(c);
+            showScreamingSun(c);
+        }
     }
 }

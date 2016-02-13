@@ -95,4 +95,7 @@
     <string name="text_resetAtMidnight">Reset at Midnight</string>
     <string name="text_showRickAndMortyPopups">Show Rick and Morty\'s Painfully Intrusive Popups</string>
     <string name="text_8">8</string>
+    <string name="text_screamingSun">Screaming Sun</string>
+    <string name="text_cromulon">Cromulon</string>
+    <string name="text_testEmail">Test Email</string>
 </resources>

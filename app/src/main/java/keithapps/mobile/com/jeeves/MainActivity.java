@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Switch switchShowSun = (Switch) findViewById(R.id.settingsScreen_showScreamingSun);
-        switchShowSun.setChecked(prefs.getBoolean(Settings.showScreamingSunRandomly, true));
+        switchShowSun.setChecked(prefs.getBoolean(Settings.showScreamingSunRandomly, false));
         switchShowSun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

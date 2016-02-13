@@ -91,6 +91,10 @@
         <activity
             android:name=".popups.CromulonPopup"
             android:theme="@style/CromulonPopup" />
+
+        <activity
+            android:name=".popups.TestPopup"
+            android:theme="@style/AppTheme.Dialog" />
     </application>
 
 </manifest>

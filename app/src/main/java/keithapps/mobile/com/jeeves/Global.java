@@ -35,9 +35,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import keithapps.mobile.com.jeeves.popups.CromulonPopup;
-import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
 import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
+import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
+import keithapps.mobile.com.jeeves.popups.TestPopup;
 
 import static javax.mail.Session.getInstance;
 
@@ -426,11 +427,19 @@ public class Global {
         c.startActivity(i);
     }
 
+    public static void showTestPopup(Context c){
+        Intent i = new Intent(c, TestPopup.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        c.startActivity(i);
+    }
+
     public static void testMethod(Context c) {
-        if (!isKeith(c)) return;
+        //if (!isKeith(c)) return;
         //KeithToast.show("Test Method", c);
         //showScreamingSun(c);
-        showCromulon(c);
+        showTestPopup(c);
+        //showCromulon(c);
         //sendEmail("Test Method run on Keith's Device", getDeviceInfo(c));
     }
 }

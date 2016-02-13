@@ -7,11 +7,13 @@ import android.content.SharedPreferences;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.Settings;
 
 import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
+import static keithapps.mobile.com.jeeves.Global.showCromulon;
 import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 
@@ -49,8 +51,14 @@ public class BackgroundProcessListener extends BroadcastReceiver {
                 Context.MODE_PRIVATE);
         if (prefs.getBoolean(Settings.showScreamingSunRandomly, false) &&
                 prefs.getBoolean(Settings.screen_mode, false)) {
-            closeNotificationTray(c);
-            showScreamingSun(c);
+            int n = new Random().nextInt(20);
+            if (n == 0) {
+                closeNotificationTray(c);
+                showScreamingSun(c);
+            } else if (n == 1) {
+                closeNotificationTray(c);
+                showCromulon(c);
+            }
         }
     }
 }

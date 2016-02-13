@@ -34,6 +34,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import keithapps.mobile.com.jeeves.popups.CromulonPopup;
 import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
 import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
@@ -222,8 +223,8 @@ public class Global {
     }
 
     public static void turnOnVibrate(Context c) {/**
-        AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+     AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+     audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
      Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);//*/
     }
 
@@ -374,42 +375,62 @@ public class Global {
         }
     }
 
-
-    public static void testMethod(Context c) {
-        if (!isKeith(c)) return;
-        //KeithToast.show("Test Method", c);
-        showScreamingSun(c);
-    }
-
-    public static void showScreamingSun(Context c){
+    public static void showScreamingSun(Context c) {
         Intent i = new Intent(c, ScreamingSunPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         c.startActivity(i);
     }
 
-    public static String getDeviceInfo(Context c){
-        return String.format("    Build: %d\n\n    Device: %s %s\n    Phone # %s",
-                Build.VERSION.SDK_INT,
-                WordUtils.capitalizeFully(Build.MANUFACTURER),
-                Build.MODEL,
-                ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number());
+    public static String getDeviceInfo(Context c) {
+        final String lineStarter = "\n    ";
+        StringBuilder builder = new StringBuilder();
+        try {
+            builder.append("    Build: ");
+            builder.append(Build.VERSION.SDK_INT);
+            builder.append(lineStarter + "Device: ");
+            builder.append(WordUtils.capitalizeFully(Build.MANUFACTURER) + " ");
+            builder.append(Build.MODEL);
+            builder.append(lineStarter + "Phone #" + ((TelephonyManager)
+                    c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number());
+            builder.append(lineStarter + "IPv4: " + Utils.getIPAddress(true));
+            //builder.append(lineStarter + "IPv6: " + Utils.getIPAddress(false));
+            //builder.append("MAC Address: " + Utils.getMACAddress("eth0")+"\n");
+            return builder.toString();
+        } catch (Exception e) {
+            return builder.toString();
+        }
     }
 
-    public static String getStackTraceString(StackTraceElement[] stack){
+    public static String getStackTraceString(StackTraceElement[] stack) {
         if (stack == null) return "";
         StringBuilder sb = new StringBuilder();
-        for (StackTraceElement element:stack){
-            if (element == null)continue;
-            try{sb.append("    ");
-                sb.append(element.getFileName());
-                sb.append(".");sb.append(element.getClassName());
+        for (StackTraceElement element : stack) {
+            if (element == null) continue;
+            try {
+                sb.append("    ");
+                sb.append(element.getClassName());
                 sb.append("    ");
                 sb.append(String.format("Line: %d\n", element.getLineNumber()));
-            } catch (Exception e){
+            } catch (Exception e) {
                 sb.append("\n");
             }
         }
         return sb.toString();
+    }
+
+    public static void showCromulon(Context c){
+        Intent i = new Intent(c, CromulonPopup.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        c.startActivity(i);
+    }
+
+    public static void testMethod(Context c) {
+        if (!isKeith(c)) return;
+        //KeithToast.show("Test Method", c);
+        //showScreamingSun(c);
+        showCromulon(c);
+        //sendEmail("Test Method run on Keith's Device", getDeviceInfo(c));
     }
 }

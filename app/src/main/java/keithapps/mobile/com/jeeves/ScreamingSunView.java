@@ -1,12 +1,15 @@
 package keithapps.mobile.com.jeeves;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.util.Random;
 
 /**
  * Created by Keith on 2/11/2016.
@@ -32,6 +35,7 @@ public class ScreamingSunView extends View {
         init();
     }
 
+    private Bitmap[] bitmaps;
     private Bitmap bitmap;
     private Paint p;
 
@@ -40,8 +44,8 @@ public class ScreamingSunView extends View {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(200);
-                    while (y > -350) {
+                    Thread.sleep(300);
+                    while (y > -1 * bitmap.getHeight()) {
                         try {
                             Thread.sleep(25);
                             y -= 3;
@@ -56,11 +60,19 @@ public class ScreamingSunView extends View {
                 }
             }
         });
-        bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),
-                R.drawable.screaming_sun), 294, 300, false);
+        Resources r = getResources();
+        int bitmapCount = 3;
+        bitmaps = new Bitmap[bitmapCount];
+        bitmaps[0] = BitmapFactory.decodeResource(r, R.drawable.screaming_sun);
+        bitmaps[1] = BitmapFactory.decodeResource(r, R.drawable.screaming_sun_2);
+        bitmaps[2] = BitmapFactory.decodeResource(r, R.drawable.screaming_sun_3);
+        for (int i = 0; i < bitmapCount; i++)
+            while (bitmaps[i].getWidth() > 500) bitmaps[i] = Bitmap.createScaledBitmap(bitmaps[i],
+                    (int) (bitmaps[i].getWidth() * .75), (int) (bitmaps[i].getHeight() * .75), false);
         p = new Paint();
         y = -500;
         animationRunning = false;
+        bitmap = bitmaps[new Random().nextInt(bitmapCount)];
     }
 
     @Override

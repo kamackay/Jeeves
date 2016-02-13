@@ -12,20 +12,20 @@ import android.view.Surface;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import keithapps.mobile.com.jeeves.CromulonView;
 import keithapps.mobile.com.jeeves.R;
-import keithapps.mobile.com.jeeves.ScreamingSunView;
 
 /**
- * Created by Keith on 2/11/2016.
- * Cromulon Popup
+ * Created by Keith on 2/12/2016.
+ * Cromulon Activity
  */
-public class ScreamingSunPopup extends Activity {
+public class CromulonPopup extends Activity {
     private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.screaming_sun_popup);
+        setContentView(R.layout.cromulon_popup);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         ActionBar a = getActionBar();
         if (a != null) a.hide();
@@ -41,43 +41,27 @@ public class ScreamingSunPopup extends Activity {
             finish();
             return;
         }
-        ScreamingSunView ssv = (ScreamingSunView) findViewById(R.id.screaming_sun);
-        ssv.setOnAnimationEnd(new Runnable() {
+        player = new MediaPlayer();
+        CromulonView cromulonView = (CromulonView)findViewById(R.id.cromulon);
+        cromulonView.setOnAnimationEnd(new Runnable() {
             @Override
             public void run() {
-                if (player.isPlaying()) fadeOut();
-                else finish();
+                finish();
+            }
+        });
+        cromulonView.setPlaySound(new Runnable() {
+            @Override
+            public void run() {
+                player.start();
             }
         });
         try {
-            player = new MediaPlayer();
-            AssetFileDescriptor afd = getAssets().openFd("screaming.mp3");
+            AssetFileDescriptor afd = getAssets().openFd("cromulon.ogg");
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
-            player.start();
-        } catch (Exception e) {
-
+        } catch (Exception e){
+            //Fuck it
         }
-    }
-
-    float volume = 1;
-
-    public void fadeOut() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (volume >= 0) {
-                    try {
-                        Thread.sleep(100);
-                        volume -= .05;
-                        player.setVolume(volume, volume);
-                    } catch (Exception e) {
-                    }
-                }
-                player.stop();
-                finish();
-            }
-        }).start();
     }
 
     @Override

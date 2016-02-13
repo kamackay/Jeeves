@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -44,11 +45,38 @@ public class HeadphoneQueryPopup extends Activity {
             ((Button) findViewById(R.id.headphone_popup_partialButton)).setTypeface(tf);
             ((TextView) findViewById(R.id.headphone_popup_text)).setTypeface(tf);
         }
+        final TextView countdown = (TextView) findViewById(R.id.headphonePopup_countdown);
+        final int x = 10;
+        countdown.setText(String.valueOf(x));
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(8000);
+                    for (int i = x-1; i >= 0; i--) {
+                        Thread.sleep(1000);
+                        if (i == 0) runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                countdown.setText("0");
+                                finish();
+                            }
+                        });
+                        else {
+                            final int finalI = i;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    countdown.setText(String.valueOf(finalI));
+                                }
+                            });
+                            if (i == 3) runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    countdown.setTextColor(Color.RED);
+                                }
+                            });
+                        }
+                    }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

@@ -34,6 +34,14 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/ten">
 
+        <TextView
+            android:id="@+id/headphonePopup_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/fifteen" />
+
         <Button
             android:id="@+id/headphone_popup_fullButton"
             android:layout_width="wrap_content"

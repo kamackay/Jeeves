@@ -93,5 +93,6 @@
     <string name="text_cancel">Cancel</string>
     <string name="text_buttonD">Button D</string>
     <string name="text_resetAtMidnight">Reset at Midnight</string>
-    <string name="text_showScreamingSun">Show Rick and Morty\'s Screaming Sun Randomly</string>
+    <string name="text_showRickAndMortyPopups">Show Rick and Morty\'s Painfully Intrusive Popups</string>
+    <string name="text_8">8</string>
 </resources>

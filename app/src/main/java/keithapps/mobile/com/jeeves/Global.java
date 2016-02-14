@@ -334,7 +334,8 @@ public class Global {
                         try {
                             Message m = new MimeMessage(session);
                             m.setFrom(new InternetAddress(username));
-                            m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+                            m.setRecipients(Message.RecipientType.TO,
+                                    InternetAddress.parse(recipient));
                             m.setSubject(header);
                             m.setText(message + "\n\n" + getTimestamp());
                             Transport.send(m);

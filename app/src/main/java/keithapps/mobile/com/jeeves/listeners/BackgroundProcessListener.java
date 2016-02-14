@@ -51,7 +51,7 @@ public class BackgroundProcessListener extends BroadcastReceiver {
                 Context.MODE_PRIVATE);
         if (prefs.getBoolean(Settings.showScreamingSunRandomly, false) &&
                 prefs.getBoolean(Settings.screen_mode, false)) {
-            int n = new Random().nextInt(20);
+            int n = new Random().nextInt(prefs.getInt(Settings.intrusivePopupFrequency, 50) + 1);
             if (n == 0) {
                 closeNotificationTray(c);
                 showScreamingSun(c);

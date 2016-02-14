@@ -29,6 +29,7 @@ public class Settings {
     public static final String action_c_name = "action.c.n";
     public static final String action_d_name = "action.d.n";
     public static final String screen_mode = "screen.on";
+    public static final String intrusivePopupFrequency = "int_popup.freq";
 
     public class Adderall {
         public static final String timeSince = "Adderall.timeSince";

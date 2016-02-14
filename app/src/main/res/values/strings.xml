@@ -92,7 +92,7 @@
     <string name="text_keithappsImage">KeithApps Image</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_buttonD">Button D</string>
-    <string name="text_resetAtMidnight">Reset at Midnight</string>
+    <string name="text_resetAtMidnight">Reset Adderall at Midnight</string>
     <string name="text_showRickAndMortyPopups">Show Rick and Morty\'s Painfully Intrusive Popups</string>
     <string name="text_8">8</string>
     <string name="text_screamingSun">Screaming Sun</string>
@@ -106,4 +106,6 @@
     <string name="text_modes">Modes</string>
     <string name="text_features">Features</string>
     <string name="text_testKeithToast">Test Keith Toast</string>
+    <string name="frequency">Frequency:</string>
+    <string name="frequency_description">Higher value causes \nlower frequency\nMax: 999 Min: 0</string>
 </resources>

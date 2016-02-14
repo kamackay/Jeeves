@@ -115,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_features_settings, frame, true);
         SharedPreferences prefs = getPrefs();
+        EditText frequency = (EditText) findViewById(R.id.intrusivePopup_frequency);
+        frequency.setText(String.valueOf(prefs.getInt(Settings.intrusivePopupFrequency, 50)));
+        frequency.addTextChangedListener(new TextChangeListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                int n = Integer.parseInt(s.toString());
+                if (n >= 0 && n <= 999) {
+                    SharedPreferences.Editor edit = getPrefs().edit();
+                    edit.putInt(Settings.intrusivePopupFrequency, n);
+                    edit.apply();
+                }
+            }
+        });
         Switch switchResetAtMidnight = (Switch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight);
         switchResetAtMidnight.setChecked(prefs.getBoolean(Settings.Adderall.resetAtMidnight, false));
         switchResetAtMidnight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -699,7 +712,7 @@ public class MainActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 KeithToast.show("Error killing process", getApplicationContext());
                                 writeToLog(String.format("Error killing process %s\n%s",
-                                                e.getLocalizedMessage(), e.getMessage()),
+                                        e.getLocalizedMessage(), e.getMessage()),
                                         getApplicationContext());
                                 populateProcesses(null);
                                 return;
@@ -716,7 +729,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception exc) {
                             KeithToast.show("Error killing process", getApplicationContext());
                             writeToLog(String.format("Error killing process %s\n%s",
-                                            exc.getLocalizedMessage(), exc.getMessage()),
+                                    exc.getLocalizedMessage(), exc.getMessage()),
                                     getApplicationContext());
                         }
                     }

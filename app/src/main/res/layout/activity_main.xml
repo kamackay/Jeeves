@@ -45,7 +45,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
                 android:onClick="showModeSettings"
-                android:padding="@dimen/zero"
                 android:text="@string/text_modes"
                 android:textSize="@dimen/ten" />
 
@@ -68,7 +67,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
                 android:onClick="showFeatures"
-                android:padding="@dimen/zero"
                 android:text="@string/text_features"
                 android:textSize="@dimen/ten" />
 
@@ -91,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
                 android:onClick="showFeedback"
-                android:padding="@dimen/zero"
                 android:text="@string/text_sendFeedback"
                 android:textSize="@dimen/ten" />
         </LinearLayout>

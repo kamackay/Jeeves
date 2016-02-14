@@ -55,4 +55,9 @@ public class TestPopup extends Activity {
             finish();
         }
     }
+
+    public void testKeithToast(View v) {
+        KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
+        finish();
+    }
 }

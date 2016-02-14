@@ -363,7 +363,7 @@ public class Global {
                         (e == null) ? "Could not get Stack Trace" : getStackTraceString(e));
         sendEmail(header, message);
         sendEmailTo(header, message, myEmail);
-        writeToLog(message, c);
+        logException(info, c, e);
     }
 
     public static String getStackTraceString(Exception e) {

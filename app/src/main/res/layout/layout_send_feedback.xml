@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/AppTheme"
+    tools:context="keithapps.mobile.com.jeeves.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,7 +23,7 @@
         android:id="@+id/feedback_titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textShortMessage" />
+        android:inputType="textShortMessage|textCapWords" />
 
     <Space
         android:layout_width="match_parent"
@@ -33,23 +36,26 @@
         android:labelFor="@+id/feedback_bodyText"
         android:text="@string/text_body" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/one_hundred_fifty">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/feedback_bodyText"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:inputType="textLongMessage|textAutoCorrect"
-            android:minHeight="@dimen/one_hundred" />
-    </ScrollView>
+            android:layout_weight="9"
+            android:inputType="textMultiLine" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/lighter_background"
-        android:onClick="sendFeedbackEmail"
-        android:text="@string/text_sendFeedback"
-        android:textColor="@android:color/white" />
+        <ImageView
+            android:id="@+id/sendFeedback_sendButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/text_sendFeedback"
+            android:paddingEnd="@dimen/zero"
+            android:paddingStart="@dimen/ten"
+            android:src="@drawable/send" />
+    </LinearLayout>
 </LinearLayout>

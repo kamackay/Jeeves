@@ -27,66 +27,75 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/main_textSmall" />
 
-    <LinearLayout
+    <HorizontalScrollView
         android:id="@+id/main_buttonBar"
-        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/activity_main_versionText">
 
-        <Button
-            android:id="@+id/main_buttonBar_1"
-            style="?android:attr/buttonBarButtonStyle"
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="showModeSettings"
-            android:text="Modes"
-            android:textSize="@dimen/ten" />
+            android:layout_gravity="center_horizontal">
 
-        <Space
-            android:layout_width="@dimen/ten"
-            android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/main_buttonBar_1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:onClick="showModeSettings"
+                android:padding="@dimen/zero"
+                android:text="@string/text_modes"
+                android:textSize="@dimen/ten" />
 
-        <View
-            android:layout_width="@dimen/one_pixel"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark" />
+            <Space
+                android:layout_width="@dimen/ten"
+                android:layout_height="match_parent" />
 
-        <Space
-            android:layout_width="@dimen/ten"
-            android:layout_height="match_parent" />
+            <View
+                android:layout_width="@dimen/one_pixel"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark" />
 
-        <Button
-            android:id="@+id/main_buttonBar_2"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="showFeatures"
-            android:text="Features"
-            android:textSize="@dimen/ten" />
+            <Space
+                android:layout_width="@dimen/ten"
+                android:layout_height="match_parent" />
 
-        <Space
-            android:layout_width="@dimen/ten"
-            android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/main_buttonBar_2"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:onClick="showFeatures"
+                android:padding="@dimen/zero"
+                android:text="@string/text_features"
+                android:textSize="@dimen/ten" />
 
-        <View
-            android:layout_width="@dimen/one_pixel"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark" />
+            <Space
+                android:layout_width="@dimen/ten"
+                android:layout_height="match_parent" />
 
-        <Space
-            android:layout_width="@dimen/ten"
-            android:layout_height="match_parent" />
+            <View
+                android:layout_width="@dimen/one_pixel"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark" />
 
-        <Button
-            android:id="@+id/main_buttonBar_3"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="showFeedback"
-            android:text="Send Feedback"
-            android:textSize="@dimen/ten" />
-    </LinearLayout>
+            <Space
+                android:layout_width="@dimen/ten"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/main_buttonBar_3"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:onClick="showFeedback"
+                android:padding="@dimen/zero"
+                android:text="@string/text_sendFeedback"
+                android:textSize="@dimen/ten" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <ScrollView
         android:id="@+id/activity_main_scrollView"

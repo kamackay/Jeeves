@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -13,17 +14,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
+import static keithapps.mobile.com.jeeves.Global.getAllChildren;
 import static keithapps.mobile.com.jeeves.Global.getTimestamp;
+import static keithapps.mobile.com.jeeves.Global.logException;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 
 public class AdderallPopup extends Activity {
+    Typeface tf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +92,7 @@ public class AdderallPopup extends Activity {
                 updateNotification(getApplicationContext());
             }
         });
+        setFont();
         writeToLog("Adderall Popup shown", getApplicationContext());
     }
 
@@ -154,5 +161,26 @@ public class AdderallPopup extends Activity {
                 }, hour, minute, false);
         mTimePicker.setTitle("What time did you last take Adderall?");
         mTimePicker.show();//*/
+    }
+
+    void setFont() {
+        try {
+            if (tf == null)
+                tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+            if (tf == null) return;
+            ArrayList<View> views = getAllChildren(findViewById(R.id.adderallPopup_root));
+            for (int i = 0; i < views.size(); i++) {
+                View v = views.get(i);
+                if (v instanceof TextView) {
+                    try {
+                        ((TextView) v).setTypeface(tf);
+                    } catch (Exception e) {
+                        //It's cool, move on
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logException("Error loading font in Adderall Popup", getApplicationContext(), e);
+        }
     }
 }

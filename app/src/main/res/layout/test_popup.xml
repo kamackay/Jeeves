@@ -42,4 +42,14 @@
         android:layout_height="wrap_content"
         android:onClick="testException"
         android:text="@string/text_testExeption" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="testKeithToast"
+        android:text="@string/text_testKeithToast" />
 </LinearLayout>

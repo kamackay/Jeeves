@@ -15,13 +15,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.Settings;
 
+import static keithapps.mobile.com.jeeves.Global.getAllChildren;
+import static keithapps.mobile.com.jeeves.Global.logException;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 
 public class HeadphoneQueryPopup extends Activity {
+
+    Typeface tf;
 
     /**
      * Initialize
@@ -47,12 +53,13 @@ public class HeadphoneQueryPopup extends Activity {
         }
         final TextView countdown = (TextView) findViewById(R.id.headphonePopup_countdown);
         final int x = 10;
+        setFont();
         countdown.setText(String.valueOf(x));
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    for (int i = x-1; i >= 0; i--) {
+                    for (int i = x - 1; i >= 0; i--) {
                         Thread.sleep(1000);
                         if (i == 0) runOnUiThread(new Runnable() {
                             @Override
@@ -133,5 +140,26 @@ public class HeadphoneQueryPopup extends Activity {
         writeToLog("Headset Popup - Partial", getApplicationContext());
         updateNotification(getApplicationContext());
         finish();
+    }
+
+    void setFont() {
+        try {
+            if (tf == null)
+                tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+            if (tf == null) return;
+            ArrayList<View> views = getAllChildren(findViewById(R.id.headphone_popup_root));
+            for (int i = 0; i < views.size(); i++) {
+                View v = views.get(i);
+                if (v instanceof TextView) {
+                    try {
+                        ((TextView) v).setTypeface(tf);
+                    } catch (Exception e) {
+                        //It's cool, move on
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logException("Error loading font in Adderall Popup", getApplicationContext(), e);
+        }
     }
 }

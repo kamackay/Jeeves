@@ -2,6 +2,7 @@ package keithapps.mobile.com.jeeves.popups;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,19 +33,18 @@ public class KeithToast {
             LayoutInflater inflater = (LayoutInflater)
                     context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.keithtoast, null);
-            TextView textView = (TextView) layout.findViewById(R.id.keithtoast_textview);
+            TextView textView = (TextView) layout.findViewById(R.id.keithToast_textView);
             textView.setText(text);
             textView.setTextColor(color);
             ImageView iv = (ImageView) layout.findViewById(R.id.keithtoast_imageview);
             iv.setImageResource(getColoredImage(color));
             TextView t2 = (TextView) layout.findViewById(R.id.keithToast_iconText);
-            t2.setTextColor(color);/**
-             Typeface tf = Typeface.createFromAsset(context.getAssets(), "arial.ttf");
-             if (tf == null) tf = Typeface.createFromAsset(context.getAssets(), "calibri.ttf");
-             if (tf != null) {
-             textView.setTypeface(tf);
-             t2.setTypeface(tf);
-             }//*/
+            t2.setTextColor(color);
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "arial.ttf");
+            if (tf != null) {
+                textView.setTypeface(tf);
+                t2.setTypeface(tf);
+            }
             Toast toast = new Toast(context);
             toast.setGravity(Gravity.TOP, 0, 50);
             if (length == Toast.LENGTH_LONG || length == Toast.LENGTH_SHORT)

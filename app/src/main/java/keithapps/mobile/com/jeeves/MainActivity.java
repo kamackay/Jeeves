@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -43,6 +42,7 @@ import keithapps.mobile.com.jeeves.popups.KeithToast;
 
 import static keithapps.mobile.com.jeeves.Global.emailException;
 import static keithapps.mobile.com.jeeves.Global.getAllChildren;
+import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
@@ -68,6 +68,28 @@ public class MainActivity extends AppCompatActivity {
      */
     private boolean mainShowing;
     private FrameLayout frame;
+    Runnable sendFeedback = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                final String header = "Feedback: " +
+                        ((EditText) findViewById(R.id.feedback_titleText)).getText().toString().trim(),
+                        message = String.format("%s\n\nSent from Device:\n%s",
+                                ((EditText) findViewById(R.id.feedback_bodyText))
+                                        .getText().toString().trim(),
+                                getDeviceInfo(getApplicationContext()));
+                if (header.isEmpty() || message.isEmpty()) return;
+                sendEmail(header, message);
+                sendEmailTo(header, message, myEmail);
+                hideKeyboard();
+                KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
+                showModeSettings(null);
+            } catch (Exception e) {
+                emailException("Error Sending feedback email", getApplicationContext(), e);
+                KeithToast.show("Error sending feedback", getApplicationContext());
+            }
+        }
+    };
 
     /**
      * Creation event
@@ -511,10 +533,10 @@ public class MainActivity extends AppCompatActivity {
             if (tf == null) return;
             ArrayList<View> views = getAllChildren(findViewById(R.id.main_root));
             for (int i = 0; i < views.size(); i++) {
-                if (views.get(i) instanceof ViewGroup) continue;
+                View v = views.get(i);
                 try {
-                    if (views.get(i) instanceof TextView)
-                        ((TextView) views.get(i)).setTypeface(tf);
+                    if (v instanceof TextView)
+                        ((TextView) v).setTypeface(tf);
                 } catch (Exception ex) {
                     //Don't do anything
                 }
@@ -776,20 +798,13 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_send_feedback, frame, true);
         setFont();
-
-    }
-
-    public void sendFeedbackEmail(View view) {
-        try {
-            final String header = ((EditText) findViewById(R.id.feedback_titleText))
-                    .getText().toString().trim(),
-                    message = ((EditText) findViewById(R.id.feedback_bodyText))
-                            .getText().toString().trim();
-            if (header.isEmpty() || message.isEmpty()) return;
-            sendEmail(header, message);
-            sendEmailTo(header, message, myEmail);
-        } catch (Exception e) {
-            emailException("Error Sending feedback email", getApplicationContext(), e);
-        }
+        getApplicationContext().setTheme(R.style.AppTheme);
+        findViewById(R.id.sendFeedback_sendButton)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendFeedback.run();
+                    }
+                });
     }
 }

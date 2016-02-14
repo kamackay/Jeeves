@@ -7,7 +7,6 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@android:color/holo_red_dark</item>
         <item name="colorPrimaryDark">@android:color/holo_red_dark</item>
-        <item name="android:typeface">serif</item>
         <item name="colorAccent">@android:color/holo_red_dark</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>

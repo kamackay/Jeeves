@@ -103,4 +103,7 @@
     <string name="text_feedback_pageHeader">Send a Feedback email to the developer at KeithApps!</string>
     <string name="text_testExeption">Test Exception</string>
     <string name="text_sendFeedback">Send Feedback</string>
+    <string name="text_modes">Modes</string>
+    <string name="text_features">Features</string>
+    <string name="text_testKeithToast">Test Keith Toast</string>
 </resources>

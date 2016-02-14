@@ -1,5 +1,4 @@
 package keithapps.mobile.com.jeeves.popups;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +11,7 @@ import static keithapps.mobile.com.jeeves.Global.emailException;
 import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.Global.sendEmail;
 import static keithapps.mobile.com.jeeves.Global.showCromulon;
+import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
 /**
  * Created by kamac on 2/13/2016.
@@ -58,6 +58,11 @@ public class TestPopup extends Activity {
 
     public void testKeithToast(View v) {
         KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
+        finish();
+    }
+
+    public void headphonesPopup(View view) {
+        showHeadphonesPopup(getApplicationContext());
         finish();
     }
 }

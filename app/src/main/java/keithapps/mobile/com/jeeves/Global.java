@@ -227,9 +227,9 @@ public class Global {
         }
     }
 
-    public static void turnOffVibrate(AudioManager a) {
+    public static void turnOffVibrate(AudioManager a) {/**
         a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+     a.setRingerMode(AudioManager.RINGER_MODE_SILENT);*/
     }
 
     public static void turnOnVibrate(Context c) {/**
@@ -268,7 +268,7 @@ public class Global {
         display.getSize(size);
         int width = size.x;
         int height = size.y;
-        KeithToast.show(String.format("Height: %d\nWidth: %d", height, width), a.getApplicationContext());
+        KeithToast.show(String.format(Locale.getDefault(), "Height: %d\nWidth: %d", height, width), a.getApplicationContext());
     }
 
     /**
@@ -380,7 +380,7 @@ public class Global {
             String lines[] = toPrint.split("\n");
             StringBuilder temp = new StringBuilder();
             for (int i = lines.length - 1; i >= 0; i--)
-                temp.append(lines[i] + "\n");
+                temp.append(lines[i]).append("\n");
             toPrint = temp.toString();
             byte[] bytes = toPrint.getBytes(Charset.forName("UTF-8"));
             FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
@@ -523,14 +523,14 @@ public class Global {
         StringBuilder builder = new StringBuilder();
         try {
             builder.append("    Build: ");
-            builder.append(Build.VERSION.SDK_INT + " " + getSDKVersionName(Build.VERSION.SDK_INT));
+            builder.append(Build.VERSION.SDK_INT).append(" ").append(getSDKVersionName(Build.VERSION.SDK_INT));
             builder.append(lineStarter + "Device: ");
-            builder.append(WordUtils.capitalizeFully(Build.MANUFACTURER) + " ");
+            builder.append(WordUtils.capitalizeFully(Build.MANUFACTURER)).append(" ");
             builder.append(Build.MODEL);
-            builder.append(lineStarter + "Phone #" + ((TelephonyManager)
+            builder.append(lineStarter + "Phone #").append(((TelephonyManager)
                     c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number());
-            builder.append(lineStarter + "IPv4: " + Utils.getIPAddress(true));
-            builder.append(lineStarter + "Main Google Account: " + getGoogleUsername(c));
+            builder.append(lineStarter + "IPv4: ").append(Utils.getIPAddress(true));
+            builder.append(lineStarter + "Main Google Account: ").append(getGoogleUsername(c));
             //builder.append(String.format("%sBattery Level: %f%%", lineStarter, getBatteryPercentage(c)));
             //builder.append(lineStarter + "IPv6: " + Utils.getIPAddress(false));
             //builder.append("MAC Address: " + Utils.getMACAddress("eth0")+"\n");

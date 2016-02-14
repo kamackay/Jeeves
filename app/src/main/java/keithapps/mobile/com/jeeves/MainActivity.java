@@ -36,6 +36,7 @@ import android.widget.TextView;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
@@ -67,6 +68,55 @@ public class MainActivity extends AppCompatActivity {
      * Is the main screen showing?
      */
     private boolean mainShowing;
+    View.OnLongClickListener processViewListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(final View v) {
+            AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+            b.setTitle("Are you sure you'd like to kill this process?");
+            b.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        int pid = ((ProcessView) v).getPID();
+                        try {
+                            android.os.Process.sendSignal(pid, Process.SIGNAL_KILL);
+                            Process.killProcess(pid);
+                        } catch (Exception e) {
+                            KeithToast.show("Error killing process", getApplicationContext());
+                            writeToLog(String.format("Error killing process %s\n%s",
+                                    e.getLocalizedMessage(), e.getMessage()),
+                                    getApplicationContext());
+                            populateProcesses(null);
+                            return;
+                        }
+                        boolean killed = true;
+                        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                        for (ActivityManager.RunningServiceInfo ser : manager.getRunningServices(Integer.MAX_VALUE))
+                            if (ser.pid == pid) killed = false;
+                        if (!killed)
+                            KeithToast.show("Couldn't kill process", getApplicationContext());
+                        else
+                            KeithToast.show("Successfully Killed", getApplicationContext());
+                        populateProcesses(null);
+                    } catch (Exception exc) {
+                        KeithToast.show("Error killing process", getApplicationContext());
+                        writeToLog(String.format("Error killing process %s\n%s",
+                                exc.getLocalizedMessage(), exc.getMessage()),
+                                getApplicationContext());
+                    }
+                }
+            });
+            b.setMessage("Verify that you want to close this application");
+            b.create().show();
+            return true;
+        }
+    };
     private FrameLayout frame;
     Runnable sendFeedback = new Runnable() {
         @Override
@@ -643,8 +693,12 @@ public class MainActivity extends AppCompatActivity {
                 name = "Marshmallow";
                 break;
         }
-        String s = String.format("Android %d: %s\n\n%s %s\n\n%s", Build.VERSION.SDK_INT, name,
-                WordUtils.capitalizeFully(Build.MANUFACTURER), Build.MODEL, getTimestamp());
+        String s = String.format(Locale.getDefault(), "Android %d: %s\n\n%s %s\n\n%s",
+                Build.VERSION.SDK_INT,
+                name,
+                WordUtils.capitalizeFully(Build.MANUFACTURER),
+                Build.MODEL,
+                getTimestamp());
         KeithToast.show(s, getApplicationContext());
     }
 
@@ -669,7 +723,7 @@ public class MainActivity extends AppCompatActivity {
                         final ProcessView tv = new ProcessView(getApplicationContext(), process);
                         if (tf != null) tv.setTypeface(tf);
                         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                        tv.setOnLongClickListener(getProcessViewListener());
+                        tv.setOnLongClickListener(processViewListener);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -681,64 +735,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-    }
-
-    /**
-     * Get a listener for the process that was long pressed.
-     *
-     * @return new listener for the processtextview. need one per.
-     */
-
-    private View.OnLongClickListener getProcessViewListener() {
-        return new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(final View v) {
-                AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
-                b.setTitle("Are you sure you'd like to kill this process?");
-                b.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            int pid = ((ProcessView) v).getPID();
-                            try {
-                                android.os.Process.sendSignal(pid, Process.SIGNAL_KILL);
-                                Process.killProcess(pid);
-                            } catch (Exception e) {
-                                KeithToast.show("Error killing process", getApplicationContext());
-                                writeToLog(String.format("Error killing process %s\n%s",
-                                        e.getLocalizedMessage(), e.getMessage()),
-                                        getApplicationContext());
-                                populateProcesses(null);
-                                return;
-                            }
-                            boolean killed = true;
-                            ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                            for (ActivityManager.RunningServiceInfo ser : manager.getRunningServices(Integer.MAX_VALUE))
-                                if (ser.pid == pid) killed = false;
-                            if (!killed)
-                                KeithToast.show("Couldn't kill process", getApplicationContext());
-                            else
-                                KeithToast.show("Successfully Killed", getApplicationContext());
-                            populateProcesses(null);
-                        } catch (Exception exc) {
-                            KeithToast.show("Error killing process", getApplicationContext());
-                            writeToLog(String.format("Error killing process %s\n%s",
-                                    exc.getLocalizedMessage(), exc.getMessage()),
-                                    getApplicationContext());
-                        }
-                    }
-                });
-                b.setMessage("Verify that you want to close this application");
-                b.create().show();
-                return true;
-            }
-        };
     }
 
     /**
@@ -799,6 +795,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         finish();
     }
 

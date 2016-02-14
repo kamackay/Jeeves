@@ -153,7 +153,7 @@ public class LogActivity extends AppCompatActivity {
     /**
      * Save all appropriate fragment state.
      *
-     * @param outState
+     * @param outState outstate
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {

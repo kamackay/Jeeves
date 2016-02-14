@@ -101,11 +101,12 @@
     <string name="text_body">Body:</string>
     <string name="text_title">Title:</string>
     <string name="text_feedback_pageHeader">Send a Feedback email to the developer at KeithApps!</string>
-    <string name="text_testExeption">Test Exception</string>
+    <string name="text_testException">Test Exception</string>
     <string name="text_sendFeedback">Send Feedback</string>
     <string name="text_modes">Modes</string>
     <string name="text_features">Features</string>
     <string name="text_testKeithToast">Test Keith Toast</string>
     <string name="frequency">Frequency:</string>
-    <string name="frequency_description">Higher value causes \nlower frequency\nMax: 999 Min: 0</string>
+    <string name="frequency_description">Higher value means \nlower frequency\nMax: 999 Min: 0</string>
+    <string name="headphonePopup">Headphone Popup</string>
 </resources>

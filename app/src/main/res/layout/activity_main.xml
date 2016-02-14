@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/ten"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -44,12 +45,14 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
+                android:layout_gravity="center_vertical"
                 android:onClick="showModeSettings"
+                android:padding="@dimen/zero"
                 android:text="@string/text_modes"
                 android:textSize="@dimen/ten" />
 
             <Space
-                android:layout_width="@dimen/ten"
+                android:layout_width="@dimen/main_buttonBar_space"
                 android:layout_height="match_parent" />
 
             <View
@@ -58,7 +61,7 @@
                 android:background="@android:color/holo_red_dark" />
 
             <Space
-                android:layout_width="@dimen/ten"
+                android:layout_width="@dimen/main_buttonBar_space"
                 android:layout_height="match_parent" />
 
             <Button
@@ -66,12 +69,14 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
+                android:layout_gravity="center_vertical"
                 android:onClick="showFeatures"
+                android:padding="@dimen/zero"
                 android:text="@string/text_features"
                 android:textSize="@dimen/ten" />
 
             <Space
-                android:layout_width="@dimen/ten"
+                android:layout_width="@dimen/main_buttonBar_space"
                 android:layout_height="match_parent" />
 
             <View
@@ -80,7 +85,7 @@
                 android:background="@android:color/holo_red_dark" />
 
             <Space
-                android:layout_width="@dimen/ten"
+                android:layout_width="@dimen/main_buttonBar_space"
                 android:layout_height="match_parent" />
 
             <Button
@@ -88,7 +93,9 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/thirty"
+                android:layout_gravity="center_vertical"
                 android:onClick="showFeedback"
+                android:padding="@dimen/zero"
                 android:text="@string/text_sendFeedback"
                 android:textSize="@dimen/ten" />
         </LinearLayout>

@@ -21,4 +21,6 @@
     <dimen name="one_pixel">1px</dimen>
     <dimen name="fourty">40sp</dimen>
     <dimen name="spinnerWidth">80sp</dimen>
+    <dimen name="main_buttonBar_space">5sp</dimen>
+    <dimen name="testPopup_verticalSpace">5sp</dimen>
 </resources>

@@ -15,7 +15,7 @@
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten" />
+        android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten" />
+        android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
         android:layout_width="wrap_content"
@@ -35,21 +35,31 @@
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten" />
+        android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="testException"
-        android:text="@string/text_testExeption" />
+        android:text="@string/text_testException" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/ten" />
+        android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="testKeithToast"
         android:text="@string/text_testKeithToast" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/testPopup_verticalSpace" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="headphonesPopup"
+        android:text="@string/headphonePopup" />
 </LinearLayout>

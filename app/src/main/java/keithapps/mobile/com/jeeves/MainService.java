@@ -120,7 +120,8 @@ public class MainService extends Service {
         contentView.setTextViewText(R.id.notification_textD,
                 prefs.getString(Settings.action_d_name, c.getString(R.string.text_car)));
         contentView.setTextViewText(R.id.notification_text_adderallSoFar,
-                String.format("%d mg", prefs.getInt(Settings.Adderall.adderall_count, 0)));
+                String.format(Locale.getDefault(), "%d mg",
+                        prefs.getInt(Settings.Adderall.adderall_count, 0)));
         String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
         if (!timestamp_last.equals("")) {
             try {
@@ -128,7 +129,8 @@ public class MainService extends Service {
                 SimpleDateFormat format = new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US);
                 long difference = format.parse(timestamp_now).getTime() -
                         format.parse(timestamp_last).getTime();
-                String s = String.format("%02d:%02d", (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
+                String s = String.format(Locale.getDefault(), "%02d:%02d",
+                        (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
                 contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
             } catch (Exception e) {//Give Up Immediately}
             }
@@ -248,8 +250,9 @@ public class MainService extends Service {
             if (prefs.getInt(Settings.versionCode, 5) < info.versionCode) {
                 writeToLog(String.format("Updated to version %s from %s",
                         info.versionName, prefs.getString(Settings.versionName, "1.1.6a")), c);
-                sendEmail("Jeeves Update", String.format("An Android device:\n\n%s\n\n" +
-                                "Updated from version %s (code %d) to version %s (code %d)",
+                sendEmail("Jeeves Update", String.format(Locale.getDefault(),
+                        "An Android device:\n\n%s\n\nUpdated from version %s (code %d) to version " +
+                                "%s (code %d)",
                         getDeviceInfo(getApplicationContext()),
                         prefs.getString(Settings.versionName, "1.1.6a"),
                         prefs.getInt(Settings.versionCode, 5),

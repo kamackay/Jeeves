@@ -201,15 +201,19 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOffBluetooth(Context c) {
-        BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
-        int state = bt.getState();
-        if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_CONNECTED
-                || state == BluetoothAdapter.STATE_TURNING_ON
-                || state == BluetoothAdapter.STATE_CONNECTING
-                || state == BluetoothAdapter.STATE_DISCONNECTED
-                || state == BluetoothAdapter.STATE_DISCONNECTING) {
-            bt.disable();
-            writeToLog("Turned off Bluetooth", c);
+        try {
+            BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+            int state = bt.getState();
+            if (state == BluetoothAdapter.STATE_ON || state == BluetoothAdapter.STATE_CONNECTED
+                    || state == BluetoothAdapter.STATE_TURNING_ON
+                    || state == BluetoothAdapter.STATE_CONNECTING
+                    || state == BluetoothAdapter.STATE_DISCONNECTED
+                    || state == BluetoothAdapter.STATE_DISCONNECTING) {
+                bt.disable();
+                writeToLog("Turned off Bluetooth", c);
+            }
+        } catch (Exception e) {
+            emailException("Error Turning off Bluetooth", c, e);
         }
     }
 
@@ -219,16 +223,20 @@ public class Global {
      * @param c the calling context
      */
     public static void turnOnBluetooth(Context c) {
-        BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
-        int state = bt.getState();
-        if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) {
-            bt.enable();
-            writeToLog("Turned on Bluetooth", c);
+        try {
+            BluetoothAdapter bt = ((BluetoothManager) c.getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+            int state = bt.getState();
+            if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) {
+                bt.enable();
+                writeToLog("Turned on Bluetooth", c);
+            }
+        } catch (Exception e) {
+            emailException("Error Turning on Bluetooth", c, e);
         }
     }
 
     public static void turnOffVibrate(AudioManager a) {/**
-        a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+     a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
      a.setRingerMode(AudioManager.RINGER_MODE_SILENT);*/
     }
 
@@ -239,22 +247,26 @@ public class Global {
     }
 
     public static String breakIntoLines(String s) {
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-        boolean f = true;
-        for (String x : s.split("[\\.:]")) {
-            if (x.contains("\n")) i = -6;
-            if (i + x.length() > 30) {
-                sb.append("\n        .").append(x);
-                i = x.length();
-            } else {
-                if (f) f = false;
-                else sb.append(".");
-                sb.append(x);
-                i += x.length();
+        try {
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            boolean f = true;
+            for (String x : s.split("[\\.:]")) {
+                if (x.contains("\n")) i = -6;
+                if (i + x.length() > 30) {
+                    sb.append("\n        .").append(x);
+                    i = x.length();
+                } else {
+                    if (f) f = false;
+                    else sb.append(".");
+                    sb.append(x);
+                    i += x.length();
+                }
             }
+            return sb.toString().trim();
+        } catch (Exception e) {
+            return "";
         }
-        return sb.toString().trim();
     }
 
     /**
@@ -263,12 +275,16 @@ public class Global {
      * @param a the application that is running
      */
     public static void showScreenSize(final Activity a) {
-        Display display = a.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        KeithToast.show(String.format(Locale.getDefault(), "Height: %d\nWidth: %d", height, width), a.getApplicationContext());
+        try {
+            Display display = a.getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+            KeithToast.show(String.format(Locale.getDefault(), "Height: %d\nWidth: %d", height, width), a.getApplicationContext());
+        } catch (Exception e) {
+            emailException("Error Showing Screen Size", a.getApplicationContext(), e);
+        }
     }
 
     /**
@@ -288,43 +304,51 @@ public class Global {
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             c.startActivity(i);
         } catch (Exception e) {
-            writeToLog("Error Showing Headphone popup", c);
+            emailException("Error Showing Headphone Popup", c, e);
         }
     }
 
     public static void sendEmailTo(final String header, final String message, final String recipient, final boolean resend) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final String username = "android.jeeves@yahoo.com";
-                final String password = "jeevspass";
-                Properties props = new Properties();
-                props.put("mail.smtp.starttls.enable", "true");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.host", "smtp.mail.yahoo.com");
-                props.put("mail.debug", "true");
-                props.put("mail.smtp.starttls.enable", "true");
-                props.put("mail.smtp.port", "465");
-                props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                props.put("mail.smtp.socketFactory.fallback", "false");
-                Session session = getInstance(props, new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        final String username = "android.jeeves@yahoo.com";
+                        final String password = "jeevspass";
+                        Properties props = new Properties();
+                        props.put("mail.smtp.starttls.enable", "true");
+                        props.put("mail.smtp.auth", "true");
+                        props.put("mail.smtp.host", "smtp.mail.yahoo.com");
+                        props.put("mail.debug", "true");
+                        props.put("mail.smtp.starttls.enable", "true");
+                        props.put("mail.smtp.port", "465");
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        props.put("mail.smtp.socketFactory.fallback", "false");
+                        Session session = getInstance(props, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(username, password);
+                            }
+                        });
+                        try {
+                            Message m = new MimeMessage(session);
+                            m.setFrom(new InternetAddress(username));
+                            m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+                            m.setSubject(header);
+                            m.setText(message + "\n\n" + getTimestamp());
+                            Transport.send(m);
+                        } catch (Exception e) {
+                            if (resend) sendEmailTo(header, message, recipient, false);
+                        }
+                    } catch (Exception e) {
+                        //Just let it go
                     }
-                });
-                try {
-                    Message m = new MimeMessage(session);
-                    m.setFrom(new InternetAddress(username));
-                    m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-                    m.setSubject(header);
-                    m.setText(message + "\n\n" + getTimestamp());
-                    Transport.send(m);
-                } catch (Exception e) {
-                    if (resend) sendEmailTo(header, message, recipient, false);
                 }
-            }
-        }).start();
+            }).start();
+        } catch (Exception e) {
+            //Do nothing. Should be impossible
+        }
     }
 
     static void sendEmailTo(final String header, final String message, final String recipient) {

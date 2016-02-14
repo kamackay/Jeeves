@@ -13,15 +13,33 @@
         android:onClick="screamingSun"
         android:text="@string/text_screamingSun" />
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="cromulon"
         android:text="@string/text_cromulon" />
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="testEmail"
         android:text="@string/text_testEmail" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/ten" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="testException"
+        android:text="@string/text_testExeption" />
 </LinearLayout>

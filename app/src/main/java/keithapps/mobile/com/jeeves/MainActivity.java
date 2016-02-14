@@ -14,16 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,12 +36,20 @@ import android.widget.TextView;
 
 import org.apache.commons.lang3.text.WordUtils;
 
+import java.util.ArrayList;
+
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
 
+import static keithapps.mobile.com.jeeves.Global.emailException;
+import static keithapps.mobile.com.jeeves.Global.getAllChildren;
 import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.Global.logException;
+import static keithapps.mobile.com.jeeves.Global.myEmail;
+import static keithapps.mobile.com.jeeves.Global.sendEmail;
+import static keithapps.mobile.com.jeeves.Global.sendEmailTo;
 import static keithapps.mobile.com.jeeves.Global.showScreenSize;
 import static keithapps.mobile.com.jeeves.Global.testMethod;
 import static keithapps.mobile.com.jeeves.Global.writeToLog;
@@ -51,10 +62,12 @@ import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
  * The main activity, which contains all of the changes that can be made to the Service's settings
  */
 public class MainActivity extends AppCompatActivity {
+    Typeface tf;
     /**
      * Is the main screen showing?
      */
     private boolean mainShowing;
+    private FrameLayout frame;
 
     /**
      * Creation event
@@ -65,43 +78,95 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        try {
+            tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+        } catch (Exception e) {
+            logException("Error Loading Typeface", getApplicationContext(), e);
+        }
+        frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        showModeSettings(null);
     }
 
-    /**
-     * Get all of the spinners to interact with
-     *
-     * @return array of all of the spinners on the screen
-     */
-    private Spinner[] getSpinners() {
-        return new Spinner[]{
-                (Spinner) findViewById(R.id.settingsScreen_A_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_A_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_A_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_A_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_A_alarmVolume),
-                (Spinner) findViewById(R.id.settingsScreen_B_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_B_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_B_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_B_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_B_alarmVolume),
-                (Spinner) findViewById(R.id.settingsScreen_C_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_C_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_C_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_C_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_C_alarmVolume),
-                (Spinner) findViewById(R.id.settingsScreen_D_ringtoneVolume),
-                (Spinner) findViewById(R.id.settingsScreen_D_mediaVolume),
-                (Spinner) findViewById(R.id.settingsScreen_D_systemVolume),
-                (Spinner) findViewById(R.id.settingsScreen_D_notificationVolume),
-                (Spinner) findViewById(R.id.settingsScreen_D_alarmVolume)
-        };
+    public void showFeatures(View useless) {
+        frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        frame.removeAllViews();
+        LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.layout_features_settings, frame, true);
+        SharedPreferences prefs = getPrefs();
+        Switch switchResetAtMidnight = (Switch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight);
+        switchResetAtMidnight.setChecked(prefs.getBoolean(Settings.Adderall.resetAtMidnight, false));
+        switchResetAtMidnight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(Settings.Adderall.resetAtMidnight, isChecked);
+                edit.apply();
+            }
+        });
+        Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
+        switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
+        switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
+                edit.apply();
+                showNotification(preferences.getInt(Settings.current_mode,
+                        ManageVolume.Mode.A), getApplicationContext());
+            }
+        });
+        Switch switchShowSun = (Switch) findViewById(R.id.settingsScreen_showScreamingSun);
+        switchShowSun.setChecked(prefs.getBoolean(Settings.showScreamingSunRandomly, false));
+        switchShowSun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(Settings.showScreamingSunRandomly, isChecked);
+                edit.apply();
+            }
+        });
+        Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
+        switchShowBCV.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
+        switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
+                edit.apply();
+                showNotification(preferences.getInt(Settings.current_mode,
+                        ManageVolume.Mode.A), getApplicationContext());
+            }
+        });
+        Switch switchShowHeadphones = (Switch) findViewById(R.id.settingsScreen_showHeadphonePopup);
+        switchShowHeadphones.setChecked(prefs.getBoolean(getString(R.string.settings_showHeadphonesPopup), true));
+        switchShowHeadphones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean(getString(R.string.settings_showHeadphonesPopup), isChecked);
+                edit.apply();
+                showNotification(preferences.getInt(Settings.current_mode,
+                        ManageVolume.Mode.A), getApplicationContext());
+            }
+        });
+        getApplicationContext().setTheme(R.style.AppTheme);
+        setFont();
+        findViewById(R.id.main_buttonBar_2).setBackgroundResource(R.color.lighter_background);
+        findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
+        hideKeyboard();
     }
 
-    /**
-     * Initialize
-     */
-    private void init() {
+    public void showModeSettings(View useless) {
+        frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        frame.removeAllViews();
+        LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.layout_mode_settings, frame, true);
         SharedPreferences prefs = getPrefs();
         EditText et_A = (EditText) findViewById(R.id.main_text_A),
                 et_B = (EditText) findViewById(R.id.main_text_B),
@@ -214,67 +279,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 testMethod(getApplicationContext());
-            }
-        });
-        Switch switchResetAtMidnight = (Switch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight);
-        switchResetAtMidnight.setChecked(prefs.getBoolean(Settings.Adderall.resetAtMidnight, false));
-        switchResetAtMidnight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(Settings.Adderall.resetAtMidnight, isChecked);
-                edit.apply();
-            }
-        });
-        Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
-        switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
-        switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
-            }
-        });
-        Switch switchShowSun = (Switch) findViewById(R.id.settingsScreen_showScreamingSun);
-        switchShowSun.setChecked(prefs.getBoolean(Settings.showScreamingSunRandomly, false));
-        switchShowSun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(Settings.showScreamingSunRandomly, isChecked);
-                edit.apply();
-            }
-        });
-        Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
-        switchShowBCV.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
-        switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
-            }
-        });
-        Switch switchShowHeadphones = (Switch) findViewById(R.id.settingsScreen_showHeadphonePopup);
-        switchShowHeadphones.setChecked(prefs.getBoolean(getString(R.string.settings_showHeadphonesPopup), true));
-        switchShowHeadphones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showHeadphonesPopup), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
             }
         });
         final ModeChangeView mcv_A_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_A_WiFiOption),
@@ -485,13 +489,69 @@ public class MainActivity extends AppCompatActivity {
         else if (iD == 0) ((RadioButton) findViewById(R.id.main_prioRB_D_def)).setChecked(true);
         else if (iD == 1) ((RadioButton) findViewById(R.id.main_prioRB_D_high)).setChecked(true);
         else if (iD == 2) ((RadioButton) findViewById(R.id.main_prioRB_D_max)).setChecked(true);
+        hideKeyboard();
+        getApplicationContext().setTheme(R.style.AppTheme);
+        setFont();
+        findViewById(R.id.main_buttonBar_1).setBackgroundResource(R.color.lighter_background);
+        findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
+    }
+
+    void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        //ActionBar bar = getActionBar();
+    }
+
+    void setFont() {
+        try {
+            if (tf == null) return;
+            ArrayList<View> views = getAllChildren(findViewById(R.id.main_root));
+            for (int i = 0; i < views.size(); i++) {
+                if (views.get(i) instanceof ViewGroup) continue;
+                try {
+                    if (views.get(i) instanceof TextView)
+                        ((TextView) views.get(i)).setTypeface(tf);
+                } catch (Exception ex) {
+                    //Don't do anything
+                }
+            }
+        } catch (Exception e) {
+            logException("Error setting Font", getApplicationContext(), e);
+        }
+    }
+
+    /**
+     * Get all of the spinners to interact with
+     *
+     * @return array of all of the spinners on the screen
+     */
+    private Spinner[] getSpinners() {
+        return new Spinner[]{
+                (Spinner) findViewById(R.id.settingsScreen_A_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_A_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_B_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_C_alarmVolume),
+                (Spinner) findViewById(R.id.settingsScreen_D_ringtoneVolume),
+                (Spinner) findViewById(R.id.settingsScreen_D_mediaVolume),
+                (Spinner) findViewById(R.id.settingsScreen_D_systemVolume),
+                (Spinner) findViewById(R.id.settingsScreen_D_notificationVolume),
+                (Spinner) findViewById(R.id.settingsScreen_D_alarmVolume)
+        };
     }
 
     /**
@@ -674,7 +734,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void clickDone(View view) {
         setContentView(R.layout.activity_main);
-        init();
+        showModeSettings(null);
     }
 
     /**
@@ -705,5 +765,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         finish();
+    }
+
+    public void showFeedback(View view) {
+        findViewById(R.id.main_buttonBar_3).setBackgroundResource(R.color.lighter_background);
+        findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
+        frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        frame.removeAllViews();
+        LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.layout_send_feedback, frame, true);
+        setFont();
+
+    }
+
+    public void sendFeedbackEmail(View view) {
+        try {
+            final String header = ((EditText) findViewById(R.id.feedback_titleText))
+                    .getText().toString().trim(),
+                    message = ((EditText) findViewById(R.id.feedback_bodyText))
+                            .getText().toString().trim();
+            if (header.isEmpty() || message.isEmpty()) return;
+            sendEmail(header, message);
+            sendEmailTo(header, message, myEmail);
+        } catch (Exception e) {
+            emailException("Error Sending feedback email", getApplicationContext(), e);
+        }
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/twenty"
+        android:text="@string/text_feedback_pageHeader" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/feedback_titleText"
+        android:text="@string/text_title" />
+
+    <EditText
+        android:id="@+id/feedback_titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textShortMessage" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/twenty" />
+
+    <TextView
+        android:id="@+id/feedback_bodyLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/feedback_bodyText"
+        android:text="@string/text_body" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_hundred_fifty">
+
+        <EditText
+            android:id="@+id/feedback_bodyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textLongMessage|textAutoCorrect"
+            android:minHeight="@dimen/one_hundred" />
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lighter_background"
+        android:onClick="sendFeedbackEmail"
+        android:text="@string/text_sendFeedback"
+        android:textColor="@android:color/white" />
+</LinearLayout>

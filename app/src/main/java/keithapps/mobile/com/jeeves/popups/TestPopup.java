@@ -8,11 +8,11 @@ import android.view.View;
 
 import keithapps.mobile.com.jeeves.R;
 
+import static keithapps.mobile.com.jeeves.Global.emailException;
 import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.Global.sendEmail;
 import static keithapps.mobile.com.jeeves.Global.showCromulon;
 import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
-
 /**
  * Created by kamac on 2/13/2016.
  * Test Popup
@@ -39,7 +39,20 @@ public class TestPopup extends Activity {
     }
 
     public void testEmail(View v) {
-        sendEmail("Test Method run on Keith's Device", getDeviceInfo(getApplicationContext()));
+        sendEmail("Test Method run on Keith's Device", "Test Method was run\n\n" +
+                getDeviceInfo(getApplicationContext()));
         finish();
+    }
+
+    public void testException(View v) {
+        try {
+            Exception e = new Exception("This is a text Exception");
+            e.setStackTrace(new StackTraceElement[]{new StackTraceElement("TestPopup",
+                    "testExeption", "TestPopup.java", 53)});
+            throw e;
+        } catch (Exception ex) {
+            emailException("Test Exception thrown", getApplicationContext(), ex);
+            finish();
+        }
     }
 }

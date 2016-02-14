@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme">
+
+    <Switch
+        android:id="@+id/settingsScreen_showBCV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingTop="@dimen/fifteen"
+        android:text="@string/text_showBCV"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/main_textSmall" />
+
+    <Switch
+        android:id="@+id/settingsScreen_showNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingTop="@dimen/fifteen"
+        android:text="@string/text_showNotification"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/main_textSmall" />
+
+    <Switch
+        android:id="@+id/settingsScreen_showHeadphonePopup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingTop="@dimen/fifteen"
+        android:text="@string/text_showHeadphonesPopup"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/main_textSmall" />
+
+    <Switch
+        android:id="@+id/settingsScreen_adderall_resetAtMidnight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingTop="@dimen/fifteen"
+        android:text="@string/text_resetAtMidnight"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/main_textSmall" />
+
+
+    <Switch
+        android:id="@+id/settingsScreen_showScreamingSun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:paddingTop="@dimen/fifteen"
+        android:text="@string/text_showRickAndMortyPopups"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/main_textSmall" />
+
+</LinearLayout>

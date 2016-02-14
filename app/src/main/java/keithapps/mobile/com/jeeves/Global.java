@@ -1,20 +1,26 @@
 package keithapps.mobile.com.jeeves;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -22,7 +28,9 @@ import org.apache.commons.lang3.text.WordUtils;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -51,6 +59,7 @@ public class Global {
      * The name of the Logfile
      */
     public static final String LOGFILE_NAME = "log.txt";
+    public static final String myEmail = "keith.mackay3@gmail.com";
 
     /**
      * Is the given service running.
@@ -318,8 +327,49 @@ public class Global {
         }).start();
     }
 
+    static void sendEmailTo(final String header, final String message, final String recipient) {
+        sendEmailTo(header, message, recipient, true);
+    }
+
     public static void sendEmail(final String header, final String message) {
         sendEmailTo(header, message, "android.jeeves@yahoo.com", true);
+    }
+
+    public static ArrayList<View> getAllChildren(View v) {
+        if (!(v instanceof ViewGroup)) {
+            ArrayList<View> viewArrayList = new ArrayList<>();
+            viewArrayList.add(v);
+            return viewArrayList;
+        }
+        ArrayList<View> result = new ArrayList<>();
+        ViewGroup vg = (ViewGroup) v;
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View child = vg.getChildAt(i);
+            ArrayList<View> viewArrayList = new ArrayList<>();
+            viewArrayList.add(v);
+            viewArrayList.addAll(getAllChildren(child));
+            result.addAll(viewArrayList);
+        }
+        return result;
+    }
+
+    public static void emailException(String info, Context c, Exception e) {
+        final String header = "Unexpected Exception in Jeeves",
+                message = String.format("%s\n\nAn Android Device: \n\n%s\n\nExperienced an Exception " +
+                                "during runtime: %s\n%s",
+                        info,
+                        getDeviceInfo(c),
+                        (e == null) ? "Could not get Message" : e.getLocalizedMessage(),
+                        (e == null) ? "Could not get Stack Trace" : getStackTraceString(e));
+        sendEmail(header, message);
+        sendEmailTo(header, message, myEmail);
+        writeToLog(message, c);
+    }
+
+    public static String getStackTraceString(Exception e) {
+        return (e == null || e.getStackTrace() == null) ?
+                "Could not get Stack Trace" :
+                getStackTraceString(e.getStackTrace());
     }
 
     public static void writeToLog(String text, Context c, boolean showToast) {
@@ -327,6 +377,11 @@ public class Global {
             if (!c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
                     .getBoolean(Settings.record_log, true)) return;
             String toPrint = String.format("%s- %s\n", getTimestamp(), text);
+            String lines[] = toPrint.split("\n");
+            StringBuilder temp = new StringBuilder();
+            for (int i = lines.length - 1; i >= 0; i--)
+                temp.append(lines[i] + "\n");
+            toPrint = temp.toString();
             byte[] bytes = toPrint.getBytes(Charset.forName("UTF-8"));
             FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
             fos.write(bytes);
@@ -383,24 +438,111 @@ public class Global {
         c.startActivity(i);
     }
 
+    public static double getBatteryPercentage(Context c) {
+        try {
+            Intent i = c.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            if (i == null) return .50;
+            int level = i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+            int scale = i.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+            return level / scale;
+        } catch (Exception e) {
+            return .50;
+        }
+    }
+
+    public static String getGoogleUsername(Context c) {
+        try {
+            AccountManager manager = AccountManager.get(c);
+            Account[] accounts = manager.getAccountsByType("com.google");
+            List<String> possibleEmails = new LinkedList<>();
+            for (Account account : accounts) possibleEmails.add(account.name);
+            if (!possibleEmails.isEmpty() && possibleEmails.get(0) != null) {
+                for (String email : possibleEmails)
+                    if (email.contains("gmail")) return email;
+                return possibleEmails.get(possibleEmails.size() - 1);
+            } else return "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String getSDKVersionName(int SDK) {
+        switch (SDK) {
+            case 1:
+                return "";
+            case 2:
+                return "";
+            case 3:
+                return "Cupcake";
+            case 4:
+                return "Donut";
+            case 5:
+                return "Eclair";
+            case 6:
+                return "Eclair";
+            case 7:
+                return "Eclair";
+            case 8:
+                return "Froyo";
+            case 9:
+                return "Gingerbread";
+            case 10:
+                return "Gingerbread";
+            case 11:
+                return "Honeycomb";
+            case 12:
+                return "Honeycomb";
+            case 13:
+                return "Honeycomb";
+            case 14:
+                return "Ice Cream Sandwich";
+            case 15:
+                return "Ice Cream Sandwich";
+            case 16:
+                return "Jelly Bean";
+            case 17:
+                return "Jelly Bean";
+            case 18:
+                return "Jelly Bean";
+            case 19:
+                return "KitKat";
+            case 20:
+                return "KitKat";
+            case 21:
+                return "Lollipop";
+            case 22:
+                return "Lollipop";
+            case 23:
+                return "Marshmallow";
+        }
+        return "";
+    }
+
     public static String getDeviceInfo(Context c) {
         final String lineStarter = "\n    ";
         StringBuilder builder = new StringBuilder();
         try {
             builder.append("    Build: ");
-            builder.append(Build.VERSION.SDK_INT);
+            builder.append(Build.VERSION.SDK_INT + " " + getSDKVersionName(Build.VERSION.SDK_INT));
             builder.append(lineStarter + "Device: ");
             builder.append(WordUtils.capitalizeFully(Build.MANUFACTURER) + " ");
             builder.append(Build.MODEL);
             builder.append(lineStarter + "Phone #" + ((TelephonyManager)
                     c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number());
             builder.append(lineStarter + "IPv4: " + Utils.getIPAddress(true));
+            builder.append(lineStarter + "Main Google Account: " + getGoogleUsername(c));
+            //builder.append(String.format("%sBattery Level: %f%%", lineStarter, getBatteryPercentage(c)));
             //builder.append(lineStarter + "IPv6: " + Utils.getIPAddress(false));
             //builder.append("MAC Address: " + Utils.getMACAddress("eth0")+"\n");
             return builder.toString();
         } catch (Exception e) {
             return builder.toString();
         }
+    }
+
+    public static void logException(String info, Context c, Exception e) {
+        writeToLog(String.format("%s\n    %s\n%s", info, e.getLocalizedMessage(),
+                getStackTraceString(e.getStackTrace())).trim(), c);
     }
 
     public static String getStackTraceString(StackTraceElement[] stack) {
@@ -420,14 +562,14 @@ public class Global {
         return sb.toString();
     }
 
-    public static void showCromulon(Context c){
+    public static void showCromulon(Context c) {
         Intent i = new Intent(c, CromulonPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         c.startActivity(i);
     }
 
-    public static void showTestPopup(Context c){
+    public static void showTestPopup(Context c) {
         Intent i = new Intent(c, TestPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -435,11 +577,6 @@ public class Global {
     }
 
     public static void testMethod(Context c) {
-        //if (!isKeith(c)) return;
-        //KeithToast.show("Test Method", c);
-        //showScreamingSun(c);
-        showTestPopup(c);
-        //showCromulon(c);
-        //sendEmail("Test Method run on Keith's Device", getDeviceInfo(c));
+        if (isKeith(c)) showTestPopup(c);
     }
 }

@@ -51,8 +51,8 @@ public class AdderallPopup extends Activity {
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 20);
                 edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
-                writeToLog(String.format("Took 20 mg of Adderall (%d mg total)",
-                                prefs.getInt(Settings.Adderall.adderall_count, 0)),
+                writeToLog(String.format(Locale.getDefault(), "Took 20 mg of Adderall (%d mg total)",
+                        prefs.getInt(Settings.Adderall.adderall_count, 0)),
                         getApplicationContext());
                 finish();
                 updateNotification(getApplicationContext());
@@ -68,8 +68,8 @@ public class AdderallPopup extends Activity {
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 10);
                 edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
-                writeToLog(String.format("Took 10 mg of Adderall (%d mg total)",
-                                prefs.getInt(Settings.Adderall.adderall_count, 0)),
+                writeToLog(String.format(Locale.getDefault(), "Took 10 mg of Adderall (%d mg total)",
+                        prefs.getInt(Settings.Adderall.adderall_count, 0)),
                         getApplicationContext());
                 finish();
                 updateNotification(getApplicationContext());
@@ -85,8 +85,8 @@ public class AdderallPopup extends Activity {
                         prefs.getInt(Settings.Adderall.adderall_count, 0) + 5);
                 edit.putString(Settings.Adderall.timeSince, getTimestamp());
                 edit.apply();
-                writeToLog(String.format("Took 5 mg of Adderall (%d mg total)",
-                                prefs.getInt(Settings.Adderall.adderall_count, 0)),
+                writeToLog(String.format(Locale.getDefault(), "Took 5 mg of Adderall (%d mg total)",
+                        prefs.getInt(Settings.Adderall.adderall_count, 0)),
                         getApplicationContext());
                 finish();
                 updateNotification(getApplicationContext());
@@ -104,13 +104,14 @@ public class AdderallPopup extends Activity {
         edit.apply();
         writeToLog("Cleared Adderall Information", getApplicationContext());
         updateNotification(getApplicationContext());
+        setValues();
     }
 
     public void setValues() {
         SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
         TextView currentAmount = (TextView) findViewById(R.id.adderallPopup_current);
         int current = prefs.getInt(Settings.Adderall.adderall_count, 0);
-        currentAmount.setText(String.format("%d mg", current));
+        currentAmount.setText(String.format(Locale.getDefault(), "%d mg", current));
         if (current <= 30) currentAmount.setTextColor(Color.GREEN);
         else if (current > 60) currentAmount.setTextColor(Color.RED);
         else currentAmount.setTextColor(Color.YELLOW);
@@ -123,8 +124,8 @@ public class AdderallPopup extends Activity {
             long difference = format.parse(timestamp_now).getTime() -
                     format.parse(timestamp_last).getTime();
             long hours = difference / (1000 * 60 * 60), minutes = (difference / 60000) % 60;
-            lastTime_hours.setText(String.format("%d", hours));
-            lastTime_min.setText(String.format("%d", minutes));
+            lastTime_hours.setText(String.format(Locale.getDefault(), "%d", hours));
+            lastTime_min.setText(String.format(Locale.getDefault(), "%d", minutes));
             if (hours == 0) {
                 lastTime_hours.setTextColor(Color.RED);
                 lastTime_min.setTextColor(Color.RED);
@@ -152,8 +153,9 @@ public class AdderallPopup extends Activity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                                 MODE_PRIVATE).edit();
-                        edit.putString(Settings.Adderall.timeSince, String.format("%s%02d:%02d:00",
-                                getTimestamp().substring(0, 6), selectedHour, selectedMinute));
+                        edit.putString(Settings.Adderall.timeSince, String.format(Locale.getDefault(),
+                                "%s%02d:%02d:00", getTimestamp().substring(0, 6), selectedHour,
+                                selectedMinute));
                         edit.apply();
                         updateNotification(getApplicationContext());
                         setValues();
@@ -182,5 +184,16 @@ public class AdderallPopup extends Activity {
         } catch (Exception e) {
             logException("Error loading font in Adderall Popup", getApplicationContext(), e);
         }
+    }
+
+    /**
+     * When leaving the activity
+     *
+     * @param outState out State
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        finish();
     }
 }

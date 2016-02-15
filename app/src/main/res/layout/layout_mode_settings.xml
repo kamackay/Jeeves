@@ -164,8 +164,13 @@
                 android:id="@+id/main_priorityRdoGrp_A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
 
                 <RadioButton
                     android:id="@+id/main_prioRB_A_min"
@@ -201,11 +206,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_max"
                     android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
             </RadioGroup>
         </HorizontalScrollView>
     </LinearLayout>
 
-    <View
+    <Space
         android:layout_width="match_parent"
         android:layout_height="30sp" />
 
@@ -358,8 +367,13 @@
                 android:id="@+id/main_priorityRdoGrp_B"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
 
                 <RadioButton
                     android:id="@+id/main_prioRB_B_min"
@@ -395,11 +409,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_max"
                     android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
             </RadioGroup>
         </HorizontalScrollView>
     </LinearLayout>
 
-    <View
+    <Space
         android:layout_width="match_parent"
         android:layout_height="30sp" />
 
@@ -553,8 +571,13 @@
                 android:id="@+id/main_priorityRdoGrp_C"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
 
                 <RadioButton
                     android:id="@+id/main_prioRB_C_min"
@@ -590,6 +613,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_max"
                     android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
             </RadioGroup>
         </HorizontalScrollView>
     </LinearLayout>
@@ -748,8 +775,13 @@
                 android:id="@+id/main_priorityRdoGrp_D"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
 
                 <RadioButton
                     android:id="@+id/main_prioRB_D_min"
@@ -785,6 +817,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_max"
                     android:textColor="@android:color/white" />
+
+                <Space
+                    android:layout_width="@dimen/prioritySpaceSize"
+                    android:layout_height="match_parent" />
             </RadioGroup>
         </HorizontalScrollView>
     </LinearLayout>

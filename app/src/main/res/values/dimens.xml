@@ -23,4 +23,5 @@
     <dimen name="spinnerWidth">80sp</dimen>
     <dimen name="main_buttonBar_space">5sp</dimen>
     <dimen name="testPopup_verticalSpace">5sp</dimen>
+    <dimen name="prioritySpaceSize">10sp</dimen>
 </resources>

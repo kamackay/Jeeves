@@ -21,19 +21,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import keithapps.mobile.com.jeeves.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.listeners.BackgroundProcessListener;
 import keithapps.mobile.com.jeeves.listeners.BootListener;
 import keithapps.mobile.com.jeeves.listeners.HeadphoneListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationButtonListener;
 import keithapps.mobile.com.jeeves.listeners.NotificationListener;
 import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
+import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.Global.getStackTraceString;
-import static keithapps.mobile.com.jeeves.Global.getTimestamp;
-import static keithapps.mobile.com.jeeves.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.Global.getStackTraceString;
+import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
+import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 public class MainService extends Service {
     /**

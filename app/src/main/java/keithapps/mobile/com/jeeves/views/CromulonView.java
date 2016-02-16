@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,13 +8,19 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import keithapps.mobile.com.jeeves.R;
+
 /**
  * Created by Keith on 2/12/2016.
  * Cromulon View
  */
 public class CromulonView extends View {
     Bitmap bitmap;
-
+    Paint p;
+    int left;
+    Thread animation;
+    boolean animationRunning;
+    Runnable onAnimationEnd, playSound;
     public CromulonView(Context context) {
         super(context);
         init();
@@ -29,14 +35,10 @@ public class CromulonView extends View {
         super(context, attrs, defStyleAttr);
         init();
     }
-
     public CromulonView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
-
-    Paint p;
-    int left;
 
     public void init() {
         animation = new Thread(new Runnable() {
@@ -68,9 +70,6 @@ public class CromulonView extends View {
         animationRunning = false;
     }
 
-    Thread animation;
-    boolean animationRunning;
-
     @Override
     protected void onDraw(Canvas c) {
         if (!animationRunning) {
@@ -86,7 +85,5 @@ public class CromulonView extends View {
 
     public void setPlaySound(Runnable runnable){playSound = runnable;
     }
-
-    Runnable onAnimationEnd, playSound;
 
 }

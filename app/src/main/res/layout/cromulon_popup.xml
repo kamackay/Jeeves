@@ -5,7 +5,8 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <keithapps.mobile.com.jeeves.CromulonView android:id="@+id/cromulon"
+    <keithapps.mobile.com.jeeves.views.CromulonView
+        android:id="@+id/cromulon"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

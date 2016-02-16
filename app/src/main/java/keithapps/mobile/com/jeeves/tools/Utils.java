@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.tools;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

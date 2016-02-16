@@ -1,29 +1,30 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 
-import keithapps.mobile.com.jeeves.ManageVolume.Mode;
+import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 
-import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
-import static keithapps.mobile.com.jeeves.Global.getPrefs;
-import static keithapps.mobile.com.jeeves.Global.turnOffBluetooth;
-import static keithapps.mobile.com.jeeves.Global.turnOffWiFi;
-import static keithapps.mobile.com.jeeves.Global.turnOnBluetooth;
-import static keithapps.mobile.com.jeeves.Global.turnOnWiFi;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
-import static keithapps.mobile.com.jeeves.ManageVolume.setAlarmVolume;
-import static keithapps.mobile.com.jeeves.ManageVolume.setMediaVolume;
-import static keithapps.mobile.com.jeeves.ManageVolume.setNotificationVolume;
-import static keithapps.mobile.com.jeeves.ManageVolume.setRingtoneVolume;
-import static keithapps.mobile.com.jeeves.ManageVolume.setSystemVolume;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_REBOOT;
+import static keithapps.mobile.com.jeeves.tools.Global.closeNotificationTray;
+import static keithapps.mobile.com.jeeves.tools.Global.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.Global.turnOffBluetooth;
+import static keithapps.mobile.com.jeeves.tools.Global.turnOffWiFi;
+import static keithapps.mobile.com.jeeves.tools.Global.turnOnBluetooth;
+import static keithapps.mobile.com.jeeves.tools.Global.turnOnWiFi;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.ManageVolume.setAlarmVolume;
+import static keithapps.mobile.com.jeeves.tools.ManageVolume.setMediaVolume;
+import static keithapps.mobile.com.jeeves.tools.ManageVolume.setNotificationVolume;
+import static keithapps.mobile.com.jeeves.tools.ManageVolume.setRingtoneVolume;
+import static keithapps.mobile.com.jeeves.tools.ManageVolume.setSystemVolume;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_LEAVE;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_OFF;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_REBOOT;
 
 /**
  * Created by Keith on 1/19/2016.

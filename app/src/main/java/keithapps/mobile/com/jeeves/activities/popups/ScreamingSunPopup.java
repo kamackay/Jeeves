@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves.popups;
+package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import keithapps.mobile.com.jeeves.R;
-import keithapps.mobile.com.jeeves.ScreamingSunView;
+import keithapps.mobile.com.jeeves.views.ScreamingSunView;
 
 /**
  * Created by Keith on 2/11/2016.
  * Cromulon Popup
  */
 public class ScreamingSunPopup extends Activity {
+    float volume = 1;
     private MediaPlayer player;
 
     @Override
@@ -59,8 +60,6 @@ public class ScreamingSunPopup extends Activity {
 
         }
     }
-
-    float volume = 1;
 
     public void fadeOut() {
         new Thread(new Runnable() {

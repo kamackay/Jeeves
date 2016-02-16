@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,10 +20,13 @@ import android.widget.TextView;
 
 import java.io.FileInputStream;
 
+import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
+import keithapps.mobile.com.jeeves.tools.Global;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.clearLog;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.clearLog;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 public class LogActivity extends AppCompatActivity {
 

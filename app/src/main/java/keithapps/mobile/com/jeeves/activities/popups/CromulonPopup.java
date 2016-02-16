@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves.popups;
+package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -12,8 +12,8 @@ import android.view.Surface;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import keithapps.mobile.com.jeeves.CromulonView;
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.views.CromulonView;
 
 /**
  * Created by Keith on 2/12/2016.

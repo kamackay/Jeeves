@@ -5,7 +5,8 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <keithapps.mobile.com.jeeves.ScreamingSunView android:id="@+id/screaming_sun"
+    <keithapps.mobile.com.jeeves.views.ScreamingSunView
+        android:id="@+id/screaming_sun"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

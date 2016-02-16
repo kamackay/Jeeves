@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.activities;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -22,37 +22,43 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import keithapps.mobile.com.jeeves.MainService;
+import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
+import keithapps.mobile.com.jeeves.listeners.SwipeListener;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
-import keithapps.mobile.com.jeeves.popups.KeithToast;
+import keithapps.mobile.com.jeeves.tools.ManageVolume;
+import keithapps.mobile.com.jeeves.tools.Settings;
+import keithapps.mobile.com.jeeves.views.ModeChangeView;
+import keithapps.mobile.com.jeeves.views.ProcessView;
+import keithapps.mobile.com.jeeves.views.SettingsSwitch;
 
-import static keithapps.mobile.com.jeeves.Global.emailException;
-import static keithapps.mobile.com.jeeves.Global.getAllChildren;
-import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.Global.getVersionName;
-import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
-import static keithapps.mobile.com.jeeves.Global.logException;
-import static keithapps.mobile.com.jeeves.Global.myEmail;
-import static keithapps.mobile.com.jeeves.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.Global.sendEmailTo;
-import static keithapps.mobile.com.jeeves.Global.showScreenSize;
-import static keithapps.mobile.com.jeeves.Global.testMethod;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_LEAVE;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_OFF;
-import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
+import static keithapps.mobile.com.jeeves.tools.Global.emailException;
+import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
+import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.Global.getVersionName;
+import static keithapps.mobile.com.jeeves.tools.Global.isServiceRunning;
+import static keithapps.mobile.com.jeeves.tools.Global.logException;
+import static keithapps.mobile.com.jeeves.tools.Global.myEmail;
+import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.Global.sendEmailTo;
+import static keithapps.mobile.com.jeeves.tools.Global.showScreenSize;
+import static keithapps.mobile.com.jeeves.tools.Global.testMethod;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_LEAVE;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_OFF;
+import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
 
 /**
  * The main activity, which contains all of the changes that can be made to the Service's settings
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
      * The font
      */
     Typeface tf;
+    int mode;
     /**
      * Is the main screen showing?
      */
@@ -122,6 +129,18 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+            }
+        }
+    };
     /**
      * The runnable to send feedback info
      */
@@ -191,72 +210,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        Switch switchResetAtMidnight = (Switch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight);
-        switchResetAtMidnight.setChecked(prefs.getBoolean(Settings.Adderall.resetAtMidnight, false));
-        switchResetAtMidnight.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((SettingsSwitch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight))
+                .setMySetting(Settings.Adderall.resetAtMidnight);
+        SettingsSwitch switchShowNotification =
+                (SettingsSwitch) findViewById(R.id.settingsScreen_showNotification);
+        switchShowNotification.setAfterChangeEvent(new Runnable() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(Settings.Adderall.resetAtMidnight, isChecked);
-                edit.apply();
+            public void run() {
+                showNotification(getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE)
+                                .getInt(Settings.current_mode, ManageVolume.Mode.A),
+                        getApplicationContext());
             }
         });
-        Switch switchShowNotification = (Switch) findViewById(R.id.settingsScreen_showNotification);
-        switchShowNotification.setChecked(prefs.getBoolean(getString(R.string.settings_showNotification), true));
-        switchShowNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switchShowNotification.setMySetting(Settings.showNotification);
+        final SettingsSwitch switchIntrusivePopup =
+                (SettingsSwitch) findViewById(R.id.features_showIntrusivePopup);
+        switchIntrusivePopup.setAfterChangeEvent(new Runnable() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showNotification), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
-            }
-        });
-        Switch switchIntrusivePopup = (Switch) findViewById(R.id.features_showIntrusivePopup);
-        boolean boolIntrusivePopup = prefs.getBoolean(Settings.showScreamingSunRandomly, false);
-        switchIntrusivePopup.setChecked(boolIntrusivePopup);
-        findViewById(R.id.features_intrusivePopup_frequency_root)
-                .setVisibility(boolIntrusivePopup ? View.VISIBLE : View.GONE);
-        switchIntrusivePopup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(Settings.showScreamingSunRandomly, isChecked);
-                edit.apply();
+            public void run() {
                 findViewById(R.id.features_intrusivePopup_frequency_root)
-                        .setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                        .setVisibility(switchIntrusivePopup.isChecked() ? View.VISIBLE : View.GONE);
             }
         });
-        Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
-        switchShowBCV.setChecked(prefs.getBoolean(getString(R.string.settings_showBigContentView), false));
-        switchShowBCV.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showBigContentView), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
-            }
-        });
-        Switch switchShowHeadphones = (Switch) findViewById(R.id.settingsScreen_showHeadphonePopup);
-        switchShowHeadphones.setChecked(prefs.getBoolean(getString(R.string.settings_showHeadphonesPopup), true));
-        switchShowHeadphones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
-                SharedPreferences.Editor edit = preferences.edit();
-                edit.putBoolean(getString(R.string.settings_showHeadphonesPopup), isChecked);
-                edit.apply();
-                showNotification(preferences.getInt(Settings.current_mode,
-                        ManageVolume.Mode.A), getApplicationContext());
-            }
-        });
+        switchIntrusivePopup.setMySetting(Settings.showScreamingSunRandomly);
+        ((SettingsSwitch) findViewById(R.id.settingsScreen_showHeadphonePopup))
+                .setMySetting(Settings.showHeadphonePopup);
         getApplicationContext().setTheme(R.style.AppTheme);
         setFont();
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(R.color.lighter_background);
@@ -611,9 +589,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setAllSwipes() {
-        if (frame != null)
-            for (View view : getAllChildren(frame))
+        try {
+            if (frame != null)
+                for (View view : getAllChildren(frame))
                     view.setOnTouchListener(swipeListener);
+            findViewById(R.id.main_root).setOnTouchListener(swipeListener);
+        } catch (Exception e) {
+            //It's cool
+        }
     }
 
     /**
@@ -865,8 +848,6 @@ public class MainActivity extends AppCompatActivity {
         setAllSwipes();
     }
 
-    int mode;
-
     public void showFeatures() {
         showFeatures(null);
     }
@@ -878,17 +859,4 @@ public class MainActivity extends AppCompatActivity {
     public void showFeedback() {
         showFeedback(null);
     }
-
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-            }
-        }
-    };
 }

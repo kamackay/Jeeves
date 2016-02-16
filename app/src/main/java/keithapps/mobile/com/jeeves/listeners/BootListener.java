@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import keithapps.mobile.com.jeeves.MainService;
-import keithapps.mobile.com.jeeves.Settings;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 1/17/2016.

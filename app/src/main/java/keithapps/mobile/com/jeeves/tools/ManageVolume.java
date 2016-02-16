@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.tools;
 
 import android.content.SharedPreferences;
 import android.media.AudioManager;

@@ -137,12 +137,12 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_A_WiFiOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_A_bluetoothOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -339,12 +339,12 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_B_WiFiOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_B_bluetoothOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -541,12 +541,12 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_C_WiFiOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_C_bluetoothOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -743,12 +743,12 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_D_WiFiOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <keithapps.mobile.com.jeeves.ModeChangeView
+        <keithapps.mobile.com.jeeves.views.ModeChangeView
             android:id="@+id/settingsScreen_D_bluetoothOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves.popups;
+package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -9,14 +9,14 @@ import android.view.View;
 
 import keithapps.mobile.com.jeeves.R;
 
-import static keithapps.mobile.com.jeeves.Global.emailException;
-import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.Global.myEmail;
-import static keithapps.mobile.com.jeeves.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.Global.sendEmailTo;
-import static keithapps.mobile.com.jeeves.Global.showCromulon;
-import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
-import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
+import static keithapps.mobile.com.jeeves.tools.Global.emailException;
+import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.Global.myEmail;
+import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.Global.sendEmailTo;
+import static keithapps.mobile.com.jeeves.tools.Global.showCromulon;
+import static keithapps.mobile.com.jeeves.tools.Global.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.tools.Global.showScreamingSun;
 
 /**
  * Created by kamac on 2/13/2016.

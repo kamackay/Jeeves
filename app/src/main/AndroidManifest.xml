@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -36,27 +36,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".popups.HeadphoneQueryPopup"
+            android:name=".activities.popups.HeadphoneQueryPopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog.Headphone" />
         <activity
-            android:name=".LogActivity"
+            android:name=".activities.LogActivity"
             android:excludeFromRecents="true"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".popups.AdderallPopup"
+            android:name=".activities.popups.AdderallPopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog" />
         <activity
-            android:name=".popups.ScreamingSunPopup"
+            android:name=".activities.popups.ScreamingSunPopup"
             android:excludeFromRecents="true"
             android:theme="@style/CromulonPopup" />
         <activity
-            android:name=".popups.CromulonPopup"
+            android:name=".activities.popups.CromulonPopup"
             android:excludeFromRecents="true"
             android:theme="@style/CromulonPopup" />
         <activity
-            android:name=".popups.DeveloperPopup"
+            android:name=".activities.popups.DeveloperPopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog" />
 

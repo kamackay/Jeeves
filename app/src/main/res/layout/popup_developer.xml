@@ -8,7 +8,7 @@
     android:gravity="center"
     android:minWidth="@dimen/two_hundred"
     android:orientation="vertical"
-    tools:context=".popups.DeveloperPopup">
+    tools:context=".activities.popups.DeveloperPopup">
 
     <Button
         android:layout_width="match_parent"

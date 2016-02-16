@@ -7,9 +7,9 @@ import android.media.AudioManager;
 import android.os.Handler;
 
 import keithapps.mobile.com.jeeves.MainService;
-import keithapps.mobile.com.jeeves.Settings;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 2/5/2016.

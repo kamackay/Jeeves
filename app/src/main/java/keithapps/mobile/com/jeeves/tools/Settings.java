@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.tools;
 
 /**
  * Settings Strings without having to call from a Context
@@ -14,6 +14,8 @@ public class Settings {
     public static final String connectedToBT = "conn.BT";
     public static final String connectedToMobile = "conn.Mobile";
     public static final String showScreamingSunRandomly = "showSun";
+    public static final String showHeadphonePopup = "settings_showHeadphonesPopup";
+    public static final String showNotification = "settings.showNotification";
     /**
      * Code to use to access the Shared Preferences
      */

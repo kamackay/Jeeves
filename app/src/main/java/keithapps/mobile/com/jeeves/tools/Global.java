@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.tools;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -40,11 +40,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import keithapps.mobile.com.jeeves.popups.CromulonPopup;
-import keithapps.mobile.com.jeeves.popups.DeveloperPopup;
-import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
-import keithapps.mobile.com.jeeves.popups.KeithToast;
-import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
+import keithapps.mobile.com.jeeves.BuildConfig;
+import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.activities.popups.CromulonPopup;
+import keithapps.mobile.com.jeeves.activities.popups.DeveloperPopup;
+import keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup;
+import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
+import keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup;
 
 import static javax.mail.Session.getInstance;
 
@@ -365,7 +367,7 @@ public class Global {
         }
     }
 
-    static void sendEmailTo(final String header, final String message, final String recipient) {
+    public static void sendEmailTo(final String header, final String message, final String recipient) {
         sendEmailTo(header, message, recipient, true);
     }
 
@@ -421,9 +423,11 @@ public class Global {
                 temp.append(lines[i]).append("\n");
             toPrint = temp.toString();
             byte[] bytes = toPrint.getBytes(Charset.forName("UTF-8"));
-            FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND);
-            fos.write(bytes);
-            fos.close();
+            try (FileOutputStream fos = c.openFileOutput(LOGFILE_NAME, Context.MODE_APPEND)) {
+                fos.write(bytes);
+            } catch (Exception e) {
+                //Shit happens
+            }
             if (showToast && isKeith(c) && isJeevesActivityForeground(c))
                 Toast.makeText(c, toPrint.trim(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

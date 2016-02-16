@@ -6,10 +6,11 @@
     android:theme="@style/AppTheme">
 
     <LinearLayout
-        android:layout_width="wrap_content" android:visibility="gone"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/fifteen">
+        android:paddingTop="@dimen/fifteen"
+        android:visibility="gone">
 
         <Switch
             android:id="@+id/settingsScreen_showBCV"
@@ -31,7 +32,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/fifteen">
 
-        <Switch
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/settingsScreen_showNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/fifteen">
 
-        <Switch
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/settingsScreen_showHeadphonePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +72,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/fifteen">
 
-        <Switch
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/settingsScreen_adderall_resetAtMidnight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +93,7 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/fifteen">
 
-        <Switch
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/features_showIntrusivePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +119,7 @@
             android:labelFor="@+id/intrusivePopup_frequency"
             android:text="@string/frequency" />
 
-        <EditText
+        <keithapps.mobile.com.jeeves.views.SettingsEditText
             android:id="@+id/intrusivePopup_frequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,7 +132,5 @@
             android:paddingEnd="@dimen/zero"
             android:paddingStart="@dimen/fifteen"
             android:text="@string/frequency_description" />
-
     </LinearLayout>
-
 </LinearLayout>

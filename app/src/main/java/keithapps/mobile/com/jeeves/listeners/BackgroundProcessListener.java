@@ -10,12 +10,12 @@ import java.util.Locale;
 import java.util.Random;
 
 import keithapps.mobile.com.jeeves.MainService;
-import keithapps.mobile.com.jeeves.Settings;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.closeNotificationTray;
-import static keithapps.mobile.com.jeeves.Global.showCromulon;
-import static keithapps.mobile.com.jeeves.Global.showScreamingSun;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.closeNotificationTray;
+import static keithapps.mobile.com.jeeves.tools.Global.showCromulon;
+import static keithapps.mobile.com.jeeves.tools.Global.showScreamingSun;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 1/19/2016.

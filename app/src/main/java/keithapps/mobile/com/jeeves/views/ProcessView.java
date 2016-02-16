@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.views;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static keithapps.mobile.com.jeeves.Global.breakIntoLines;
+import keithapps.mobile.com.jeeves.R;
+
+import static keithapps.mobile.com.jeeves.tools.Global.breakIntoLines;
 
 /**
  * Created by Keith on 1/19/2016.

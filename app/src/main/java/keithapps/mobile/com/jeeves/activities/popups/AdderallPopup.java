@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves.popups;
+package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,14 +19,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
-import keithapps.mobile.com.jeeves.Settings;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.emailException;
-import static keithapps.mobile.com.jeeves.Global.getAllChildren;
-import static keithapps.mobile.com.jeeves.Global.getTimestamp;
-import static keithapps.mobile.com.jeeves.Global.logException;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
+import static keithapps.mobile.com.jeeves.tools.Global.emailException;
+import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
+import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
+import static keithapps.mobile.com.jeeves.tools.Global.logException;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 public class AdderallPopup extends Activity {
     Typeface tf;

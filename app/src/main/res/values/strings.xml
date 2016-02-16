@@ -58,7 +58,6 @@
     <string name="text_showNotification">Show Notification</string>
     <string name="settings_showNotification">settings.showNotification</string>
     <string name="text_showHeadphonesPopup">Show Headphones popup</string>
-    <string name="settings_showHeadphonesPopup">settings_showHeadphonesPopup</string>
     <string name="text_reboot">Reboot</string>
     <string name="text_notificationListener">Notification Listener</string>
     <string name="text_showLog">Show Log</string>

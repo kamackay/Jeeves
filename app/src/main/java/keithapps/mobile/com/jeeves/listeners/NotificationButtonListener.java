@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import keithapps.mobile.com.jeeves.Global;
-import keithapps.mobile.com.jeeves.MainActivity;
-import keithapps.mobile.com.jeeves.SetState;
-import keithapps.mobile.com.jeeves.Settings;
-import keithapps.mobile.com.jeeves.popups.AdderallPopup;
+import keithapps.mobile.com.jeeves.activities.MainActivity;
+import keithapps.mobile.com.jeeves.activities.popups.AdderallPopup;
+import keithapps.mobile.com.jeeves.tools.Global;
+import keithapps.mobile.com.jeeves.tools.SetState;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 2/4/2016.

@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.views;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,10 +11,21 @@ import android.view.View;
 
 import java.util.Random;
 
+import keithapps.mobile.com.jeeves.R;
+
 /**
  * Created by Keith on 2/11/2016.
+ * Screaming Sun View
  */
 public class ScreamingSunView extends View {
+    Thread animation;
+    Runnable onAnimationEnd;
+    private Bitmap[] bitmaps;
+    private Bitmap bitmap;
+    private Paint p;
+    private boolean animationRunning;
+    private int y;
+
     public ScreamingSunView(Context context) {
         super(context);
         init();
@@ -34,10 +45,6 @@ public class ScreamingSunView extends View {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
-
-    private Bitmap[] bitmaps;
-    private Bitmap bitmap;
-    private Paint p;
 
     private void init() {
         animation = new Thread(new Runnable() {
@@ -88,9 +95,4 @@ public class ScreamingSunView extends View {
     public void setOnAnimationEnd(Runnable runnable) {
         onAnimationEnd = runnable;
     }
-
-    private boolean animationRunning;
-    private int y;
-    Thread animation;
-    Runnable onAnimationEnd;
 }

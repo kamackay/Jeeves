@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves.popups;
+package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.content.Context;
 import android.graphics.Color;

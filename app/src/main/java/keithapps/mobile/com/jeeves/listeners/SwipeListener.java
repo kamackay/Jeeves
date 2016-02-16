@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.listeners;
 
 import android.view.MotionEvent;
 import android.view.View;

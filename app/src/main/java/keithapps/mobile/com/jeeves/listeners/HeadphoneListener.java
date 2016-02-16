@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
-import keithapps.mobile.com.jeeves.R;
-import keithapps.mobile.com.jeeves.Settings;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.Global.showHeadphonesPopup;
-import static keithapps.mobile.com.jeeves.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Global.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 1/18/2016.
@@ -45,7 +44,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                     break;
                 case 1:
                     if (!prefs.getBoolean(Settings.headset_pluggedIn, false)
-                            && prefs.getBoolean(c.getString(R.string.settings_showHeadphonesPopup), true)) {
+                            && prefs.getBoolean(Settings.showHeadphonePopup, true)) {
                         showHeadphonesPopup(c);
                     }
                     SharedPreferences.Editor edit = prefs.edit();

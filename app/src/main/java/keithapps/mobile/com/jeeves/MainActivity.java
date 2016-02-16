@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
@@ -33,10 +32,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import java.util.ArrayList;
-import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
@@ -44,7 +40,6 @@ import keithapps.mobile.com.jeeves.popups.KeithToast;
 import static keithapps.mobile.com.jeeves.Global.emailException;
 import static keithapps.mobile.com.jeeves.Global.getAllChildren;
 import static keithapps.mobile.com.jeeves.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.Global.getTimestamp;
 import static keithapps.mobile.com.jeeves.Global.getVersionName;
 import static keithapps.mobile.com.jeeves.Global.isServiceRunning;
 import static keithapps.mobile.com.jeeves.Global.logException;
@@ -63,11 +58,17 @@ import static keithapps.mobile.com.jeeves.ModeChangeView.SELECTED_ON;
  * The main activity, which contains all of the changes that can be made to the Service's settings
  */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * The font
+     */
     Typeface tf;
     /**
      * Is the main screen showing?
      */
     private boolean mainShowing;
+    /**
+     * The long click listener for the process views
+     */
     View.OnLongClickListener processViewListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(final View v) {
@@ -117,7 +118,13 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+    /**
+     * The main frame to load all of the screens into
+     */
     private FrameLayout frame;
+    /**
+     * The runnable to send feedback info
+     */
     Runnable sendFeedback = new Runnable() {
         @Override
         public void run() {
@@ -159,7 +166,13 @@ public class MainActivity extends AppCompatActivity {
         showModeSettings(null);
     }
 
+    /**
+     * Show the Features on the main screen.
+     *
+     * @param useless Not used, feel free to pass null. Only here to be used as an onClick event
+     */
     public void showFeatures(View useless) {
+        mode = 2;
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
@@ -202,15 +215,20 @@ public class MainActivity extends AppCompatActivity {
                         ManageVolume.Mode.A), getApplicationContext());
             }
         });
-        Switch switchShowSun = (Switch) findViewById(R.id.settingsScreen_showScreamingSun);
-        switchShowSun.setChecked(prefs.getBoolean(Settings.showScreamingSunRandomly, false));
-        switchShowSun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch switchIntrusivePopup = (Switch) findViewById(R.id.features_showIntrusivePopup);
+        boolean boolIntrusivePopup = prefs.getBoolean(Settings.showScreamingSunRandomly, false);
+        switchIntrusivePopup.setChecked(boolIntrusivePopup);
+        findViewById(R.id.features_intrusivePopup_frequency_root)
+                .setVisibility(boolIntrusivePopup ? View.VISIBLE : View.GONE);
+        switchIntrusivePopup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences preferences = getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
                 SharedPreferences.Editor edit = preferences.edit();
                 edit.putBoolean(Settings.showScreamingSunRandomly, isChecked);
                 edit.apply();
+                findViewById(R.id.features_intrusivePopup_frequency_root)
+                        .setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
         });
         Switch switchShowBCV = (Switch) findViewById(R.id.settingsScreen_showBCV);
@@ -245,9 +263,17 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
         hideKeyboard();
+        setAllSwipes();
     }
 
+    /**
+     * Show the mode settings on the Main Screen
+     *
+     * @param useless Not used, feel free to pass null. Only here so that it can be used as an
+     *                onClick event
+     */
     public void showModeSettings(View useless) {
+        mode = 1;
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
@@ -366,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
                 testMethod(getApplicationContext());
             }
         });
+        t.setOnTouchListener(swipeListener);
         final ModeChangeView mcv_A_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_A_WiFiOption),
                 mcv_B_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_B_WiFiOption),
                 mcv_C_wifi = (ModeChangeView) findViewById(R.id.settingsScreen_C_WiFiOption),
@@ -580,17 +607,36 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
+        setAllSwipes();
     }
 
+    void setAllSwipes() {
+        if (frame != null)
+            for (View view : getAllChildren(frame))
+                    view.setOnTouchListener(swipeListener);
+    }
+
+    /**
+     * Hide the keyboard from the screen
+     */
     void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
+        try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(findViewById(android.R.id.content).getWindowToken(),
+                    InputMethodManager.HIDE_IMPLICIT_ONLY);
+            if (frame != null) {
+                imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(frame.getWindowToken(), 0);
+            }
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        } catch (Exception e) {
+            //Should be ok
         }
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
+    /**
+     * Set the font
+     */
     void setFont() {
         try {
             if (tf == null) return;
@@ -598,8 +644,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < views.size(); i++) {
                 View v = views.get(i);
                 try {
-                    if (v instanceof TextView)
-                        ((TextView) v).setTypeface(tf);
+                    if (v instanceof TextView) ((TextView) v).setTypeface(tf);
                 } catch (Exception ex) {
                     //Don't do anything
                 }
@@ -677,28 +722,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show the system info in a custom toast
+     */
     private void showSystemInfo() {
-        String name = "";
-        switch (Build.VERSION.SDK_INT) {
-            case Build.VERSION_CODES.KITKAT:
-                name = "KitKat";
-                break;
-            case Build.VERSION_CODES.LOLLIPOP:
-                name = "Lollipop";
-                break;
-            case Build.VERSION_CODES.LOLLIPOP_MR1:
-                name = "Lollipop (MR1)";
-                break;
-            case Build.VERSION_CODES.M:
-                name = "Marshmallow";
-                break;
-        }
-        String s = String.format(Locale.getDefault(), "Android %d: %s\n\n%s %s\n\n%s",
-                Build.VERSION.SDK_INT,
-                name,
-                WordUtils.capitalizeFully(Build.MANUFACTURER),
-                Build.MODEL,
-                getTimestamp());
+        String s = getDeviceInfo(getApplicationContext()).replace("    ", "\n");
         KeithToast.show(s, getApplicationContext());
     }
 
@@ -797,13 +825,23 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * The onPause event
+     */
     @Override
     protected void onPause() {
         super.onPause();
         finish();
     }
 
-    public void showFeedback(View view) {
+    /**
+     * Show the feedback screen on the main screen
+     *
+     * @param useless Not used, feel free to pass null. Only here so this method can be an onClick
+     *                Listener.
+     */
+    public void showFeedback(View useless) {
+        mode = 3;
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
@@ -820,5 +858,37 @@ public class MainActivity extends AppCompatActivity {
                         sendFeedback.run();
                     }
                 });
+        View v = findViewById(R.id.feedback_titleText);
+        v.requestFocus();
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .showSoftInput(v, InputMethodManager.SHOW_FORCED);
+        setAllSwipes();
     }
+
+    int mode;
+
+    public void showFeatures() {
+        showFeatures(null);
+    }
+
+    public void showModeSettings() {
+        showModeSettings(null);
+    }
+
+    public void showFeedback() {
+        showFeedback(null);
+    }
+
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+            }
+        }
+    };
 }

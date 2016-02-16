@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/developer_popup_root"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:gravity="center"
+    android:minWidth="@dimen/two_hundred"
     android:orientation="vertical"
-    tools:context="keithapps.mobile.com.jeeves.popups.TestPopup">
+    tools:context=".popups.DeveloperPopup">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="screamingSun"
         android:text="@string/text_screamingSun" />
@@ -18,7 +21,7 @@
         android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="cromulon"
         android:text="@string/text_cromulon" />
@@ -28,7 +31,7 @@
         android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="testEmail"
         android:text="@string/text_testEmail" />
@@ -38,7 +41,7 @@
         android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="testException"
         android:text="@string/text_testException" />
@@ -48,7 +51,7 @@
         android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="testKeithToast"
         android:text="@string/text_testKeithToast" />
@@ -58,7 +61,7 @@
         android:layout_height="@dimen/testPopup_verticalSpace" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="headphonesPopup"
         android:text="@string/headphonePopup" />

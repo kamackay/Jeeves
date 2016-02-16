@@ -8,14 +8,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.view.Display;
@@ -43,10 +41,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import keithapps.mobile.com.jeeves.popups.CromulonPopup;
+import keithapps.mobile.com.jeeves.popups.DeveloperPopup;
 import keithapps.mobile.com.jeeves.popups.HeadphoneQueryPopup;
 import keithapps.mobile.com.jeeves.popups.KeithToast;
 import keithapps.mobile.com.jeeves.popups.ScreamingSunPopup;
-import keithapps.mobile.com.jeeves.popups.TestPopup;
 
 import static javax.mail.Session.getInstance;
 
@@ -59,6 +57,9 @@ public class Global {
      * The name of the Logfile
      */
     public static final String LOGFILE_NAME = "log.txt";
+    /**
+     * Keith MacKay's (my) email Address - keith.mackay3@gmail.com
+     */
     public static final String myEmail = "keith.mackay3@gmail.com";
 
     /**
@@ -159,6 +160,12 @@ public class Global {
         }
     }
 
+    /**
+     * Is Jeeves the currently running foreground app
+     *
+     * @param c the callng context
+     * @return true if the foreground app is one of Jeeves' children
+     */
     public static boolean isJeevesActivityForeground(Context c) {
         try {
             List<ActivityManager.RunningAppProcessInfo> tasks = ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
@@ -171,6 +178,12 @@ public class Global {
         }
     }
 
+    /**
+     * Are you a motherfucking God?
+     *
+     * @param c the Calling Context
+     * @return true if you are essentially perfect.
+     */
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) &&
@@ -463,18 +476,12 @@ public class Global {
         c.startActivity(i);
     }
 
-    public static double getBatteryPercentage(Context c) {
-        try {
-            Intent i = c.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-            if (i == null) return .50;
-            int level = i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-            int scale = i.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-            return level / scale;
-        } catch (Exception e) {
-            return .50;
-        }
-    }
-
+    /**
+     * Get the main Google account on this device
+     *
+     * @param c the calling context
+     * @return the main google account on this device. Empty String if it could not be found
+     */
     public static String getGoogleUsername(Context c) {
         try {
             AccountManager manager = AccountManager.get(c);
@@ -491,6 +498,12 @@ public class Global {
         }
     }
 
+    /**
+     * Get the name of this version of Android
+     *
+     * @param SDK the SDK version of this device
+     * @return the name of this version of Android
+     */
     public static String getSDKVersionName(int SDK) {
         switch (SDK) {
             case 1:
@@ -536,7 +549,7 @@ public class Global {
             case 21:
                 return "Lollipop";
             case 22:
-                return "Lollipop";
+                return "Lollipop MR1";
             case 23:
                 return "Marshmallow";
         }
@@ -579,7 +592,7 @@ public class Global {
                 sb.append("    ");
                 sb.append(element.getClassName());
                 sb.append("    ");
-                sb.append(String.format("Line: %d\n", element.getLineNumber()));
+                sb.append(String.format(Locale.getDefault(), "Line: %d\n", element.getLineNumber()));
             } catch (Exception e) {
                 sb.append("\n");
             }
@@ -595,7 +608,7 @@ public class Global {
     }
 
     public static void showTestPopup(Context c) {
-        Intent i = new Intent(c, TestPopup.class);
+        Intent i = new Intent(c, DeveloperPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         c.startActivity(i);

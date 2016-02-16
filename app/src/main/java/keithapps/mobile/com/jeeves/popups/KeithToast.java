@@ -3,6 +3,7 @@ package keithapps.mobile.com.jeeves.popups;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,8 @@ public class KeithToast {
                     context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.keithtoast, null);
             TextView textView = (TextView) layout.findViewById(R.id.keithToast_textView);
-            textView.setText(text);
+            if (text.length() > 100) textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            textView.setText(text.trim());
             textView.setTextColor(color);
             ImageView iv = (ImageView) layout.findViewById(R.id.keithtoast_imageview);
             iv.setImageResource(getColoredImage(color));

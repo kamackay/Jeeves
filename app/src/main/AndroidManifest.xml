@@ -35,6 +35,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".popups.HeadphoneQueryPopup"
+            android:excludeFromRecents="true"
+            android:theme="@style/AppTheme.Dialog.Headphone" />
+        <activity
+            android:name=".LogActivity"
+            android:excludeFromRecents="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".popups.AdderallPopup"
+            android:excludeFromRecents="true"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".popups.ScreamingSunPopup"
+            android:excludeFromRecents="true"
+            android:theme="@style/CromulonPopup" />
+        <activity
+            android:name=".popups.CromulonPopup"
+            android:excludeFromRecents="true"
+            android:theme="@style/CromulonPopup" />
+        <activity
+            android:name=".popups.DeveloperPopup"
+            android:excludeFromRecents="true"
+            android:theme="@style/AppTheme.Dialog" />
+
+        <service
+            android:name=".MainService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/app_name" />
 
         <receiver
             android:name="listeners.NotificationListener"
@@ -70,33 +100,5 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
-        <service
-            android:name=".MainService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="@string/app_name" />
-
-        <activity
-            android:name=".popups.HeadphoneQueryPopup"
-            android:theme="@style/AppTheme.Dialog.Headphone" />
-        <activity
-            android:name=".LogActivity"
-            android:excludeFromRecents="true"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".popups.AdderallPopup"
-            android:theme="@style/AppTheme.Dialog" />
-        <activity
-            android:name=".popups.ScreamingSunPopup"
-            android:theme="@style/CromulonPopup" />
-        <activity
-            android:name=".popups.CromulonPopup"
-            android:theme="@style/CromulonPopup" />
-
-        <activity
-            android:name=".popups.TestPopup"
-            android:theme="@style/AppTheme.Dialog" />
     </application>
-
 </manifest>

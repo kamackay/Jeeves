@@ -6,7 +6,7 @@
     android:theme="@style/AppTheme">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="wrap_content" android:visibility="gone"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="@dimen/fifteen">
@@ -93,7 +93,7 @@
         android:paddingTop="@dimen/fifteen">
 
         <Switch
-            android:id="@+id/settingsScreen_showScreamingSun"
+            android:id="@+id/features_showIntrusivePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false" />
@@ -106,7 +106,7 @@
             android:textSize="@dimen/main_textSmall" />
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/features_intrusivePopup_frequency_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"

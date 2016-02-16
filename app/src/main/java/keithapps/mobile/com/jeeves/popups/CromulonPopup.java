@@ -42,7 +42,7 @@ public class CromulonPopup extends Activity {
             return;
         }
         player = new MediaPlayer();
-        CromulonView cromulonView = (CromulonView)findViewById(R.id.cromulon);
+        CromulonView cromulonView = (CromulonView) findViewById(R.id.cromulon);
         cromulonView.setOnAnimationEnd(new Runnable() {
             @Override
             public void run() {
@@ -59,22 +59,22 @@ public class CromulonPopup extends Activity {
             AssetFileDescriptor afd = getAssets().openFd("cromulon.ogg");
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             player.prepare();
-        } catch (Exception e){
+        } catch (Exception e) {
             //Fuck it
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
             return true;
-        }
         return super.onTouchEvent(event);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (player.isPlaying()) player.stop();
+        player.release();
         return super.onKeyDown(keyCode, event);
     }
 
@@ -82,5 +82,6 @@ public class CromulonPopup extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (player.isPlaying()) player.stop();
+        player.release();
     }
 }

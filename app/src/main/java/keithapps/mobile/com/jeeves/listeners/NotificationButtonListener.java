@@ -55,7 +55,7 @@ public class NotificationButtonListener extends BroadcastReceiver {
                 i2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 c.startActivity(i2);
                 break;
-            case Settings.Adderall.adderall_clear:
+            case Settings.Adderall.intentAction_adderallClear:
                 writeToLog(String.format("You took %d mg of Adderall today",
                         10 * prefs.getInt(Settings.Adderall.adderall_count, 0)), c);
                 SharedPreferences.Editor editor = prefs.edit();

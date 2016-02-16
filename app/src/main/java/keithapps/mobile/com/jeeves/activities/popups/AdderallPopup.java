@@ -22,6 +22,7 @@ import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
+import static keithapps.mobile.com.jeeves.tools.AdderallTools.writeAdderall;
 import static keithapps.mobile.com.jeeves.tools.Global.emailException;
 import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
@@ -56,6 +57,7 @@ public class AdderallPopup extends Activity {
                     writeToLog(String.format(Locale.getDefault(), "Took 20 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
+                    writeAdderall(getApplicationContext(), 20);
                     finish();
                     updateNotification(getApplicationContext());
                 }
@@ -73,6 +75,7 @@ public class AdderallPopup extends Activity {
                     writeToLog(String.format(Locale.getDefault(), "Took 10 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
+                    writeAdderall(getApplicationContext(), 10);
                     finish();
                     updateNotification(getApplicationContext());
                 }
@@ -90,6 +93,7 @@ public class AdderallPopup extends Activity {
                     writeToLog(String.format(Locale.getDefault(), "Took 5 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
+                    writeAdderall(getApplicationContext(), 5);
                     finish();
                     updateNotification(getApplicationContext());
                 }
@@ -107,8 +111,10 @@ public class AdderallPopup extends Activity {
                     MODE_PRIVATE);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putInt(Settings.Adderall.adderall_count, 0);
+            edit.putString(Settings.Adderall.lastClearTime, getTimestamp());
             edit.apply();
             writeToLog("Cleared Adderall Information", getApplicationContext());
+            writeAdderall(getApplicationContext(), 0);
             updateNotification(getApplicationContext());
             setValues();
         } catch (Exception e) {

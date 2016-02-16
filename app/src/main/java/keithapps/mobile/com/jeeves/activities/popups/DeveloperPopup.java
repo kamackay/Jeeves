@@ -77,4 +77,21 @@ public class DeveloperPopup extends Activity {
         showHeadphonesPopup(getApplicationContext());
         finish();
     }
+
+    public void writeToFile(View v) {/*
+        try {
+            File f = new File(getFileFolder() + LOGFILE_NAME);
+            if (f.getParentFile().mkdirs() && f.createNewFile())
+                KeithToast.show("Created New File", getApplicationContext());
+            FileInputStream fis = openFileInput(Global.LOGFILE_NAME);
+            FileOutputStream fos = new FileOutputStream(f);
+            int ch;
+            while ((ch = fis.read()) != -1) fos.write(ch);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            KeithToast.show(e.getLocalizedMessage(), getApplicationContext());
+        }//*/
+        finish();
+    }
 }

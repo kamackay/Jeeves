@@ -42,7 +42,7 @@ public class BackgroundProcessListener extends BroadcastReceiver {
             if (prefs.getInt(Settings.Adderall.adderall_count, 0) > 0 &&
                     prefs.getBoolean(Settings.Adderall.resetAtMidnight, false)) {
                 Intent i = new Intent(c, NotificationButtonListener.class);
-                i.setAction(Settings.Adderall.adderall_clear);
+                i.setAction(Settings.Adderall.intentAction_adderallClear);
                 c.sendBroadcast(i);
             }
         }

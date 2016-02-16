@@ -64,5 +64,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="headphonesPopup"
-        android:text="@string/headphonePopup" />
+        android:text="@string/headphonePopup" /><Space
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/testPopup_verticalSpace" /><Button
+    android:layout_width="match_parent" android:text="Write to file" android:onClick="writeToFile"
+    android:layout_height="wrap_content" />
 </LinearLayout>

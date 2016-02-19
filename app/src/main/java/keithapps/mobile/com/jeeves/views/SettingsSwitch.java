@@ -2,10 +2,12 @@ package keithapps.mobile.com.jeeves.views;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 /**
@@ -16,27 +18,27 @@ public class SettingsSwitch extends Switch implements SettingsView {
     String mySetting;
     Runnable afterwards;
 
-    public SettingsSwitch(Context context) {
-        super(context);
-        init();
+    public SettingsSwitch(Context c) {
+        super(c);
+        init(c, null);
     }
 
-    public SettingsSwitch(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+    public SettingsSwitch(Context c, AttributeSet attrs) {
+        super(c, attrs);
+        init(c, attrs);
     }
 
-    public SettingsSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
+    public SettingsSwitch(Context c, AttributeSet attrs, int defStyleAttr) {
+        super(c, attrs, defStyleAttr);
+        init(c, attrs);
     }
 
-    public SettingsSwitch(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
+    public SettingsSwitch(Context c, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(c, attrs, defStyleAttr, defStyleRes);
+        init(c, attrs);
     }
 
-    void init() {
+    void init(Context c, AttributeSet attrs) {
         setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -49,6 +51,10 @@ public class SettingsSwitch extends Switch implements SettingsView {
                 }
             }
         });
+        if (attrs == null) return;
+        TypedArray ta = c.obtainStyledAttributes(attrs, R.styleable.SettingsSwitch, 0, 0);
+        setMySetting(ta.getString(R.styleable.SettingsSwitch_setting));
+        ta.recycle();
     }
 
     /**

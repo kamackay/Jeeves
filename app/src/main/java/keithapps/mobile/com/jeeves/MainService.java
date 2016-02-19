@@ -30,9 +30,9 @@ import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
 import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.tools.Utils.getStackTraceString;
 import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
@@ -226,8 +226,8 @@ public class MainService extends Service {
      */
     @Override
     public void onCreate() {
+        Context c = getApplicationContext();
         try {
-            Context c = getApplicationContext();
             super.onCreate();
             HeadphoneListener headphoneListener = new HeadphoneListener();
             IntentFilter headsetFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
@@ -258,7 +258,7 @@ public class MainService extends Service {
                         prefs.getString(Settings.versionName, "1.1.6a"),
                         prefs.getInt(Settings.versionCode, 5),
                         info.versionName,
-                        info.versionCode));
+                        info.versionCode), c);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putInt(Settings.versionCode, info.versionCode);
                 edit.putString(Settings.versionName, info.versionName);
@@ -275,7 +275,7 @@ public class MainService extends Service {
                             getDeviceInfo(getApplicationContext()),
                             e.getMessage(),
                             e.getLocalizedMessage(),
-                            getStackTraceString(e.getStackTrace())));
+                            getStackTraceString(e.getStackTrace())), c);
         }
     }
 

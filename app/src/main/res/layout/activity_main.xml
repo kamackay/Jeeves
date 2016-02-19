@@ -13,8 +13,9 @@
 
     <TextView
         android:id="@+id/activity_main_versionText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:gravity="end"
         android:paddingBottom="@dimen/twenty"
         android:text="@string/default_versionText"
@@ -97,6 +98,30 @@
                 android:onClick="showFeedback"
                 android:padding="@dimen/zero"
                 android:text="@string/text_sendFeedback"
+                android:textSize="@dimen/ten" />
+
+            <Space
+                android:layout_width="@dimen/main_buttonBar_space"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="@dimen/one_pixel"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark" />
+
+            <Space
+                android:layout_width="@dimen/main_buttonBar_space"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/main_buttonBar_4"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/thirty"
+                android:layout_gravity="center_vertical"
+                android:onClick="showPermissions"
+                android:padding="@dimen/zero"
+                android:text="@string/permissions"
                 android:textSize="@dimen/ten" />
         </LinearLayout>
     </HorizontalScrollView>

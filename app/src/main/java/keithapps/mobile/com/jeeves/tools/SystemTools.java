@@ -29,7 +29,7 @@ import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
  * Created by Keith on 2/18/2016.
  * Helpers for the Android System
  */
-public class AndroidTools {
+public class SystemTools {
     /**
      * Get the shared preferences
      *

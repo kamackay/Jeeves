@@ -46,9 +46,6 @@ import keithapps.mobile.com.jeeves.views.ProcessView;
 import keithapps.mobile.com.jeeves.views.SettingsSwitch;
 
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getVersionName;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.showScreenSize;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
@@ -56,6 +53,9 @@ import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.testMethod;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getVersionName;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.showScreenSize;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_OFF;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
@@ -129,6 +129,20 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
+            }
+        }
+    };
     /**
      * The runnable to send feedback info
      */
@@ -143,26 +157,14 @@ public class MainActivity extends AppCompatActivity {
                                         .getText().toString().trim(),
                                 getDeviceInfo(getApplicationContext()));
                 if (header.isEmpty() || message.isEmpty()) return;
-                sendEmail(header, message);
-                Email.sendEmailTo(header, message, myEmail);
+                sendEmail(header, message, getApplicationContext());
+                Email.sendEmailTo(header, message, myEmail, getApplicationContext());
                 hideKeyboard();
                 KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
                 showModeSettings(null);
             } catch (Exception e) {
                 emailException("Error Sending feedback email", getApplicationContext(), e);
                 KeithToast.show("Error sending feedback", getApplicationContext());
-            }
-        }
-    };
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
             }
         }
     };
@@ -210,8 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        ((SettingsSwitch) findViewById(R.id.settingsScreen_adderall_resetAtMidnight))
-                .setMySetting(Settings.Adderall.resetAtMidnight);
         SettingsSwitch switchShowNotification =
                 (SettingsSwitch) findViewById(R.id.settingsScreen_showNotification);
         switchShowNotification.setAfterChangeEvent(new Runnable() {
@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_4).setBackgroundResource(android.R.color.transparent);
         hideKeyboard();
         setAllSwipes();
     }
@@ -585,6 +586,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_4).setBackgroundResource(android.R.color.transparent);
         setAllSwipes();
     }
 
@@ -828,6 +830,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
         findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_4).setBackgroundResource(android.R.color.transparent);
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
@@ -858,5 +861,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void showFeedback() {
         showFeedback(null);
+    }
+
+    public void showPermissions() {
+        showPermissions(null);
+    }
+
+    public void showPermissions(View useless) {
+        mode = 4;
+        findViewById(R.id.main_buttonBar_4).setBackgroundResource(R.color.lighter_background);
+        findViewById(R.id.main_buttonBar_2).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_1).setBackgroundResource(android.R.color.transparent);
+        findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
+        if (frame == null) frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        frame.removeAllViews();
+        LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.layout_permissions, frame, true);
+        setFont();
+        setAllSwipes();
+        getApplicationContext().setTheme(R.style.AppTheme);
     }
 }

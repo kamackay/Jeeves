@@ -7,10 +7,10 @@ import android.content.SharedPreferences;
 
 import keithapps.mobile.com.jeeves.activities.MainActivity;
 import keithapps.mobile.com.jeeves.activities.popups.AdderallPopup;
-import keithapps.mobile.com.jeeves.tools.AndroidTools;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.SetState;
 import keithapps.mobile.com.jeeves.tools.Settings;
+import keithapps.mobile.com.jeeves.tools.SystemTools;
 
 /**
  * Created by Keith on 2/4/2016.
@@ -29,7 +29,7 @@ public class NotificationButtonListener extends BroadcastReceiver {
                 Context.MODE_PRIVATE);
         switch (intent.getAction()) {
             case Settings.showJeevesMain:
-                AndroidTools.closeNotificationTray(c);
+                SystemTools.closeNotificationTray(c);
                 Intent i = new Intent(c, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -48,7 +48,7 @@ public class NotificationButtonListener extends BroadcastReceiver {
                 SetState.stateD(c);
                 break;
             case Settings.text_add:
-                AndroidTools.closeNotificationTray(c);
+                SystemTools.closeNotificationTray(c);
                 Intent i2 = new Intent(c, AdderallPopup.class);
                 i2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

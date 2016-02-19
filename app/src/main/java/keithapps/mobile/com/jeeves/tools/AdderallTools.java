@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Locale;
 
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getPrefs;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.isExternalStorageWritable;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.isExternalStorageWritable;
 import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
 /**

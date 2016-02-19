@@ -13,10 +13,10 @@ import keithapps.mobile.com.jeeves.tools.Email;
 import static keithapps.mobile.com.jeeves.activities.popups.CromulonPopup.showCromulon;
 import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup.showScreamingSun;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
 
 /**
  * Created by kamac on 2/13/2016.
@@ -45,9 +45,9 @@ public class DeveloperPopup extends Activity {
 
     public void testEmail(View v) {
         sendEmail("Test Method run on Keith's Device", "Test Method was run\n\n" +
-                getDeviceInfo(getApplicationContext()));
+                getDeviceInfo(getApplicationContext()), getApplicationContext());
         Email.sendEmailTo("Test Method run on Keith's Device", "Test Method was run\n\n" +
-                getDeviceInfo(getApplicationContext()), myEmail, true);
+                getDeviceInfo(getApplicationContext()), myEmail, true, getApplicationContext());
         finish();
     }
 

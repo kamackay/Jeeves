@@ -1,5 +1,12 @@
 package keithapps.mobile.com.jeeves.tools;
 
+import android.content.Context;
+
+import java.util.Locale;
+
+import static keithapps.mobile.com.jeeves.tools.Log.logLocation;
+import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
+
 /**
  * Created by Keith on 2/18/2016.
  * Location Tools
@@ -23,5 +30,15 @@ public class LocationTools {
      */
     public static int getSeconds(double coordinate) {
         return (int) ((((coordinate % 1) * 60) % 1) * 60);
+    }
+
+    public static void onLocationChange(double latitude, double longitude, Context c) {
+        logLocation(latitude, longitude);
+        writeToLog(String.format(Locale.getDefault(),
+                "Location: %s %c, %s %c",
+                String.valueOf(Math.abs(latitude)),
+                (latitude > 0) ? 'N' : 'S',
+                String.valueOf(Math.abs(longitude)),
+                (longitude > 0) ? 'E' : 'W'), c);
     }
 }

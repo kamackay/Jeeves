@@ -21,14 +21,16 @@ import java.util.Locale;
 import java.util.Random;
 
 import keithapps.mobile.com.jeeves.MainService;
+import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.activities.popups.CromulonPopup.showCromulon;
 import static keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup.showScreamingSun;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDouble;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.getPrefs;
-import static keithapps.mobile.com.jeeves.tools.AndroidTools.putDouble;
+import static keithapps.mobile.com.jeeves.tools.LocationTools.onLocationChange;
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getDouble;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.putDouble;
 
 /**
  * Created by Keith on 1/19/2016.
@@ -76,14 +78,16 @@ public class BackgroundProcessListener extends BroadcastReceiver implements Goog
                 showCromulon(c);
             }
         }
-        if (mGoogleApiClient == null) mGoogleApiClient = new GoogleApiClient.Builder(c)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        if (!mGoogleApiClient.isConnected()) mGoogleApiClient.connect();
-        else mGoogleApiClient.reconnect();
-        //mGoogleApiClient.disconnect();
+        if (prefs.getBoolean(c.getString(R.string.permissions_location), true)) {
+            if (mGoogleApiClient == null) mGoogleApiClient = new GoogleApiClient.Builder(c)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            if (!mGoogleApiClient.isConnected()) mGoogleApiClient.connect();
+            else mGoogleApiClient.reconnect();
+            //mGoogleApiClient.disconnect();
+        }
     }
 
     @Override
@@ -105,10 +109,7 @@ public class BackgroundProcessListener extends BroadcastReceiver implements Goog
             edit = putDouble(edit, Settings.Location.lastLat, mLastLocation.getLatitude());
             edit = putDouble(edit, Settings.Location.lastLong, mLastLocation.getLongitude());
             edit.apply();
-            double lat = mLastLocation.getLatitude(), lon = mLastLocation.getLongitude();
-            writeToLog(String.format(Locale.getDefault(), "Location: %s %c, %s %c",
-                    String.valueOf(Math.abs(lat)), (lat > 0) ? 'N' : 'S',
-                    String.valueOf(Math.abs(lon)), (lon > 0) ? 'E' : 'W'),
+            onLocationChange(mLastLocation.getLatitude(), mLastLocation.getLongitude(),
                     mGoogleApiClient.getContext());
         }
     }

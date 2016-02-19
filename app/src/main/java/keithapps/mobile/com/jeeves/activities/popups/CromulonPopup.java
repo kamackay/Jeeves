@@ -2,6 +2,8 @@ package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
@@ -21,6 +23,13 @@ import keithapps.mobile.com.jeeves.views.CromulonView;
  */
 public class CromulonPopup extends Activity {
     private MediaPlayer player;
+
+    public static void showCromulon(Context c) {
+        Intent i = new Intent(c, CromulonPopup.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        c.startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

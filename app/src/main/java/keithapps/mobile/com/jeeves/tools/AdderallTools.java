@@ -10,15 +10,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Locale;
 
-import static keithapps.mobile.com.jeeves.tools.Global.getPrefs;
-import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
-import static keithapps.mobile.com.jeeves.tools.Global.isExternalStorageWritable;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.isExternalStorageWritable;
+import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
 /**
  * Created by Keith on 2/16/2016.
  * Adderall Tools
  */
 public class AdderallTools {
+    public static final String adderallCSV_FILENAME = "AdderallUsage.csv";
+
     public static void writeAdderall(Context c, int mg) {
         try {
             if (!isExternalStorageWritable()) return;
@@ -48,6 +50,4 @@ public class AdderallTools {
             Toast.makeText(c, "error creating file", Toast.LENGTH_LONG).show();
         }
     }
-
-    public static final String adderallCSV_FILENAME = "AdderallUsage.csv";
 }

@@ -19,15 +19,15 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.AdderallTools.writeAdderall;
-import static keithapps.mobile.com.jeeves.tools.Global.emailException;
-import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
-import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
-import static keithapps.mobile.com.jeeves.tools.Global.logException;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Email.emailException;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
+import static keithapps.mobile.com.jeeves.tools.Log.logException;
+import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
 public class AdderallPopup extends Activity {
     Typeface tf;
@@ -54,7 +54,7 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0) + 20);
                     edit.putString(Settings.Adderall.timeSince, getTimestamp());
                     edit.apply();
-                    writeToLog(String.format(Locale.getDefault(), "Took 20 mg of Adderall (%d mg total)",
+                    Log.writeToLog(String.format(Locale.getDefault(), "Took 20 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 20);
@@ -72,7 +72,7 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0) + 10);
                     edit.putString(Settings.Adderall.timeSince, getTimestamp());
                     edit.apply();
-                    writeToLog(String.format(Locale.getDefault(), "Took 10 mg of Adderall (%d mg total)",
+                    Log.writeToLog(String.format(Locale.getDefault(), "Took 10 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 10);
@@ -90,7 +90,7 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0) + 5);
                     edit.putString(Settings.Adderall.timeSince, getTimestamp());
                     edit.apply();
-                    writeToLog(String.format(Locale.getDefault(), "Took 5 mg of Adderall (%d mg total)",
+                    Log.writeToLog(String.format(Locale.getDefault(), "Took 5 mg of Adderall (%d mg total)",
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 5);
@@ -99,7 +99,7 @@ public class AdderallPopup extends Activity {
                 }
             });
             setFont();
-            writeToLog("Adderall Popup shown", getApplicationContext());
+            Log.writeToLog("Adderall Popup shown", getApplicationContext());
         } catch (Exception e) {
             emailException("Error loading Adderall popup", getApplicationContext(), e);
         }
@@ -113,7 +113,7 @@ public class AdderallPopup extends Activity {
             edit.putInt(Settings.Adderall.adderall_count, 0);
             edit.putString(Settings.Adderall.lastClearTime, getTimestamp());
             edit.apply();
-            writeToLog("Cleared Adderall Information", getApplicationContext());
+            Log.writeToLog("Cleared Adderall Information", getApplicationContext());
             writeAdderall(getApplicationContext(), 0);
             updateNotification(getApplicationContext());
             setValues();

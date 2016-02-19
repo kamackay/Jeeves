@@ -37,6 +37,8 @@ import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 import keithapps.mobile.com.jeeves.listeners.SwipeListener;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
+import keithapps.mobile.com.jeeves.tools.Email;
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.ManageVolume;
 import keithapps.mobile.com.jeeves.tools.Settings;
 import keithapps.mobile.com.jeeves.views.ModeChangeView;
@@ -44,18 +46,16 @@ import keithapps.mobile.com.jeeves.views.ProcessView;
 import keithapps.mobile.com.jeeves.views.SettingsSwitch;
 
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
-import static keithapps.mobile.com.jeeves.tools.Global.emailException;
-import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
-import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.tools.Global.getVersionName;
-import static keithapps.mobile.com.jeeves.tools.Global.isServiceRunning;
-import static keithapps.mobile.com.jeeves.tools.Global.logException;
-import static keithapps.mobile.com.jeeves.tools.Global.myEmail;
-import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.tools.Global.sendEmailTo;
-import static keithapps.mobile.com.jeeves.tools.Global.showScreenSize;
-import static keithapps.mobile.com.jeeves.tools.Global.testMethod;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getVersionName;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.showScreenSize;
+import static keithapps.mobile.com.jeeves.tools.Email.emailException;
+import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
+import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.isServiceRunning;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.testMethod;
+import static keithapps.mobile.com.jeeves.tools.Log.logException;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_LEAVE;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_OFF;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                             Process.killProcess(pid);
                         } catch (Exception e) {
                             KeithToast.show("Error killing process", getApplicationContext());
-                            writeToLog(String.format("Error killing process %s\n%s",
+                            Log.writeToLog(String.format("Error killing process %s\n%s",
                                     e.getLocalizedMessage(), e.getMessage()),
                                     getApplicationContext());
                             populateProcesses(null);
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         populateProcesses(null);
                     } catch (Exception exc) {
                         KeithToast.show("Error killing process", getApplicationContext());
-                        writeToLog(String.format("Error killing process %s\n%s",
+                        Log.writeToLog(String.format("Error killing process %s\n%s",
                                 exc.getLocalizedMessage(), exc.getMessage()),
                                 getApplicationContext());
                     }
@@ -129,18 +129,6 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-            }
-        }
-    };
     /**
      * The runnable to send feedback info
      */
@@ -156,13 +144,25 @@ public class MainActivity extends AppCompatActivity {
                                 getDeviceInfo(getApplicationContext()));
                 if (header.isEmpty() || message.isEmpty()) return;
                 sendEmail(header, message);
-                sendEmailTo(header, message, myEmail);
+                Email.sendEmailTo(header, message, myEmail);
                 hideKeyboard();
                 KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
                 showModeSettings(null);
             } catch (Exception e) {
                 emailException("Error Sending feedback email", getApplicationContext(), e);
                 KeithToast.show("Error sending feedback", getApplicationContext());
+            }
+        }
+    };
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
             }
         }
     };

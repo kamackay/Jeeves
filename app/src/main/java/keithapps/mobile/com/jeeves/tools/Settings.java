@@ -76,4 +76,9 @@ public class Settings {
         public static final String mediaVolume = "settings_d_mediaVolume";
         public static final String notificationPriority = "settings.D.priority";
     }
+
+    public class Location {
+        public static final String lastLat = "location_lastLat";
+        public static final String lastLong = "location_lastLong";
+    }
 }

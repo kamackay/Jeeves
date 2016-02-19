@@ -6,10 +6,12 @@ import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.os.Handler;
 
+import java.util.Locale;
+
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
 
 /**
  * Created by Keith on 2/5/2016.
@@ -63,8 +65,9 @@ public class VolumeChangeListener extends ContentObserver {
                         }
                     }
                 }).start();
-            } else writeToLog(String.format("Media Vol set to %d out of %d (was %d)", newVol,
-                    aMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC), mediaVol), c, true);
+            } else
+                writeToLog(String.format(Locale.getDefault(), "Media Vol set to %d out of %d (was %d)", newVol,
+                        aMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC), mediaVol), c, true);
             mediaVol = newVol;
         }
     }

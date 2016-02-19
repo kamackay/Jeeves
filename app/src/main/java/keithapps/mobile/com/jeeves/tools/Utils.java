@@ -5,8 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Utils {
 
@@ -95,7 +98,7 @@ public class Utils {
 
     /**
      * Get IP address from first non-localhost interface
-     * @param ipv4  true=return ipv4, false=return ipv6
+     * @param useIPv4  true=return ipv4, false=return ipv6
      * @return  address or empty string
      */
     public static String getIPAddress(boolean useIPv4) {
@@ -125,4 +128,60 @@ public class Utils {
         return "";
     }
 
+    public static String breakIntoLines(String s) {
+        try {
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            boolean f = true;
+            for (String x : s.split("[\\.:]")) {
+                if (x.contains("\n")) i = -6;
+                if (i + x.length() > 30) {
+                    sb.append("\n        .").append(x);
+                    i = x.length();
+                } else {
+                    if (f) f = false;
+                    else sb.append(".");
+                    sb.append(x);
+                    i += x.length();
+                }
+            }
+            return sb.toString().trim();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String getStackTraceString(Exception e) {
+        return (e == null || e.getStackTrace() == null) ?
+                "Could not get Stack Trace" :
+                getStackTraceString(e.getStackTrace());
+    }
+
+    /**
+     * Get the current Timestamp in the format
+     * <p/>
+     * MM/dd/yyyy:HH:mm:ss
+     *
+     * @return the current timestamp in string form
+     */
+    public static String getTimestamp() {
+        return new SimpleDateFormat("MM/dd-HH:mm:ss", Locale.US).format(new Date());
+    }
+
+    public static String getStackTraceString(StackTraceElement[] stack) {
+        if (stack == null) return "";
+        StringBuilder sb = new StringBuilder();
+        for (StackTraceElement element : stack) {
+            if (element == null) continue;
+            try {
+                sb.append("    ");
+                sb.append(element.getClassName());
+                sb.append("    ");
+                sb.append(String.format(Locale.getDefault(), "Line: %d\n", element.getLineNumber()));
+            } catch (Exception e) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }

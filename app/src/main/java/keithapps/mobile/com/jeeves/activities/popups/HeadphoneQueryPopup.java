@@ -3,6 +3,7 @@ package keithapps.mobile.com.jeeves.activities.popups;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -18,16 +19,28 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.tools.Email;
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
-import static keithapps.mobile.com.jeeves.tools.Global.getAllChildren;
-import static keithapps.mobile.com.jeeves.tools.Global.logException;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
+import static keithapps.mobile.com.jeeves.tools.Log.logException;
 
 public class HeadphoneQueryPopup extends Activity {
 
     Typeface tf;
+
+    public static void showHeadphonesPopup(Context c) {
+        try {
+            Intent i = new Intent(c, HeadphoneQueryPopup.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            c.startActivity(i);
+        } catch (Exception e) {
+            Email.emailException("Error Showing Headphone Popup", c, e);
+        }
+    }
 
     /**
      * Initialize
@@ -44,7 +57,7 @@ public class HeadphoneQueryPopup extends Activity {
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
         getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
-        writeToLog("Headphone Query Popup", getApplicationContext());
+        Log.writeToLog("Headphone Query Popup", getApplicationContext());
         Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
         if (tf != null) {
             ((Button) findViewById(R.id.headphone_popup_fullButton)).setTypeface(tf);
@@ -114,7 +127,7 @@ public class HeadphoneQueryPopup extends Activity {
                 MODE_PRIVATE).edit();
         edit.putBoolean(Settings.headset_full, true);
         edit.apply();
-        writeToLog("Headset Popup - Full", getApplicationContext());
+        Log.writeToLog("Headset Popup - Full", getApplicationContext());
         updateNotification(getApplicationContext());
         finish();
     }
@@ -137,7 +150,7 @@ public class HeadphoneQueryPopup extends Activity {
                 MODE_PRIVATE).edit();
         edit.putBoolean(Settings.headset_full, false);
         edit.apply();
-        writeToLog("Headset Popup - Partial", getApplicationContext());
+        Log.writeToLog("Headset Popup - Partial", getApplicationContext());
         updateNotification(getApplicationContext());
         finish();
     }

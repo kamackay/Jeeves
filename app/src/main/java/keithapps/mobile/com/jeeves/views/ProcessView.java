@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import keithapps.mobile.com.jeeves.R;
 
-import static keithapps.mobile.com.jeeves.tools.Global.breakIntoLines;
+import static keithapps.mobile.com.jeeves.tools.Utils.breakIntoLines;
 
 /**
  * Created by Keith on 1/19/2016.

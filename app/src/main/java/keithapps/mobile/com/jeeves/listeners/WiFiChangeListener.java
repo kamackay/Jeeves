@@ -7,9 +7,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
-
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
 
 /**
  * Created by Keith on 2/5/2016.
@@ -27,13 +26,13 @@ public class WiFiChangeListener extends BroadcastReceiver {
             boolean connectedToWiFi = prefs.getBoolean(Settings.connectedToWiFi, false);
             if (!connectedToWiFi && netInfo != null && (netInfo.getType() ==
                     ConnectivityManager.TYPE_WIFI && netInfo.isConnected())) {
-                writeToLog("Connected to WiFi", c);
+                Log.writeToLog("Connected to WiFi", c);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(Settings.connectedToWiFi, true);
                 edit.apply();
             } else if (connectedToWiFi && (netInfo == null || (netInfo.getType() ==
                     ConnectivityManager.TYPE_WIFI && !netInfo.isConnected()))) {
-                writeToLog("No Longer Connected to WiFi", c);
+                Log.writeToLog("No Longer Connected to WiFi", c);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(Settings.connectedToWiFi, false);
                 edit.apply();
@@ -45,13 +44,13 @@ public class WiFiChangeListener extends BroadcastReceiver {
             boolean connectedToMobile = prefs.getBoolean(Settings.connectedToMobile, false);
             if (!connectedToMobile && netInfo != null && (netInfo.getType() ==
                     ConnectivityManager.TYPE_MOBILE && netInfo.isConnected())) {
-                writeToLog("Connected to Mobile", c);
+                Log.writeToLog("Connected to Mobile", c);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(Settings.connectedToMobile, true);
                 edit.apply();
             } else if (connectedToMobile && (netInfo == null || (netInfo.getType() ==
                     ConnectivityManager.TYPE_MOBILE && !netInfo.isConnected()))) {
-                writeToLog("No Longer Connected to Mobile", c);
+                Log.writeToLog("No Longer Connected to Mobile", c);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(Settings.connectedToMobile, false);
                 edit.apply();

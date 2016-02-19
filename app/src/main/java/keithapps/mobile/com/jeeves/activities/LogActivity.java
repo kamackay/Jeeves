@@ -22,11 +22,10 @@ import java.io.FileInputStream;
 
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
-import keithapps.mobile.com.jeeves.tools.Global;
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.tools.Global.clearLog;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Log.clearLog;
 
 public class LogActivity extends AppCompatActivity {
 
@@ -49,12 +48,12 @@ public class LogActivity extends AppCompatActivity {
         switch_log.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) writeToLog("Logging Turned Off", getApplicationContext());
+                if (!isChecked) Log.writeToLog("Logging Turned Off", getApplicationContext());
                 SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
                         Context.MODE_PRIVATE).edit();
                 edit.putBoolean(Settings.record_log, isChecked);
                 edit.apply();
-                if (isChecked) writeToLog("Logging Turned Back on", getApplicationContext());
+                if (isChecked) Log.writeToLog("Logging Turned Back on", getApplicationContext());
             }
         });
         ((EditText) findViewById(R.id.logScreen_searchTextbox))
@@ -83,22 +82,34 @@ public class LogActivity extends AppCompatActivity {
                         int ch;
                         boolean s = !search.trim().isEmpty(), not = search.startsWith("not ");
                         if (not) search = search.replace("not ", "").trim();
-                        FileInputStream fis = openFileInput(Global.LOGFILE_NAME);
+                        FileInputStream fis = openFileInput(Log.LOGFILE_NAME);
                         while ((ch = fis.read()) != -1) chars.append((char) ch);
                         fis.close();
-                        String[] lines = chars.toString().split("\n");
-                        for (int i = lines.length - 1; i >= 0; i--) {
-                            if (not && !(!s || lines[i].toLowerCase().contains(search)))
-                                sb.append(lines[i]).append("\n\n");
-                            else if (!not && (!s || lines[i].toLowerCase().contains(search)))
-                                sb.append(lines[i]).append("\n\n");
-                        }
+                        final String[] lines = chars.toString().split("\n");
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tv.setText(sb.toString());
+                                tv.setText("");
                             }
                         });
+                        for (int i = lines.length - 1; i >= 0; i--) {
+                            final int fi = i;
+                            if (not && !(!s || lines[i].toLowerCase().contains(search)))
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tv.append(lines[fi] + "\n\n");
+                                    }
+                                });
+                            else if (!not && (!s || lines[i].toLowerCase().contains(search))) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tv.append(lines[fi] + "\n\n");
+                                    }
+                                });
+                            }
+                        }
                     } catch (Exception e) {
                         //Do nothing again
                     }

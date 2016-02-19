@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
+import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.tools.Global.showHeadphonesPopup;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
 
 /**
  * Created by Keith on 1/18/2016.
@@ -19,7 +19,7 @@ public class HeadphoneListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context c, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_MEDIA_BUTTON)) {
-            writeToLog(intent.getAction(), c);
+            Log.writeToLog(intent.getAction(), c);
         } else if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
             int state = intent.getIntExtra("state", -1);
             SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
@@ -27,7 +27,7 @@ public class HeadphoneListener extends BroadcastReceiver {
             switch (state) {
                 case 0:
                     if (prefs.getBoolean(Settings.headset_pluggedIn, false)) { //There used to be a headset
-                        writeToLog("Headset Unplugged", c);
+                        Log.writeToLog("Headset Unplugged", c);
                         AudioManager audioManager =
                                 (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
                         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
@@ -39,7 +39,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                             edit.putBoolean(Settings.headset_full, false);
                         edit.putBoolean(Settings.headset_pluggedIn, false);
                         edit.apply();
-                        writeToLog("Stop Pushing Media Vol to Full", c);
+                        Log.writeToLog("Stop Pushing Media Vol to Full", c);
                     }
                     break;
                 case 1:
@@ -50,10 +50,10 @@ public class HeadphoneListener extends BroadcastReceiver {
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean(Settings.headset_pluggedIn, true);
                     edit.apply();
-                    writeToLog("Headset Plugged in", c);
+                    Log.writeToLog("Headset Plugged in", c);
                     break;
                 default:
-                    writeToLog("Unknown Headphone State", c);
+                    Log.writeToLog("Unknown Headphone State", c);
             }
         }
     }

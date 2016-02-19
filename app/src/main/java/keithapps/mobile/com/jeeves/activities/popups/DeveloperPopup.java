@@ -8,15 +8,15 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.tools.Email;
 
-import static keithapps.mobile.com.jeeves.tools.Global.emailException;
-import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.tools.Global.myEmail;
-import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.tools.Global.sendEmailTo;
-import static keithapps.mobile.com.jeeves.tools.Global.showCromulon;
-import static keithapps.mobile.com.jeeves.tools.Global.showHeadphonesPopup;
-import static keithapps.mobile.com.jeeves.tools.Global.showScreamingSun;
+import static keithapps.mobile.com.jeeves.activities.popups.CromulonPopup.showCromulon;
+import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup.showScreamingSun;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.Email.emailException;
+import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
+import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
 
 /**
  * Created by kamac on 2/13/2016.
@@ -46,7 +46,7 @@ public class DeveloperPopup extends Activity {
     public void testEmail(View v) {
         sendEmail("Test Method run on Keith's Device", "Test Method was run\n\n" +
                 getDeviceInfo(getApplicationContext()));
-        sendEmailTo("Test Method run on Keith's Device", "Test Method was run\n\n" +
+        Email.sendEmailTo("Test Method run on Keith's Device", "Test Method was run\n\n" +
                 getDeviceInfo(getApplicationContext()), myEmail, true);
         finish();
     }
@@ -78,20 +78,7 @@ public class DeveloperPopup extends Activity {
         finish();
     }
 
-    public void writeToFile(View v) {/*
-        try {
-            File f = new File(getFileFolder() + LOGFILE_NAME);
-            if (f.getParentFile().mkdirs() && f.createNewFile())
-                KeithToast.show("Created New File", getApplicationContext());
-            FileInputStream fis = openFileInput(Global.LOGFILE_NAME);
-            FileOutputStream fos = new FileOutputStream(f);
-            int ch;
-            while ((ch = fis.read()) != -1) fos.write(ch);
-            fos.flush();
-            fos.close();
-        } catch (Exception e) {
-            KeithToast.show(e.getLocalizedMessage(), getApplicationContext());
-        }//*/
+    public void writeToFile(View v) {
         finish();
     }
 }

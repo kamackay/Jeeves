@@ -9,13 +9,12 @@ import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
-import static keithapps.mobile.com.jeeves.tools.Global.closeNotificationTray;
-import static keithapps.mobile.com.jeeves.tools.Global.getPrefs;
-import static keithapps.mobile.com.jeeves.tools.Global.turnOffBluetooth;
-import static keithapps.mobile.com.jeeves.tools.Global.turnOffWiFi;
-import static keithapps.mobile.com.jeeves.tools.Global.turnOnBluetooth;
-import static keithapps.mobile.com.jeeves.tools.Global.turnOnWiFi;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.closeNotificationTray;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.turnOffBluetooth;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.turnOffWiFi;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.turnOnBluetooth;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.turnOnWiFi;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setAlarmVolume;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setMediaVolume;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setNotificationVolume;
@@ -39,7 +38,7 @@ public class SetState {
     public static void stateA(Context c) {
         try {
             SharedPreferences prefs = getPrefs(c);
-            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_a_name,
+            Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_a_name,
                     c.getString(R.string.text_home)) + "\"", c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
             closeNotificationTray(c);
@@ -64,7 +63,7 @@ public class SetState {
             prefsEdit.apply();
             showNotification(Mode.A, c);
         } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
+            Log.writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
@@ -76,7 +75,7 @@ public class SetState {
     public static void stateB(Context c) {
         try {
             SharedPreferences prefs = getPrefs(c);
-            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_b_name,
+            Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_b_name,
                     c.getString(R.string.text_class)) + "\"", c);
             closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
@@ -102,7 +101,7 @@ public class SetState {
             prefsEdit.apply();
             showNotification(Mode.B, c);
         } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
+            Log.writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
@@ -114,7 +113,7 @@ public class SetState {
     public static void stateC(Context c) {
         try {
             SharedPreferences prefs = getPrefs(c);
-            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
+            Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
                     c.getString(R.string.text_out)) + "\"", c);
             closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
@@ -140,7 +139,7 @@ public class SetState {
             prefsEdit.apply();
             showNotification(Mode.C, c);
         } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
+            Log.writeToLog(e.getLocalizedMessage(), c);
         }
     }
 
@@ -152,7 +151,7 @@ public class SetState {
     public static void stateD(Context c) {
         try {
             SharedPreferences prefs = getPrefs(c);
-            writeToLog("Mode Set to \"" + prefs.getString(Settings.action_d_name,
+            Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_d_name,
                     c.getString(R.string.text_class)) + "\"", c);
             closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
@@ -178,7 +177,7 @@ public class SetState {
             prefsEdit.apply();
             showNotification(Mode.D, c);
         } catch (Exception e) {
-            writeToLog(e.getLocalizedMessage(), c);
+            Log.writeToLog(e.getLocalizedMessage(), c);
         }
     }
 }

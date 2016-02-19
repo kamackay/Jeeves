@@ -30,11 +30,11 @@ import keithapps.mobile.com.jeeves.listeners.VolumeChangeListener;
 import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.tools.Global.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.tools.Global.getStackTraceString;
-import static keithapps.mobile.com.jeeves.tools.Global.getTimestamp;
-import static keithapps.mobile.com.jeeves.tools.Global.sendEmail;
-import static keithapps.mobile.com.jeeves.tools.Global.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.AndroidTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
+import static keithapps.mobile.com.jeeves.tools.Utils.getStackTraceString;
+import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
 public class MainService extends Service {
     /**
@@ -292,6 +292,16 @@ public class MainService extends Service {
     }
 
     /**
+     * When the Service is being closed
+     */
+    @Override
+    public void onDestroy() {
+        getApplicationContext().getContentResolver().unregisterContentObserver(mVolumeChangeListener);
+        writeToLog("Main Service Killed", getApplicationContext());
+        super.onDestroy();
+    }
+
+    /**
      * Called when all clients have disconnected from a particular interface
      * published by the service.  The default implementation does nothing and
      * returns false.
@@ -323,16 +333,6 @@ public class MainService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         writeToLog("MainService onTaskRemoved", getApplicationContext());
         super.onTaskRemoved(rootIntent);
-    }
-
-    /**
-     * When the Service is being closed
-     */
-    @Override
-    public void onDestroy() {
-        getApplicationContext().getContentResolver().unregisterContentObserver(mVolumeChangeListener);
-        writeToLog("Main Service Killed", getApplicationContext());
-        super.onDestroy();
     }
 
     @Override

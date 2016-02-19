@@ -13,6 +13,7 @@ import keithapps.mobile.com.jeeves.tools.Email;
 import static keithapps.mobile.com.jeeves.activities.popups.CromulonPopup.showCromulon;
 import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup.showScreamingSun;
+import static keithapps.mobile.com.jeeves.activities.popups.TextPopup.showTextPopup;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
@@ -79,6 +80,11 @@ public class DeveloperPopup extends Activity {
     }
 
     public void writeToFile(View v) {
+        finish();
+    }
+
+    public void textPopup(View view) {
+        showTextPopup("Text. Wide Text. Very Wide Text\n\nAND A SECOND LINE!", "Title", getApplicationContext());
         finish();
     }
 }

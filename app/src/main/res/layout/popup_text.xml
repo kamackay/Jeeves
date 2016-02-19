@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textPopup_text"
+        android:id="@+id/textPopup_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</ScrollView>
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:padding="@dimen/ten"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/twenty_five" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:maxHeight="400sp">
+
+        <TextView
+            android:id="@+id/textPopup_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/fifteen"
+            android:textColor="@android:color/white"
+            android:textIsSelectable="true" />
+    </ScrollView>
+</LinearLayout>

@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.popups.TextPopup">
 
-    <TextView
-        android:id="@+id/textPopup_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/black"
-        android:padding="@dimen/ten"
-        android:textAlignment="center"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/twenty_five" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textPopup_title"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="9"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_dark"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/twenty_five" />
+
+        <ImageView
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:contentDescription="@string/close"
+            android:onClick="close"
+            android:src="@drawable/ic_menu_close_clear_cancel" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,6 +45,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/fifteen"
             android:textColor="@android:color/white"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:textSize="@dimen/twelve" />
     </ScrollView>
 </LinearLayout>

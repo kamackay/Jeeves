@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.R;
@@ -46,14 +47,18 @@ import keithapps.mobile.com.jeeves.views.ProcessView;
 import keithapps.mobile.com.jeeves.views.SettingsSwitch;
 
 import static keithapps.mobile.com.jeeves.MainService.showNotification;
+import static keithapps.mobile.com.jeeves.activities.popups.TextPopup.showTextPopup;
+import static keithapps.mobile.com.jeeves.tools.AdderallTools.getAdderallLog;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.testMethod;
+import static keithapps.mobile.com.jeeves.tools.LocationTools.getLocationLog;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getVersionName;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.showScreenSize;
 import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_LEAVE;
@@ -129,20 +134,6 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
     /**
      * The runnable to send feedback info
      */
@@ -160,11 +151,26 @@ public class MainActivity extends AppCompatActivity {
                 sendEmail(header, message, getApplicationContext());
                 Email.sendEmailTo(header, message, myEmail, getApplicationContext());
                 hideKeyboard();
-                KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
+                if (getPrefs(getApplicationContext()).getBoolean(getString(R.string.permissions_internet), true))
+                    KeithToast.show("Feedback Sent\nThank you!", getApplicationContext());
                 showModeSettings(null);
             } catch (Exception e) {
                 emailException("Error Sending feedback email", getApplicationContext(), e);
                 KeithToast.show("Error sending feedback", getApplicationContext());
+            }
+        }
+    };
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
             }
         }
     };
@@ -198,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_features_settings, frame, true);
-        SharedPreferences prefs = getPrefs();
+        SharedPreferences prefs = getPrefs(getApplicationContext());
         EditText frequency = (EditText) findViewById(R.id.intrusivePopup_frequency);
         frequency.setText(String.valueOf(prefs.getInt(Settings.intrusivePopupFrequency, 50)));
         frequency.addTextChangedListener(new TextChangeListener() {
@@ -206,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 int n = Integer.parseInt(s.toString());
                 if (n >= 0 && n <= 999) {
-                    SharedPreferences.Editor edit = getPrefs().edit();
+                    SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
                     edit.putInt(Settings.intrusivePopupFrequency, n);
                     edit.apply();
                 }
@@ -257,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_mode_settings, frame, true);
-        SharedPreferences prefs = getPrefs();
+        SharedPreferences prefs = getPrefs(getApplicationContext());
         EditText et_A = (EditText) findViewById(R.id.main_text_A),
                 et_B = (EditText) findViewById(R.id.main_text_B),
                 et_C = (EditText) findViewById(R.id.main_text_C),
@@ -310,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener saveListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor prefs = getPrefs().edit();
+                SharedPreferences.Editor prefs = getPrefs(getApplicationContext()).edit();
                 prefs.putInt(Settings.A.ringtoneVolume, spinners[0].getSelectedItemPosition());
                 prefs.putInt(Settings.A.mediaVolume, spinners[1].getSelectedItemPosition());
                 prefs.putInt(Settings.A.systemVolume, spinners[2].getSelectedItemPosition());
@@ -702,6 +708,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainMenu_showLog:
                 startActivity(new Intent(getApplicationContext(), LogActivity.class));
                 return true;
+            case R.id.mainMenu_showLocationLog:
+                showLocationLog();
+                return true;
+            case R.id.mainMenu_showAdderallLog:
+                showAdderallLog();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -748,15 +760,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-    }
-
-    /**
-     * Get the shared preferences
-     *
-     * @return Shared Preferences
-     */
-    private SharedPreferences getPrefs() {
-        return getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
     }
 
     /**
@@ -844,10 +847,11 @@ public class MainActivity extends AppCompatActivity {
                         sendFeedback.run();
                     }
                 });
+        /* This opens the Keyboard, but it got annoying
         View v = findViewById(R.id.feedback_titleText);
         v.requestFocus();
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .showSoftInput(v, InputMethodManager.SHOW_FORCED);
+                .showSoftInput(v, InputMethodManager.SHOW_FORCED);//*/
         setAllSwipes();
     }
 
@@ -877,8 +881,19 @@ public class MainActivity extends AppCompatActivity {
         frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_permissions, frame, true);
+        int r = new Random().nextInt(4);
+        ((TextView) findViewById(R.id.permissions_header))
+                .append(r != 0 ? "Pinky Promise" : "Scout's Honor");
         setFont();
         setAllSwipes();
         getApplicationContext().setTheme(R.style.AppTheme);
+    }
+
+    public void showAdderallLog() {
+        showTextPopup(getAdderallLog(), "Adderall Log", getApplicationContext());
+    }
+
+    public void showLocationLog() {
+        showTextPopup(getLocationLog(), "Location Log", getApplicationContext());
     }
 }

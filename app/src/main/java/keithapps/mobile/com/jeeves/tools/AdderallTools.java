@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Locale;
 
@@ -48,6 +50,32 @@ public class AdderallTools {
             //Toast.makeText(c, "wrote to file", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Toast.makeText(c, "error creating file", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static String getAdderallLog() {
+        try {
+            StringBuilder sb = new StringBuilder();
+            File file = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOCUMENTS), adderallCSV_FILENAME);
+            file = new File(file.getParentFile().getParentFile(), "/Jeeves/" + adderallCSV_FILENAME);
+            file.getParentFile().mkdirs();
+            if (!file.exists()) file.createNewFile();
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    String[] elements = line.split(",");
+                    sb.append(elements[0]).append("\n  ");
+                    sb.append("Took ").append(elements[2]).append(" mg");
+                    sb.append("\n").append("    ").append(elements[3]).append(" mg since clear");
+                    sb.append("\n\n");
+                } catch (Exception e) { //Just in case there aren't 4 things
+                }
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return "Error Getting Adderall Log";
         }
     }
 }

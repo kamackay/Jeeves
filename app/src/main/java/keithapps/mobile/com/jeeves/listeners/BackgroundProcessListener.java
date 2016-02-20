@@ -36,7 +36,8 @@ import static keithapps.mobile.com.jeeves.tools.SystemTools.putDouble;
  * Created by Keith on 1/19/2016.
  * Background Process Listener
  */
-public class BackgroundProcessListener extends BroadcastReceiver implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class BackgroundProcessListener extends BroadcastReceiver
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     GoogleApiClient mGoogleApiClient;
@@ -54,6 +55,7 @@ public class BackgroundProcessListener extends BroadcastReceiver implements Goog
                 return;
             }
         }
+        if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_background), true)) return;
         Calendar cal = Calendar.getInstance(Locale.US);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         if (hour == 0 && cal.get(Calendar.MINUTE) < 10) {

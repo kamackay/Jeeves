@@ -4,7 +4,7 @@
         android:id="@+id/mainMenu_showScreenSize"
         android:icon="@android:drawable/ic_menu_always_landscape_portrait"
         android:title="@string/text_showScreenSize"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/mainMenu_showLog"
         android:icon="@android:drawable/ic_menu_info_details"
@@ -14,9 +14,18 @@
         android:id="@+id/mainMenu_showAllRunningActions"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="@string/text_showAllRunningProcesses"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/mainMenu_showSysInfo"
         android:title="@string/text_showSystemInfo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mainMenu_showLocationLog"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/text_showLocationLog"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mainMenu_showAdderallLog"
+        android:title="@string/show_adderall_log"
         app:showAsAction="never" />
 </menu>

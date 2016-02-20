@@ -109,10 +109,19 @@
     <string name="frequency_description">Higher value means \nlower frequency\nMax: 999 Min: 0</string>
     <string name="headphonePopup">Headphone Popup</string>
     <string name="permissions">Permissions</string>
-    <string name="permissions_forewarning">Technically, permissions can only be \"turned off\" in Marshmallow, so Jeeves may still have access, but will no longer use anything associated with those permissions.\n\nPinky Promise</string>
+    <string name="text_permissionsForewarning">"Technically, permissions can only be \"turned off\" in Marshmallow, so Jeeves may still have access, but will no longer use anything associated with those permissions.\n\n"</string>
     <string name="location">Location</string>
     <string name="permissions_location">permissions_location</string>
     <string name="resetAtMidnight">resetAtMidnight</string>
     <string name="internet">Internet</string>
     <string name="permissions_internet">permissions_internet</string>
+    <string name="backgroundProcess">Background Process</string>
+    <string name="permissions_background">permissions_background</string>
+    <string name="accountInfo">Account Information</string>
+    <string name="permissions_accounts">permissions_accounts</string>
+    <string name="text_showLocationLog">Show Location Log</string>
+    <string name="permissions_phoneNumber">permissions_phoneNumber</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="close">Close</string>
+    <string name="show_adderall_log">Show Adderall Log</string>
 </resources>

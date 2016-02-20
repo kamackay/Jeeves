@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import keithapps.mobile.com.jeeves.R;
@@ -32,7 +34,18 @@ public class TextPopup extends Activity {
         //getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         String text = getIntent().getExtras().getString("text");
         String title = getIntent().getExtras().getString("title");
-        ((TextView) findViewById(R.id.textPopup_text)).setText(text);
-        ((TextView) findViewById(R.id.textPopup_title)).setText(title);
+        TextView tvText = (TextView) findViewById(R.id.textPopup_text);
+        TextView tvTitle = (TextView) findViewById(R.id.textPopup_title);
+        tvText.setText(text);
+        tvTitle.setText(title);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+        if (tf != null) {
+            tvText.setTypeface(tf);
+            tvTitle.setTypeface(tf);
+        }
+    }
+
+    public void close(View v) {
+        finish();
     }
 }

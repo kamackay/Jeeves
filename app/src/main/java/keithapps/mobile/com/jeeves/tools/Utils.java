@@ -1,5 +1,7 @@
 package keithapps.mobile.com.jeeves.tools;
 
+import android.content.Context;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -10,6 +12,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import keithapps.mobile.com.jeeves.R;
+
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 
 public class Utils {
 
@@ -114,8 +120,10 @@ public class Utils {
      * @param useIPv4 true=return ipv4, false=return ipv6
      * @return address or empty string
      */
-    public static String getIPAddress(boolean useIPv4) {
+    public static String getIPAddress(boolean useIPv4, Context c) {
         try {
+            if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_internet), true))
+                return "No Internet Permission";
             List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface intf : interfaces) {
                 List<InetAddress> addrs = Collections.list(intf.getInetAddresses());

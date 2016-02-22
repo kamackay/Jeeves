@@ -44,6 +44,7 @@ public class LocationTools {
     public static void onLocationChange(double latitude, double longitude, Context c) {
         if (!getPrefs(c).getBoolean(c.getString(R.string.settings_logLocation), true)) return;
         logLocation(latitude, longitude);
+
         /*
         writeToLog(format(Locale.getDefault(),
                 "Location: %s %c, %s %c",
@@ -85,6 +86,54 @@ public class LocationTools {
             }
         } catch (Exception e) {
             return "Error Getting Location Log";
+        }
+    }
+
+    public class Spot {
+        double lat, lon;
+        String name;
+
+        public Spot(String name, double latitude, double longitude) {
+            lat = latitude;
+            lon = longitude;
+            this.name = name;
+        }
+
+        /**
+         * Get the latitude
+         *
+         * @return the latitude of this spot
+         */
+        public double getLatitude() {
+            return lat;
+        }
+
+        /**
+         * Get the longitude
+         *
+         * @return the longitude of this spot
+         */
+        public double getLongitude() {
+            return lon;
+        }
+
+        /**
+         * Get the name
+         *
+         * @return the name of this spot
+         */
+        public String getName() {
+            return name;
+        }
+
+        public boolean equals(Object o) {
+            return o instanceof Spot &&
+                    ((Spot) o).getLatitude() == lat &&
+                    ((Spot) o).getLongitude() == lon;
+        }
+
+        public boolean isAt(double latitude, double longitude) {
+            return latitude == lat && longitude == lon;//is close enough
         }
     }
 }

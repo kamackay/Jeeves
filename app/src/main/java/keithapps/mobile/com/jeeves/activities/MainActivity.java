@@ -138,20 +138,6 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
     /**
      * The runnable to send feedback info
      */
@@ -175,6 +161,20 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 emailException("Error Sending feedback email", getApplicationContext(), e);
                 KeithToast.show("Error sending feedback", getApplicationContext());
+            }
+        }
+    };
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
             }
         }
     };
@@ -661,7 +661,7 @@ public class MainActivity extends AppCompatActivity {
      */
     void setFont() {
         try {
-            if (tf == null) getFont(getApplicationContext());
+            if (tf == null) tf = getFont(getApplicationContext());
             ArrayList<View> views = getAllChildren(findViewById(R.id.main_root));
             for (int i = 0; i < views.size(); i++) {
                 View v = views.get(i);

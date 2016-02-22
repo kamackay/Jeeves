@@ -325,10 +325,11 @@ public class SystemTools {
                 case 8:
                     return Typeface.createFromAsset(c.getAssets(), "code.ttf");
                 case 9:
-                    return Typeface.createFromAsset(c.getAssets(), "starjedi.ttf");
+                    return Typeface.createFromAsset(c.getAssets(), "jedi.ttf");
             }
             return Typeface.createFromAsset(c.getAssets(), "arial.ttf");
         } catch (Exception e) {
+            KeithToast.show(e.getLocalizedMessage(), c);
             return Typeface.createFromAsset(c.getAssets(), "arial.ttf");
         }
     }

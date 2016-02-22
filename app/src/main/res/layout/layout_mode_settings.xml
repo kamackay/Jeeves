@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,16 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/notification_button_background"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
         android:padding="@dimen/ten">
 
         <EditText
             android:id="@+id/main_text_A"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage"
+            android:maxLength="10"
             android:paddingBottom="@dimen/twenty"
+            android:paddingEnd="@dimen/fifteen"
+            android:paddingStart="@dimen/zero"
             android:text="@string/text_home"
             android:textAlignment="center"
             android:textColor="@android:color/white"
@@ -224,15 +228,36 @@
         android:orientation="vertical"
         android:padding="@dimen/twenty">
 
-        <EditText
-            android:id="@+id/main_text_B"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textShortMessage"
-            android:paddingBottom="@dimen/twenty"
-            android:text="@string/text_class"
-            android:textAlignment="center"
-            android:textSize="30sp" />
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/main_text_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/modeB_icon_switch"
+                android:inputType="textShortMessage"
+                android:maxLength="10"
+                android:paddingBottom="@dimen/twenty"
+                android:paddingEnd="@dimen/fifteen"
+                android:paddingStart="@dimen/zero"
+                android:text="@string/text_class"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <keithapps.mobile.com.jeeves.views.SettingsSwitch
+                android:id="@+id/modeB_icon_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingEnd="@dimen/zero"
+                android:paddingStart="@dimen/fifteen"
+                android:text="@string/icon"
+                app:setting="@string/modeB_icon" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -425,16 +450,36 @@
         android:orientation="vertical"
         android:padding="@dimen/twenty">
 
-        <EditText
-            android:id="@+id/main_text_C"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textShortMessage"
-            android:paddingBottom="@dimen/twenty"
-            android:text="@string/text_out"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/main_text_C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/modeC_icon_switch"
+                android:inputType="textShortMessage"
+                android:maxLength="10"
+                android:paddingBottom="@dimen/twenty"
+                android:paddingEnd="@dimen/fifteen"
+                android:paddingStart="@dimen/zero"
+                android:text="@string/text_class"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <keithapps.mobile.com.jeeves.views.SettingsSwitch
+                android:id="@+id/modeC_icon_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingEnd="@dimen/zero"
+                android:paddingStart="@dimen/fifteen"
+                android:text="@string/icon"
+                app:setting="@string/modeC_icon" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -627,16 +672,36 @@
         android:orientation="vertical"
         android:padding="@dimen/ten">
 
-        <EditText
-            android:id="@+id/main_text_D"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textShortMessage"
-            android:paddingBottom="@dimen/twenty"
-            android:text="@string/text_home"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/main_text_D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/modeD_icon_switch"
+                android:inputType="textShortMessage"
+                android:maxLength="10"
+                android:paddingBottom="@dimen/twenty"
+                android:paddingEnd="@dimen/fifteen"
+                android:paddingStart="@dimen/zero"
+                android:text="@string/text_class"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <keithapps.mobile.com.jeeves.views.SettingsSwitch
+                android:id="@+id/modeD_icon_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingEnd="@dimen/zero"
+                android:paddingStart="@dimen/fifteen"
+                android:text="@string/icon"
+                app:setting="@string/modeD_icon" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -73,6 +73,7 @@ public class AdderallTools {
                 } catch (Exception e) { //Just in case there aren't 4 things
                 }
             }
+            reader.close();
             return sb.toString();
         } catch (Exception e) {
             return "Error Getting Adderall Log";

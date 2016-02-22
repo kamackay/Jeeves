@@ -136,6 +136,7 @@ public class MainService extends Service {
             } catch (Exception e) {//Give Up Immediately}
             }
         }
+        builder.setSmallIcon(android.R.color.transparent);
         if (prefs.getBoolean(Settings.headset_full, false))
             builder.setSmallIcon(android.R.color.transparent);
         else if (mode == Mode.A) {
@@ -150,19 +151,22 @@ public class MainService extends Service {
             contentView.setTextColor(R.id.notification_textB, Color.BLACK);
             contentView.setImageViewResource(R.id.notification_buttonB,
                     R.drawable.notification_button_background_selected);
-            builder.setSmallIcon(R.drawable.icon_class);
+            if (prefs.getBoolean(c.getString(R.string.modeB_icon), true))
+                builder.setSmallIcon(R.drawable.icon_class);
         } else if (mode == Mode.C) {
             priority = prefs.getInt(Settings.C.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setImageViewResource(R.id.notification_buttonC,
                     R.drawable.notification_button_background_selected);
             contentView.setTextColor(R.id.notification_textC, Color.BLACK);
-            builder.setSmallIcon(R.drawable.icon_small);
+            if (prefs.getBoolean(c.getString(R.string.modeC_icon), true))
+                builder.setSmallIcon(R.drawable.icon_small);
         } else if (mode == Mode.D) {
             priority = prefs.getInt(Settings.D.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setImageViewResource(R.id.notification_buttonD,
                     R.drawable.notification_button_background_selected);
             contentView.setTextColor(R.id.notification_textD, Color.BLACK);
-            builder.setSmallIcon(R.drawable.icon_car_white);
+            if (prefs.getBoolean(c.getString(R.string.modeD_icon), true))
+                builder.setSmallIcon(R.drawable.icon_car_white);
         } else builder.setSmallIcon(R.drawable.icon_small);
         switch (priority) {
             case Notification.PRIORITY_MIN:

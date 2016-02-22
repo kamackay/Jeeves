@@ -114,7 +114,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/twenty">
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,5 +136,21 @@
             android:paddingEnd="@dimen/zero"
             android:paddingStart="@dimen/fifteen"
             android:text="@string/frequency_description" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/permissions_switch_padding"
+            app:setting="@string/settings_logLocation" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logLocation" />
     </LinearLayout>
 </LinearLayout>

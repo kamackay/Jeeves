@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.popups.HeadphoneQueryPopup"
+            android:name=".activities.popups.HeadphonePopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog.Headphone" />
         <activity

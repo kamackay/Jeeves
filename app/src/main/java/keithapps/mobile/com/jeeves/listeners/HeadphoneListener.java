@@ -9,7 +9,7 @@ import android.media.AudioManager;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.activities.popups.HeadphonePopup.showHeadphonesPopup;
 
 /**
  * Created by Keith on 1/18/2016.

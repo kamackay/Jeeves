@@ -58,8 +58,8 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 20);
-                    finish();
                     updateNotification(getApplicationContext());
+                    setValues();
                 }
             });
             b10.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +76,8 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 10);
-                    finish();
                     updateNotification(getApplicationContext());
+                    setValues();
                 }
             });
             b5.setOnClickListener(new View.OnClickListener() {
@@ -94,8 +94,8 @@ public class AdderallPopup extends Activity {
                             prefs.getInt(Settings.Adderall.adderall_count, 0)),
                             getApplicationContext());
                     writeAdderall(getApplicationContext(), 5);
-                    finish();
                     updateNotification(getApplicationContext());
+                    setValues();
                 }
             });
             setFont();

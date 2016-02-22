@@ -93,23 +93,19 @@ public class LogActivity extends AppCompatActivity {
                             }
                         });
                         for (int i = lines.length - 1; i >= 0; i--) {
-                            final int fi = i;
                             if (not && !(!s || lines[i].toLowerCase().contains(search)))
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tv.append(lines[fi] + "\n\n");
-                                    }
-                                });
+                                sb.append(lines[i]).append("\n\n");
                             else if (!not && (!s || lines[i].toLowerCase().contains(search))) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        tv.append(lines[fi] + "\n\n");
-                                    }
-                                });
+                                sb.append(lines[i]).append("\n\n");
                             }
                         }
+                        final String finS = sb.toString();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tv.setText(finS);
+                            }
+                        });
                     } catch (Exception e) {
                         //Do nothing again
                     }

@@ -2,6 +2,7 @@ package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -9,15 +10,18 @@ import android.view.View;
 
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Email;
+import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.activities.popups.CromulonPopup.showCromulon;
-import static keithapps.mobile.com.jeeves.activities.popups.HeadphoneQueryPopup.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.activities.popups.HeadphonePopup.showHeadphonesPopup;
 import static keithapps.mobile.com.jeeves.activities.popups.ScreamingSunPopup.showScreamingSun;
 import static keithapps.mobile.com.jeeves.activities.popups.TextPopup.showTextPopup;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.putDouble;
 
 /**
  * Created by kamac on 2/13/2016.
@@ -85,6 +89,14 @@ public class DeveloperPopup extends Activity {
 
     public void textPopup(View view) {
         showTextPopup("Text. Wide Text. Very Wide Text\n\nAND A SECOND LINE!", "Title", getApplicationContext());
+        finish();
+    }
+
+    public void forceLocationUpdate(View v) {
+        SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
+        edit = putDouble(edit, Settings.Location.lastLat, 0);
+        edit = putDouble(edit, Settings.Location.lastLong, 0);
+        edit.apply();
         finish();
     }
 }

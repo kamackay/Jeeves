@@ -27,9 +27,11 @@
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:contentDescription="@string/close"
             android:onClick="close"
+            android:paddingEnd="@dimen/fifteen"
+            android:paddingRight="@dimen/zero"
             android:src="@drawable/ic_menu_close_clear_cancel" />
     </LinearLayout>
 

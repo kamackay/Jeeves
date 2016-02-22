@@ -124,4 +124,11 @@
     <string name="phoneNumber">Phone Number</string>
     <string name="close">Close</string>
     <string name="show_adderall_log">Show Adderall Log</string>
+    <string name="settings_logLocation">settings_logLocation</string>
+    <string name="logLocation">Log Location</string>
+    <string name="icon">Icon</string>
+    <string name="modeA_icon">modeA_icon</string>
+    <string name="modeC_icon">modeC_icon</string>
+    <string name="modeB_icon">modeB_icon</string>
+    <string name="modeD_icon">modeD_icon</string>
 </resources>

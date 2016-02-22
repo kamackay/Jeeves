@@ -76,7 +76,7 @@ public class GlobalTools {
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
         return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) &&
-                BuildConfig.DEBUG_MODE &&
+                BuildConfig.DEBUG &&
                 Build.BRAND.toLowerCase().equals("samsung") &&
                 Build.MODEL.toLowerCase().equals("sm-n900");
     }

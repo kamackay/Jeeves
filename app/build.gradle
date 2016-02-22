@@ -15,12 +15,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "Boolean", "DEBUG_MODE", "false"
-        }
-        debug {
-            buildConfigField "Boolean", "DEBUG_MODE", "true"
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -28,11 +22,14 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/mail.jar/$)
+    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/activation.jar/$)
+    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/additionnal.jar/$)
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.android.gms:play-services:8.4.0'
-    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/mail.jar/$)
-    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/activation.jar/$)
-    compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/additionnal.jar/$)
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }

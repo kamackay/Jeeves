@@ -75,4 +75,14 @@
         android:layout_height="wrap_content"
         android:onClick="textPopup"
         android:text="Text Popup" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/testPopup_verticalSpace" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="forceLocationUpdate"
+        android:text="Force Location Update" />
 </LinearLayout>

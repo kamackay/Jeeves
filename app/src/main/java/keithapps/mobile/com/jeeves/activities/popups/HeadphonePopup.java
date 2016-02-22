@@ -27,13 +27,13 @@ import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
 
-public class HeadphoneQueryPopup extends Activity {
+public class HeadphonePopup extends Activity {
 
     Typeface tf;
 
     public static void showHeadphonesPopup(Context c) {
         try {
-            Intent i = new Intent(c, HeadphoneQueryPopup.class);
+            Intent i = new Intent(c, HeadphonePopup.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             c.startActivity(i);
@@ -127,6 +127,19 @@ public class HeadphoneQueryPopup extends Activity {
                 MODE_PRIVATE).edit();
         edit.putBoolean(Settings.headset_full, true);
         edit.apply();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                            audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                } catch (Exception e) {
+                    //Don't do anything with this
+                }
+            }
+        }).start();
         Log.writeToLog("Headset Popup - Full", getApplicationContext());
         updateNotification(getApplicationContext());
         finish();

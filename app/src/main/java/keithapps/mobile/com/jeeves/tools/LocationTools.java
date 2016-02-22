@@ -43,6 +43,7 @@ public class LocationTools {
     }
 
     public static void onLocationChange(double latitude, double longitude, Context c) {
+        if (!getPrefs(c).getBoolean(c.getString(R.string.settings_logLocation), true)) return;
         logLocation(latitude, longitude);
         writeToLog(format(Locale.getDefault(),
                 "Location: %s %c, %s %c",
@@ -64,17 +65,24 @@ public class LocationTools {
     }
 
     public static String getLocationLog() {
+        StringBuilder sb = new StringBuilder();
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOCUMENTS), "bs.txt");
+        file = new File(file.getParentFile().getParentFile(), "/Jeeves/" + "location.txt");
+        file.getParentFile().mkdirs();
         try {
-            StringBuilder sb = new StringBuilder();
-            File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOCUMENTS), "bs.txt");
-            file = new File(file.getParentFile().getParentFile(), "/Jeeves/" + "location.txt");
-            file.getParentFile().mkdirs();
             if (!file.exists()) file.createNewFile();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) sb.append(line + "\n\n");
-            return sb.toString();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line).append("\n");
+                String[] lines = sb.toString().split("\n");
+                StringBuilder fin = new StringBuilder();
+                for (int i = lines.length - 1; i >= 0; i--)
+                    fin.append(lines[i]).append("\n\n");
+                return fin.toString();
+            } catch (Exception e) {
+                return "Error Getting Location Log";
+            }
         } catch (Exception e) {
             return "Error Getting Location Log";
         }

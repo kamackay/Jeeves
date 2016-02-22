@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -31,10 +30,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+import keithapps.mobile.com.jeeves.FontSpinnerAdapter;
 import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.SpinnerAdapter;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 import keithapps.mobile.com.jeeves.listeners.SwipeListener;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
@@ -58,6 +61,7 @@ import static keithapps.mobile.com.jeeves.tools.GlobalTools.testMethod;
 import static keithapps.mobile.com.jeeves.tools.LocationTools.getLocationLog;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getVersionName;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.showScreenSize;
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+            tf = getFont(getApplicationContext());
         } catch (Exception e) {
             logException("Error Loading Typeface", getApplicationContext(), e);
         }
@@ -242,6 +246,32 @@ public class MainActivity extends AppCompatActivity {
         ((SettingsSwitch) findViewById(R.id.settingsScreen_showHeadphonePopup))
                 .setMySetting(Settings.showHeadphonePopup);
         getApplicationContext().setTheme(R.style.AppTheme);
+        final Spinner fontSpinner = (Spinner) findViewById(R.id.features_fontSpinner);
+        FontSpinnerAdapter adapter = new FontSpinnerAdapter(getApplicationContext(),
+                R.layout.spinner_dropdown, Arrays.asList(getResources().getStringArray(R.array.fonts)));
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        AdapterView.OnItemSelectedListener saveListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
+                edit.putInt(Settings.fontCode, fontSpinner.getSelectedItemPosition());
+                edit.apply();
+                tf = getFont(getApplicationContext());
+                setFont();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Well, don't do anything
+            }
+        };
+        try {
+            fontSpinner.setAdapter(adapter);
+            fontSpinner.setOnItemSelectedListener(saveListener);
+            fontSpinner.setSelection(prefs.getInt(Settings.fontCode, 0));
+        } catch (Exception e) {
+            //Don't do anything, it should be ok
+        }
         setFont();
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
@@ -310,8 +340,9 @@ public class MainActivity extends AppCompatActivity {
         });
         mainShowing = true;
         final Spinner[] spinners = getSpinners();
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.percentages, android.R.layout.simple_spinner_item);
+        List<String> strings = Arrays.asList(getResources().getStringArray(R.array.percentages));
+        SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
+                R.layout.spinner_dropdown, strings);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown);
         AdapterView.OnItemSelectedListener saveListener = new AdapterView.OnItemSelectedListener() {
             @Override
@@ -630,7 +661,7 @@ public class MainActivity extends AppCompatActivity {
      */
     void setFont() {
         try {
-            if (tf == null) return;
+            if (tf == null) getFont(getApplicationContext());
             ArrayList<View> views = getAllChildren(findViewById(R.id.main_root));
             for (int i = 0; i < views.size(); i++) {
                 View v = views.get(i);
@@ -736,7 +767,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void populateProcesses(View v) {
         mainShowing = false;
-        final Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
+        final Typeface tf = getFont(getApplicationContext());
         final LinearLayout l = (LinearLayout) findViewById(R.id.runningProcesses_root);
         if (l.getChildCount() > 0) l.removeAllViews();
         new Thread(new Runnable() {

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -293,7 +294,42 @@ public class SystemTools {
         return edit.putLong(key, Double.doubleToRawLongBits(value));
     }
 
-    public static double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
+    public static double getDouble(final SharedPreferences prefs,
+                                   final String key, final double defaultValue) {
         return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    }
+
+    public static Typeface getFont(Context c) {
+        return getFont(getPrefs(c).getInt(Settings.fontCode, 0), c);
+    }
+
+    public static Typeface getFont(int i, Context c) {
+        try {
+            switch (i) {
+                case 0:
+                    Typeface.createFromAsset(c.getAssets(), "arial.ttf");
+                case 1:
+                    return Typeface.createFromAsset(c.getAssets(), "calibri.ttf");
+                case 2:
+                    return Typeface.createFromAsset(c.getAssets(), "tahoma.ttf");
+                case 3:
+                    return Typeface.createFromAsset(c.getAssets(), "comic.ttf");
+                case 4:
+                    return Typeface.createFromAsset(c.getAssets(), "times.ttf");
+                case 5:
+                    return Typeface.createFromAsset(c.getAssets(), "lighthouse.ttf");
+                case 6:
+                    return Typeface.createFromAsset(c.getAssets(), "roboto.ttf");
+                case 7:
+                    return Typeface.createFromAsset(c.getAssets(), "roboto_thin.ttf");
+                case 8:
+                    return Typeface.createFromAsset(c.getAssets(), "code.ttf");
+                case 9:
+                    return Typeface.createFromAsset(c.getAssets(), "starjedi.ttf");
+            }
+            return Typeface.createFromAsset(c.getAssets(), "arial.ttf");
+        } catch (Exception e) {
+            return Typeface.createFromAsset(c.getAssets(), "arial.ttf");
+        }
     }
 }

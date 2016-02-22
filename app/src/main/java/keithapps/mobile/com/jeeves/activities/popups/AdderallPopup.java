@@ -27,6 +27,7 @@ import static keithapps.mobile.com.jeeves.tools.AdderallTools.writeAdderall;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
 import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
 public class AdderallPopup extends Activity {
@@ -191,7 +192,7 @@ public class AdderallPopup extends Activity {
     void setFont() {
         try {
             if (tf == null)
-                tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+                tf = getFont(getApplicationContext());
             if (tf == null) return;
             ArrayList<View> views = getAllChildren(findViewById(R.id.adderallPopup_root));
             for (int i = 0; i < views.size(); i++) {

@@ -33,13 +33,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/fifteen">
+        android:paddingTop="@dimen/ten">
 
         <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/settingsScreen_showNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false" />
+            android:checked="false"
+            android:padding="@dimen/ten" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,13 +54,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/fifteen">
+        android:paddingTop="@dimen/ten">
 
         <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/settingsScreen_showHeadphonePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false" />
+            android:checked="false"
+            android:padding="@dimen/ten" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,11 +75,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/fifteen">
+        android:paddingTop="@dimen/ten">
 
         <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/ten"
             app:setting="@string/resetAtMidnight" />
 
         <TextView
@@ -93,17 +96,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/fifteen">
+        android:paddingTop="@dimen/ten">
 
         <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/features_showIntrusivePopup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false" />
+            android:checked="false"
+            android:padding="@dimen/ten" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/ten"
             android:text="@string/text_showRickAndMortyPopups"
             android:textColor="@android:color/white"
             android:textSize="@dimen/main_textSmall" />
@@ -115,7 +120,7 @@
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/twenty">
+        android:paddingBottom="@dimen/fifteen">
 
         <TextView
             android:layout_width="wrap_content"
@@ -140,7 +145,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/ten">
 
         <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:layout_width="wrap_content"
@@ -152,5 +158,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logLocation" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/ten">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/twenty"
+            android:paddingStart="@dimen/ten"
+            android:text="@string/font" />
+
+        <Spinner
+            android:id="@+id/features_fontSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

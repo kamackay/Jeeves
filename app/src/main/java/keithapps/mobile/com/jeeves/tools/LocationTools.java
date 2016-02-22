@@ -13,7 +13,6 @@ import keithapps.mobile.com.jeeves.R;
 
 import static java.lang.String.format;
 import static keithapps.mobile.com.jeeves.tools.Log.logLocation;
-import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDouble;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 
@@ -45,12 +44,13 @@ public class LocationTools {
     public static void onLocationChange(double latitude, double longitude, Context c) {
         if (!getPrefs(c).getBoolean(c.getString(R.string.settings_logLocation), true)) return;
         logLocation(latitude, longitude);
+        /*
         writeToLog(format(Locale.getDefault(),
                 "Location: %s %c, %s %c",
                 String.valueOf(Math.abs(latitude)),
                 (latitude > 0) ? 'N' : 'S',
                 String.valueOf(Math.abs(longitude)),
-                (longitude > 0) ? 'E' : 'W'), c);
+                (longitude > 0) ? 'E' : 'W'), c);//*/
     }
 
     public static String getLastKnownLocation(Context c) {

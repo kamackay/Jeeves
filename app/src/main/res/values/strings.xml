@@ -33,7 +33,17 @@
         <item>90%</item>
         <item>100%</item>
     </string-array>
-
+    <string-array name="fonts">
+        <item>Arial</item>
+        <item>Calibri</item>
+        <item>Tahoma</item>
+        <item>Comic Sans (don\'t)</item>
+        <item>Times New Roman</item>
+        <item>Lighthouse</item>
+        <item>Roboto</item>
+        <item>Roboto Thin</item>
+        <item>Code</item><item>Star Jedi</item>
+    </string-array>
     <string name="title_activity_lock_screen">Lock Screen</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -131,4 +141,7 @@
     <string name="modeC_icon">modeC_icon</string>
     <string name="modeB_icon">modeB_icon</string>
     <string name="modeD_icon">modeD_icon</string>
+    <string name="fontCode">fontNumber</string>
+    <string name="setting_logStuff">log.record</string>
+    <string name="font">Font:</string>
 </resources>

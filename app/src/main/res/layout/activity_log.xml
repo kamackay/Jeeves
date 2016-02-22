@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,14 +16,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Switch
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
             android:id="@+id/logScreen_switchLog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/ten"
             android:text="@string/text_log"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/fifteen" />
+            android:textSize="@dimen/fifteen"
+            app:setting="@string/setting_logStuff" />
 
         <ImageView
             android:layout_width="wrap_content"

@@ -1,8 +1,6 @@
 package keithapps.mobile.com.jeeves.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -23,9 +20,9 @@ import java.io.FileInputStream;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
 import keithapps.mobile.com.jeeves.tools.Log;
-import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.tools.Log.clearLog;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
 
 public class LogActivity extends AppCompatActivity {
 
@@ -37,25 +34,16 @@ public class LogActivity extends AppCompatActivity {
             mHandler.postDelayed(mHandlerTask, 5000);
         }
     };
-
+Typeface tf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
-        SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
-        Switch switch_log = (Switch) findViewById(R.id.logScreen_switchLog);
-        switch_log.setChecked(prefs.getBoolean(Settings.record_log, true));
-        switch_log.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) Log.writeToLog("Logging Turned Off", getApplicationContext());
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        Context.MODE_PRIVATE).edit();
-                edit.putBoolean(Settings.record_log, isChecked);
-                edit.apply();
-                if (isChecked) Log.writeToLog("Logging Turned Back on", getApplicationContext());
-            }
-        });
+        tf = getFont(getApplicationContext());
+        if (tf != null){
+            ((Switch) findViewById(R.id.logScreen_switchLog)).setTypeface(tf);
+            ((TextView)findViewById(R.id.logScreen_searchTextbox)).setTypeface(tf);
+        }
         ((EditText) findViewById(R.id.logScreen_searchTextbox))
                 .addTextChangedListener(new TextChangeListener() {
                     @Override
@@ -86,12 +74,6 @@ public class LogActivity extends AppCompatActivity {
                         while ((ch = fis.read()) != -1) chars.append((char) ch);
                         fis.close();
                         final String[] lines = chars.toString().split("\n");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                tv.setText("");
-                            }
-                        });
                         for (int i = lines.length - 1; i >= 0; i--) {
                             if (not && !(!s || lines[i].toLowerCase().contains(search)))
                                 sb.append(lines[i]).append("\n\n");
@@ -111,7 +93,7 @@ public class LogActivity extends AppCompatActivity {
                     }
                 }
             }).start();
-            tv.setTypeface(Typeface.createFromAsset(getAssets(), "calibri.ttf"));
+            tv.setTypeface(getFont(getApplicationContext()));
         } catch (Exception e) {
             //Don't do nothin'
         }

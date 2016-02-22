@@ -26,6 +26,7 @@ import keithapps.mobile.com.jeeves.tools.Settings;
 import static keithapps.mobile.com.jeeves.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
 
 public class HeadphonePopup extends Activity {
 
@@ -58,7 +59,7 @@ public class HeadphonePopup extends Activity {
         getWindowManager().getDefaultDisplay().getSize(size);
         getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
         Log.writeToLog("Headphone Query Popup", getApplicationContext());
-        Typeface tf = Typeface.createFromAsset(getAssets(), "calibri.ttf");
+        Typeface tf = getFont(getApplicationContext());
         if (tf != null) {
             ((Button) findViewById(R.id.headphone_popup_fullButton)).setTypeface(tf);
             ((Button) findViewById(R.id.headphone_popup_partialButton)).setTypeface(tf);
@@ -171,7 +172,7 @@ public class HeadphonePopup extends Activity {
     void setFont() {
         try {
             if (tf == null)
-                tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+                tf = getFont(getApplicationContext());
             if (tf == null) return;
             ArrayList<View> views = getAllChildren(findViewById(R.id.headphone_popup_root));
             for (int i = 0; i < views.size(); i++) {

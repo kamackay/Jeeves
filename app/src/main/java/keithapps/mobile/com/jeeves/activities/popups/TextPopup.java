@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import keithapps.mobile.com.jeeves.R;
 
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
+
 /**
  * Created by Keith on 2/19/2016.
  * Show Text on a popup
@@ -38,7 +40,7 @@ public class TextPopup extends Activity {
         TextView tvTitle = (TextView) findViewById(R.id.textPopup_title);
         tvText.setText(text);
         tvTitle.setText(title);
-        Typeface tf = Typeface.createFromAsset(getAssets(), "arial.ttf");
+        Typeface tf = getFont(getApplicationContext());
         if (tf != null) {
             tvText.setTypeface(tf);
             tvTitle.setTypeface(tf);

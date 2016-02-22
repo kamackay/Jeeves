@@ -17,6 +17,8 @@ import java.util.Random;
 
 import keithapps.mobile.com.jeeves.R;
 
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
+
 /**
  * Custom Toast Implementation
  */
@@ -42,7 +44,7 @@ public class KeithToast {
             iv.setImageResource(getColoredImage(color));
             TextView t2 = (TextView) layout.findViewById(R.id.keithToast_iconText);
             t2.setTextColor(color);
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "arial.ttf");
+            Typeface tf = getFont(context);
             if (tf != null) {
                 textView.setTypeface(tf);
                 t2.setTypeface(tf);

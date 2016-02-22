@@ -14,6 +14,10 @@
         android:minWidth="@dimen/two_hundred"
         android:orientation="vertical">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="textPopup"
-            android:text="Text Popup" />
+            android:text="@string/text_popup" />
 
         <Space
             android:layout_width="wrap_content"
@@ -88,6 +92,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="forceLocationUpdate"
-            android:text="Force Location Update" />
+            android:text="@string/force_location_update" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty" />
     </LinearLayout>
 </ScrollView>

@@ -144,4 +144,6 @@
     <string name="fontCode">fontNumber</string>
     <string name="setting_logStuff">log.record</string>
     <string name="font">Font:</string>
+    <string name="text_popup">Text Popup</string>
+    <string name="force_location_update">Force Location Update</string>
 </resources>

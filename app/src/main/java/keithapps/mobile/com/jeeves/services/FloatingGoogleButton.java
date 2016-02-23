@@ -17,8 +17,7 @@ public class FloatingGoogleButton extends PersistentFloatingButton {
 
     @Override
     public int getImageResource() {
-        return super.getImageResource();
-        //return R.drawable.google;
+        return R.drawable.google;
     }
 
     @Override

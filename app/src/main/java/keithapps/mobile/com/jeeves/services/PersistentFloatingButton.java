@@ -161,6 +161,6 @@ public abstract class PersistentFloatingButton extends Service {
     public abstract void onClick();
 
     public int getImageResource() {
-        return R.drawable.icon;
+        return R.drawable.white_circle;
     }
 }

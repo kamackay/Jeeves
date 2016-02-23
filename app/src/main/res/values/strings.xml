@@ -42,7 +42,8 @@
         <item>Lighthouse</item>
         <item>Roboto</item>
         <item>Roboto Thin</item>
-        <item>Code</item><item>Star Jedi</item>
+        <item>Code</item>
+        <item>Star Jedi</item>
     </string-array>
     <string name="title_activity_lock_screen">Lock Screen</string>
     <string name="dummy_button">Dummy Button</string>
@@ -146,4 +147,6 @@
     <string name="font">Font:</string>
     <string name="text_popup">Text Popup</string>
     <string name="force_location_update">Force Location Update</string>
+    <string name="adderall_graph">Adderall Graph</string>
+    <string name="graphViewCredit">Credit for the Graph View to Jonas Gehring\nhttp://www.android-graphview.org/</string>
 </resources>

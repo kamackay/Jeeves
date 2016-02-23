@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/mainMenu_showAdderallGraph"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/adderall_graph"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/mainMenu_showScreenSize"
         android:icon="@android:drawable/ic_menu_always_landscape_portrait"
         android:title="@string/text_showScreenSize"
@@ -9,7 +14,7 @@
         android:id="@+id/mainMenu_showLog"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/text_showLog"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/mainMenu_showAllRunningActions"
         android:icon="@android:drawable/ic_menu_sort_by_size"
@@ -23,7 +28,7 @@
         android:id="@+id/mainMenu_showLocationLog"
         android:icon="@android:drawable/ic_menu_compass"
         android:title="@string/text_showLocationLog"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/mainMenu_showAdderallLog"
         android:title="@string/show_adderall_log"

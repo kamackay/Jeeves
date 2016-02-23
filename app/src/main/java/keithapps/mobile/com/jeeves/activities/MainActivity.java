@@ -138,6 +138,20 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
+            }
+        }
+    };
     /**
      * The runnable to send feedback info
      */
@@ -164,20 +178,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
 
     /**
      * Creation event
@@ -188,11 +188,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            tf = getFont(getApplicationContext());
-        } catch (Exception e) {
-            logException("Error Loading Typeface", getApplicationContext(), e);
-        }
+        tf = getFont(getApplicationContext());
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
         showModeSettings(null);
     }
@@ -746,6 +742,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.mainMenu_showAdderallLog:
                 showAdderallLog();
+                return true;
+            case R.id.mainMenu_showAdderallGraph:
+                startActivity(new Intent(getApplicationContext(), AdderallGraphActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

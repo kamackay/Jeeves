@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.view.View;
@@ -150,5 +151,19 @@ public class GlobalTools {
 
     public static void testMethod(Context c) {
         if (isKeith(c)) showTestPopup(c);
+    }
+
+    public static void openGoogle(Context c) {
+        try {
+            Intent mainLauncher = new Intent();
+            mainLauncher.setAction("MAIN");
+            mainLauncher.addCategory("LAUNCHER");
+            PackageManager p = c.getPackageManager();
+            Intent i = p.getLaunchIntentForPackage("com.google.android.googlequicksearchbox");
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            c.startActivity(i);
+        } catch (Exception e) {
+            KeithToast.show("Error opening Google: " + e.getLocalizedMessage(), c);
+        }
     }
 }

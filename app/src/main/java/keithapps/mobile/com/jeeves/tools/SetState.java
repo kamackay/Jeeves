@@ -8,7 +8,7 @@ import android.net.wifi.WifiManager;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 
-import static keithapps.mobile.com.jeeves.MainService.showNotification;
+import static keithapps.mobile.com.jeeves.services.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setAlarmVolume;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setMediaVolume;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setNotificationVolume;

@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
-import keithapps.mobile.com.jeeves.MainService;
+import keithapps.mobile.com.jeeves.services.MainService;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Settings;
 

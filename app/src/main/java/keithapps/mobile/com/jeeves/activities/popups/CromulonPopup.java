@@ -75,9 +75,7 @@ public class CromulonPopup extends Activity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE)
-            return true;
-        return super.onTouchEvent(event);
+        return event.getAction() == MotionEvent.ACTION_OUTSIDE || super.onTouchEvent(event);
     }
 
     @Override

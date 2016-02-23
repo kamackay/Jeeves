@@ -22,7 +22,7 @@ import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.MainService.updateNotification;
+import static keithapps.mobile.com.jeeves.services.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.AdderallTools.writeAdderall;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;

@@ -39,13 +39,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.AdderallGraphActivity"
+            android:excludeFromRecents="true" />
+        <activity
             android:name=".activities.popups.HeadphonePopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog.Headphone" />
         <activity
             android:name=".activities.LogActivity"
-            android:excludeFromRecents="true"
-            android:parentActivityName=".activities.MainActivity" />
+            android:excludeFromRecents="true" />
         <activity
             android:name=".activities.popups.AdderallPopup"
             android:excludeFromRecents="true"
@@ -66,12 +68,16 @@
             android:name=".activities.popups.TextPopup"
             android:excludeFromRecents="true"
             android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".activities.popups.GoogleButton"
+            android:theme="@style/AppTheme.Dialog.GoogleButton" />
 
         <service
-            android:name=".MainService"
+            android:name=".services.MainService"
             android:enabled="true"
             android:exported="false"
             android:label="@string/app_name" />
+        <service android:name=".services.FloatingGoogleButton" />
 
         <receiver
             android:name="listeners.NotificationListener"
@@ -107,8 +113,6 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".activities.AdderallGraphActivity"></activity>
     </application>
 
 </manifest>

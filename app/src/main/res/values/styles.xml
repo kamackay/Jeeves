@@ -1,7 +1,13 @@
 <resources>
 
     <style name="CromulonPopup" parent="Theme.AppCompat.Dialog">
-        <item name="android:backgroundDimEnabled">false</item><item name="android:windowSwipeToDismiss">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowSwipeToDismiss">false</item>
+    </style>
+
+    <style name="AppTheme.Dialog.GoogleButton" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat">

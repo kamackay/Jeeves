@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class AdderallGraphActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adderall_graph);
         graph = (GraphView) findViewById(R.id.graph);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         try {
             File file = new File(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOCUMENTS), AdderallTools.adderallCSV_FILENAME);
@@ -94,7 +96,7 @@ public class AdderallGraphActivity extends Activity {
     }
 
     /**
-     * Absorb the hardware keypresses, because they annoy me
+     * Go back to Main after back press
      *
      * @param keycode the key pressed
      * @param e       the key event

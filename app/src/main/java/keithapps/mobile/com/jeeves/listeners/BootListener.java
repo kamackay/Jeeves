@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import keithapps.mobile.com.jeeves.MainService;
+import keithapps.mobile.com.jeeves.services.MainService;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 

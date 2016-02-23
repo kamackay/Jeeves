@@ -1,4 +1,4 @@
-package keithapps.mobile.com.jeeves;
+package keithapps.mobile.com.jeeves.services;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.listeners.BackgroundProcessListener;
 import keithapps.mobile.com.jeeves.listeners.BootListener;
 import keithapps.mobile.com.jeeves.listeners.HeadphoneListener;
@@ -191,7 +192,7 @@ public class MainService extends Service {
         builder.setContent(contentView);
         NotificationManager nMan =
                 (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
-        nMan.cancelAll();
+        //nMan.cancelAll();
         nMan.notify(992944, builder.build());
     }
 

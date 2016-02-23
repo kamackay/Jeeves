@@ -179,4 +179,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/ten">
+
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
+            android:id="@+id/features_showGoogleButton_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/permissions_switch_padding"
+            app:setting="@string/settings_showGoogleButton" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/twenty"
+            android:paddingStart="@dimen/ten"
+            android:text="@string/showGoogleButton" />
+    </LinearLayout>
 </LinearLayout>

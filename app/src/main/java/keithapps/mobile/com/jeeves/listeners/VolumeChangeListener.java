@@ -8,7 +8,7 @@ import android.os.Handler;
 
 import java.util.Locale;
 
-import keithapps.mobile.com.jeeves.MainService;
+import keithapps.mobile.com.jeeves.services.MainService;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;

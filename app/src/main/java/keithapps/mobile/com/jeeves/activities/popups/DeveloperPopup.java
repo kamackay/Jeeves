@@ -2,6 +2,7 @@ package keithapps.mobile.com.jeeves.activities.popups;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import keithapps.mobile.com.jeeves.R;
+import keithapps.mobile.com.jeeves.services.FloatingGoogleButton;
 import keithapps.mobile.com.jeeves.tools.Email;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
@@ -128,5 +130,10 @@ public class DeveloperPopup extends Activity {
         } catch (Exception e) {
             logException("Error setting Font", getApplicationContext(), e);
         }
+    }
+
+    public void openGoogleButton(View view) {
+        startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+        finish();
     }
 }

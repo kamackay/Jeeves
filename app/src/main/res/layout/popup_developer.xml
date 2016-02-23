@@ -95,6 +95,15 @@
             android:text="@string/force_location_update" />
 
         <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/testPopup_verticalSpace" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="openGoogleButton"
+            android:text="@string/googleButton" />
+        <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/twenty" />
     </LinearLayout>

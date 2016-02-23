@@ -35,12 +35,13 @@ import java.util.List;
 import java.util.Random;
 
 import keithapps.mobile.com.jeeves.FontSpinnerAdapter;
-import keithapps.mobile.com.jeeves.MainService;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.SpinnerAdapter;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 import keithapps.mobile.com.jeeves.listeners.SwipeListener;
 import keithapps.mobile.com.jeeves.listeners.TextChangeListener;
+import keithapps.mobile.com.jeeves.services.FloatingGoogleButton;
+import keithapps.mobile.com.jeeves.services.MainService;
 import keithapps.mobile.com.jeeves.tools.Email;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.ManageVolume;
@@ -49,8 +50,8 @@ import keithapps.mobile.com.jeeves.views.ModeChangeView;
 import keithapps.mobile.com.jeeves.views.ProcessView;
 import keithapps.mobile.com.jeeves.views.SettingsSwitch;
 
-import static keithapps.mobile.com.jeeves.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.activities.popups.TextPopup.showTextPopup;
+import static keithapps.mobile.com.jeeves.services.MainService.showNotification;
 import static keithapps.mobile.com.jeeves.tools.AdderallTools.getAdderallLog;
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.Email.myEmail;
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tf = getFont(getApplicationContext());
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
         showModeSettings(null);
@@ -241,7 +243,14 @@ public class MainActivity extends AppCompatActivity {
         switchIntrusivePopup.setMySetting(Settings.showScreamingSunRandomly);
         ((SettingsSwitch) findViewById(R.id.settingsScreen_showHeadphonePopup))
                 .setMySetting(Settings.showHeadphonePopup);
-        getApplicationContext().setTheme(R.style.AppTheme);
+        ((SettingsSwitch) findViewById(R.id.features_showGoogleButton_switch)).setAfterChangeEvent(new Runnable() {
+            @Override
+            public void run() {
+                stopService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+                if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                    startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+            }
+        });
         final Spinner fontSpinner = (Spinner) findViewById(R.id.features_fontSpinner);
         FontSpinnerAdapter adapter = new FontSpinnerAdapter(getApplicationContext(),
                 R.layout.spinner_dropdown, Arrays.asList(getResources().getStringArray(R.array.fonts)));
@@ -268,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             //Don't do anything, it should be ok
         }
+        getApplicationContext().setTheme(R.style.AppTheme);
         setFont();
         findViewById(R.id.main_buttonBar_2).setBackgroundResource(R.color.lighter_background);
         findViewById(R.id.main_buttonBar_3).setBackgroundResource(android.R.color.transparent);
@@ -804,6 +814,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         if (!isServiceRunning(MainService.class, getApplicationContext()))
             startService(new Intent(getApplicationContext(), MainService.class));
+        if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+            startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
     }
 
     /**
@@ -851,7 +863,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        finish();
+        //finish();
     }
 
     /**

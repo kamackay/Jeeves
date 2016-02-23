@@ -149,4 +149,7 @@
     <string name="force_location_update">Force Location Update</string>
     <string name="adderall_graph">Adderall Graph</string>
     <string name="graphViewCredit">Credit for the Graph View to Jonas Gehring\nhttp://www.android-graphview.org/</string>
+    <string name="googleButton">Google Button</string>
+    <string name="settings_showGoogleButton">settings_showGoogleButton</string>
+    <string name="showGoogleButton">Show Floating Google Button</string>
 </resources>

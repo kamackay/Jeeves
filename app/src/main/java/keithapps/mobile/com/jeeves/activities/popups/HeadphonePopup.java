@@ -23,7 +23,7 @@ import keithapps.mobile.com.jeeves.tools.Email;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
-import static keithapps.mobile.com.jeeves.MainService.updateNotification;
+import static keithapps.mobile.com.jeeves.services.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;

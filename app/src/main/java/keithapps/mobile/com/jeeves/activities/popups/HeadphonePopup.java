@@ -56,6 +56,10 @@ public class HeadphonePopup extends Activity {
         if (a != null) a.hide();
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         Point size = new Point();
+        final AudioManager audioManager =
+                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
+                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         getWindowManager().getDefaultDisplay().getSize(size);
         getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
         Log.writeToLog("Headphone Query Popup", getApplicationContext());

@@ -26,4 +26,15 @@ public class FloatingGoogleButton extends PersistentFloatingButton {
         if (!getPrefs(getApplicationContext())
                 .getBoolean(getString(R.string.settings_showGoogleButton), true)) onDestroy();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopSelf();
+    }
+
+    @Override
+    public int getBubbleSize() {
+        return 125;
+    }
 }

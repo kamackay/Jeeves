@@ -180,4 +180,21 @@ public class SetState {
             Log.writeToLog(e.getLocalizedMessage(), c);
         }
     }
+
+    public static void setState(Context c) {
+        switch (getPrefs(c).getInt(Settings.current_mode, Mode.A)) {
+            case Mode.A:
+                stateA(c);
+                break;
+            case Mode.B:
+                stateB(c);
+                break;
+            case Mode.C:
+                stateC(c);
+                break;
+            case Mode.D:
+                stateD(c);
+                break;
+        }
+    }
 }

@@ -4,12 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.activities.popups.HeadphonePopup.showHeadphonesPopup;
+import static keithapps.mobile.com.jeeves.tools.SetState.setState;
 
 /**
  * Created by Keith on 1/18/2016.
@@ -28,12 +28,7 @@ public class HeadphoneListener extends BroadcastReceiver {
                 case 0:
                     if (prefs.getBoolean(Settings.headset_pluggedIn, false)) { //There used to be a headset
                         Log.writeToLog("Headset Unplugged", c);
-                        AudioManager audioManager =
-                                (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-                        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION,
-                                (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION) *
-                                        (prefs.getInt(Settings.A.notificationVolume,
-                                                5)) * .1), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                        setState(c);
                         SharedPreferences.Editor edit = prefs.edit();
                         if (prefs.getBoolean(Settings.headset_full, false))
                             edit.putBoolean(Settings.headset_full, false);

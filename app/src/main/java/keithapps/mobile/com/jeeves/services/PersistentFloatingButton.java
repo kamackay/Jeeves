@@ -25,6 +25,7 @@ public abstract class PersistentFloatingButton extends Service {
     final int deltaFactor = 20;
     final int closeTraySize = 600;
     final int centerVal = 50;
+    final int leftRightAnimationSpeed = 10;
     Handler handler;
     boolean movingLeft, movingRight, movingToClose, running;
     WindowManager.LayoutParams closeParams;
@@ -131,7 +132,7 @@ public abstract class PersistentFloatingButton extends Service {
                                             while (paramsF.x >= 0 && movingLeft
                                                     && !movingRight && !movingToClose) {
                                                 try {
-                                                    Thread.sleep(10);
+                                                    Thread.sleep(leftRightAnimationSpeed);
                                                     paramsF.x = paramsF.x - 25;
                                                     updateBubble(paramsF);
                                                 } catch (Exception e) {
@@ -150,7 +151,7 @@ public abstract class PersistentFloatingButton extends Service {
                                             while (paramsF.x <= width - 50 && movingRight
                                                     && !movingLeft && !movingToClose) {
                                                 try {
-                                                    Thread.sleep(10);
+                                                    Thread.sleep(leftRightAnimationSpeed);
                                                     paramsF.x = paramsF.x + 25;
                                                     updateBubble(paramsF);
                                                 } catch (Exception e) {
@@ -180,7 +181,7 @@ public abstract class PersistentFloatingButton extends Service {
                                             while ((paramsF.x != center || paramsF.y != bottom)
                                                     && movingToClose && !movingLeft && !movingRight) {
                                                 try {
-                                                    Thread.sleep(50);
+                                                    Thread.sleep(40);
                                                     paramsF.x = Math.abs(paramsF.x - center) > 10 ?
                                                             paramsF.x - ((paramsF.x - center) / deltaFactor)
                                                             : center;

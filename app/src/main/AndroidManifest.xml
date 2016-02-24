@@ -78,6 +78,7 @@
             android:exported="false"
             android:label="@string/app_name" />
         <service android:name=".services.FloatingGoogleButton" />
+        <service android:name=".services.FacebookButton" />
 
         <receiver
             android:name="listeners.NotificationListener"

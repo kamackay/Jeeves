@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -331,6 +332,20 @@ public class SystemTools {
         } catch (Exception e) {
             KeithToast.show(e.getLocalizedMessage(), c);
             return Typeface.createFromAsset(c.getAssets(), "arial.ttf");
+        }
+    }
+
+    public static void openPackageLauncher(String packageName, Context c) {
+        try {
+            Intent mainLauncher = new Intent();
+            mainLauncher.setAction("MAIN");
+            mainLauncher.addCategory("LAUNCHER");
+            PackageManager p = c.getPackageManager();
+            Intent i = p.getLaunchIntentForPackage(packageName);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            c.startActivity(i);
+        } catch (Exception e) {
+            //It's ok
         }
     }
 }

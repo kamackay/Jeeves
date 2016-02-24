@@ -135,7 +135,7 @@ public class MainService extends Service {
                 long difference = format.parse(timestamp_now).getTime() -
                         format.parse(timestamp_last).getTime();
                 String s = String.format(Locale.getDefault(), "%02d:%02d",
-                        (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
+                        difference / 360000, (difference / 60000) % 60);
                 contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
                 contentView.setTextViewTextSize(R.id.notification_text_timeSinceAdderall,
                         TypedValue.COMPLEX_UNIT_SP, 15);

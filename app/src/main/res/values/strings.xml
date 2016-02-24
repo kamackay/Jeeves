@@ -152,4 +152,5 @@
     <string name="googleButton">Google Button</string>
     <string name="settings_showGoogleButton">settings_showGoogleButton</string>
     <string name="showGoogleButton">Show Floating Google Button</string>
+    <string name="show">Show</string>
 </resources>

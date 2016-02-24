@@ -139,6 +139,20 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
+            }
+        }
+    };
     /**
      * The runnable to send feedback info
      */
@@ -165,20 +179,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
 
     /**
      * Creation event
@@ -192,7 +192,24 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tf = getFont(getApplicationContext());
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
-        showModeSettings(null);
+        if (savedInstanceState != null) {
+            switch (savedInstanceState.getInt("mode", 1)) {
+                case 1:
+                    showModeSettings();
+                    return;
+                case 2:
+                    showFeatures();
+                    return;
+                case 3:
+                    showFeedback();
+                    return;
+                case 4:
+                    showPermissions();
+                    return;
+
+            }
+        }
+        showModeSettings();
     }
 
     /**
@@ -208,6 +225,14 @@ public class MainActivity extends AppCompatActivity {
                 .inflate(R.layout.layout_features_settings, frame, true);
         SharedPreferences prefs = getPrefs(getApplicationContext());
         EditText frequency = (EditText) findViewById(R.id.intrusivePopup_frequency);
+        findViewById(R.id.features_showGoogleButton_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                            startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+                    }
+                });
         frequency.setText(String.valueOf(prefs.getInt(Settings.intrusivePopupFrequency, 50)));
         frequency.addTextChangedListener(new TextChangeListener() {
             @Override
@@ -852,7 +877,9 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);finish();
+        super.onSaveInstanceState(outState);
+        outState.putInt("mode", mode);
+        finish();
     }
 
     /**

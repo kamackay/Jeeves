@@ -22,7 +22,9 @@ import keithapps.mobile.com.jeeves.R;
  * Persistent Floating Button
  */
 public abstract class PersistentFloatingButton extends Service {
-    final int deltaFactor = 20, closeTraySize = 600, centerVal = 50, clickSize = 25;
+    final int deltaFactor = 20;
+    final int closeTraySize = 600;
+    final int centerVal = 50;
     Handler handler;
     boolean movingLeft, movingRight, movingToClose, running;
     WindowManager.LayoutParams closeParams;
@@ -52,6 +54,15 @@ public abstract class PersistentFloatingButton extends Service {
         });
         closeView.setImageResource(R.drawable.close);
         running = true;
+        /* To show above Lockscreen
+        WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED,
+                PixelFormat.TRANSLUCENT);
+        */
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -101,8 +112,7 @@ public abstract class PersistentFloatingButton extends Service {
                                 break;
                             case MotionEvent.ACTION_UP:
                                 hideClose();
-                                if (Math.abs(event.getRawX() - initialTouchX) <= clickSize &&
-                                        Math.abs(event.getRawY() - initialTouchY) <= clickSize)
+                                if (event.getRawX() == initialTouchX && event.getRawY() == initialTouchY)
                                     click();
                                 Display display = windowManager.getDefaultDisplay();
                                 Point size = new Point();

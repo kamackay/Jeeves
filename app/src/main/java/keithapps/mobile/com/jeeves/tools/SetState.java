@@ -35,7 +35,7 @@ public class SetState {
      *
      * @param c the calling context
      */
-    public static void stateA(Context c) {
+    public static void stateA(Context c, boolean audioOnly) {
         try {
             SharedPreferences prefs = getPrefs(c);
             Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_a_name,
@@ -47,6 +47,7 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.A);
             setMediaVolume(a, prefs, ManageVolume.Mode.A);
             setNotificationVolume(a, prefs, ManageVolume.Mode.A);
+            if (audioOnly) return;
             int wifiAction = prefs.getInt(c.getString(R.string.settings_a_wifiAction),
                     SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                     R.string.settings_a_bluetoothAction), SELECTED_LEAVE);
@@ -72,7 +73,7 @@ public class SetState {
      *
      * @param c the calling context
      */
-    public static void stateB(Context c) {
+    public static void stateB(Context c, boolean audioOnly) {
         try {
             SharedPreferences prefs = getPrefs(c);
             Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_b_name,
@@ -84,6 +85,7 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.B);
             setMediaVolume(a, prefs, ManageVolume.Mode.B);
             setNotificationVolume(a, prefs, ManageVolume.Mode.B);
+            if (audioOnly) return;
             int wifiAction = prefs.getInt(c.getString(R.string.settings_b_wifiAction),
                     SELECTED_LEAVE),
                     bluetoothAction = prefs.getInt(c.getString(
@@ -110,18 +112,19 @@ public class SetState {
      *
      * @param c the calling context
      */
-    public static void stateC(Context c) {
+    public static void stateC(Context c, boolean audioOnly) {
         try {
             SharedPreferences prefs = getPrefs(c);
             Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_c_name,
                     c.getString(R.string.text_out)) + "\"", c);
             closeNotificationTray(c);
             AudioManager a = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-            setRingtoneVolume(a, prefs, ManageVolume.Mode.A);
-            setSystemVolume(a, prefs, ManageVolume.Mode.A);
-            setAlarmVolume(a, prefs, ManageVolume.Mode.A);
-            setMediaVolume(a, prefs, ManageVolume.Mode.A);
-            setNotificationVolume(a, prefs, ManageVolume.Mode.A);
+            setRingtoneVolume(a, prefs, ManageVolume.Mode.C);
+            setSystemVolume(a, prefs, ManageVolume.Mode.C);
+            setAlarmVolume(a, prefs, ManageVolume.Mode.C);
+            setMediaVolume(a, prefs, ManageVolume.Mode.C);
+            setNotificationVolume(a, prefs, ManageVolume.Mode.C);
+            if (audioOnly) return;
             int wifiAction = prefs.getInt(c.getString(R.string.settings_c_wifiAction),
                     SELECTED_LEAVE), bluetoothAction = prefs.getInt(c.getString(
                     R.string.settings_c_bluetoothAction), SELECTED_LEAVE);
@@ -148,7 +151,7 @@ public class SetState {
      *
      * @param c the calling context
      */
-    public static void stateD(Context c) {
+    public static void stateD(Context c, boolean audioOnly) {
         try {
             SharedPreferences prefs = getPrefs(c);
             Log.writeToLog("Mode Set to \"" + prefs.getString(Settings.action_d_name,
@@ -160,6 +163,7 @@ public class SetState {
             setAlarmVolume(a, prefs, ManageVolume.Mode.D);
             setMediaVolume(a, prefs, ManageVolume.Mode.D);
             setNotificationVolume(a, prefs, ManageVolume.Mode.D);
+            if (audioOnly) return;
             int wifiAction = prefs.getInt(c.getString(R.string.settings_d_wifiAction),
                     SELECTED_LEAVE),
                     bluetoothAction = prefs.getInt(c.getString(
@@ -181,19 +185,35 @@ public class SetState {
         }
     }
 
+    public static void stateA(Context c) {
+        stateA(c, false);
+    }
+
+    public static void stateB(Context c) {
+        stateB(c, false);
+    }
+
+    public static void stateC(Context c) {
+        stateC(c, false);
+    }
+
+    public static void stateD(Context c) {
+        stateD(c, false);
+    }
+
     public static void setState(Context c) {
         switch (getPrefs(c).getInt(Settings.current_mode, Mode.A)) {
             case Mode.A:
-                stateA(c);
+                stateA(c, true);
                 break;
             case Mode.B:
-                stateB(c);
+                stateB(c, true);
                 break;
             case Mode.C:
-                stateC(c);
+                stateC(c, true);
                 break;
             case Mode.D:
-                stateD(c);
+                stateD(c, true);
                 break;
         }
     }

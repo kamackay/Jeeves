@@ -22,8 +22,7 @@ import keithapps.mobile.com.jeeves.R;
  * Persistent Floating Button
  */
 public abstract class PersistentFloatingButton extends Service {
-    final int deltaFactor = 20, closeTraySize = 600,
-            closeTrayHeight = 250, centerVal = 50, clickSize = 25;
+    final int deltaFactor = 20, closeTraySize = 600, centerVal = 50, clickSize = 25;
     Handler handler;
     boolean movingLeft, movingRight, movingToClose, running;
     WindowManager.LayoutParams closeParams;
@@ -45,6 +44,12 @@ public abstract class PersistentFloatingButton extends Service {
         chatHead = new ImageView(this);
         closeView = new ImageView(this);
         chatHead.setImageResource(getImageResource());
+        chatHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click();
+            }
+        });
         closeView.setImageResource(R.drawable.close);
         running = true;
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -98,14 +103,14 @@ public abstract class PersistentFloatingButton extends Service {
                                 hideClose();
                                 if (Math.abs(event.getRawX() - initialTouchX) <= clickSize &&
                                         Math.abs(event.getRawY() - initialTouchY) <= clickSize)
-                                    onClick();
+                                    click();
                                 Display display = windowManager.getDefaultDisplay();
                                 Point size = new Point();
                                 display.getSize(size);
                                 final int width = size.x;
                                 final int height = size.y;
                                 if (Math.abs((width / 2) - event.getRawX()) <= 200 &&
-                                        Math.abs((height - closeTrayHeight) - event.getRawY()) <= 200)
+                                        Math.abs((height - getBubbleSize() * 1.7) - event.getRawY()) <= 200)
                                     onDestroy();
                                 else if (paramsF.x < width / 2) {
                                     movingLeft = true;
@@ -158,7 +163,7 @@ public abstract class PersistentFloatingButton extends Service {
                                     movingToClose = true;
                                     showClose();
                                     final int center = w / 2 - centerVal;
-                                    final int bottom = h - closeTrayHeight;
+                                    final int bottom = h - (int) (getBubbleSize() * 1.7);
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -210,7 +215,7 @@ public abstract class PersistentFloatingButton extends Service {
     /**
      * What will happen when the button is clicked
      */
-    public abstract void onClick();
+    public abstract void click();
 
     /**
      * Use this to set the image resource of the bubble

@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
 import static keithapps.mobile.com.jeeves.tools.Utils.getStackTraceString;
@@ -124,6 +126,7 @@ public class MainService extends Service {
         contentView.setTextViewText(R.id.notification_text_adderallSoFar,
                 String.format(Locale.getDefault(), "%d mg",
                         prefs.getInt(Settings.Adderall.adderall_count, 0)));
+        contentView.setTextViewTextSize(R.id.notification_text_adderallSoFar, TypedValue.COMPLEX_UNIT_SP, 15);
         String timestamp_last = prefs.getString(Settings.Adderall.timeSince, "");
         if (!timestamp_last.equals("")) {
             try {
@@ -134,6 +137,8 @@ public class MainService extends Service {
                 String s = String.format(Locale.getDefault(), "%02d:%02d",
                         (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
                 contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
+                contentView.setTextViewTextSize(R.id.notification_text_timeSinceAdderall,
+                        TypedValue.COMPLEX_UNIT_SP, 15);
             } catch (Exception e) {//Give Up Immediately}
             }
         }
@@ -241,6 +246,9 @@ public class MainService extends Service {
             IntentFilter notificationFilter = new IntentFilter(NOTIFICATION_SERVICE);
             NotificationListener notificationListener = new NotificationListener();
             registerReceiver(notificationListener, notificationFilter);
+
+            if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
 
             mVolumeChangeListener = new VolumeChangeListener(this, new Handler());
 

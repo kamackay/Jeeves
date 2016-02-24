@@ -11,7 +11,7 @@ import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
  */
 public class FloatingGoogleButton extends PersistentFloatingButton {
     @Override
-    public void onClick() {
+    public void click() {
         openGoogle(getApplicationContext());
     }
 

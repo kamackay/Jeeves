@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.views.CromulonView;
 
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+
 /**
  * Created by Keith on 2/12/2016.
  * Cromulon Activity
@@ -25,6 +27,8 @@ public class CromulonPopup extends Activity {
     private MediaPlayer player;
 
     public static void showCromulon(Context c) {
+        if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+            return;
         Intent i = new Intent(c, CromulonPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

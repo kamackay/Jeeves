@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.views.ScreamingSunView;
 
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+
 /**
  * Created by Keith on 2/11/2016.
  * Cromulon Popup
@@ -26,6 +28,8 @@ public class ScreamingSunPopup extends Activity {
     private MediaPlayer player;
 
     public static void showScreamingSun(Context c) {
+        if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+            return;
         Intent i = new Intent(c, ScreamingSunPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

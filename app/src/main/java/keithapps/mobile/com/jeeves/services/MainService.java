@@ -33,9 +33,9 @@ import keithapps.mobile.com.jeeves.tools.ManageVolume.Mode;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
-import static keithapps.mobile.com.jeeves.tools.GlobalTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.Utils.getStackTraceString;
 import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
@@ -135,7 +135,7 @@ public class MainService extends Service {
                 long difference = format.parse(timestamp_now).getTime() -
                         format.parse(timestamp_last).getTime();
                 String s = String.format(Locale.getDefault(), "%02d:%02d",
-                        difference / 360000, (difference / 60000) % 60);
+                        (difference / (1000 * 60 * 60)), (difference / (1000 * 60)) % 60);
                 contentView.setTextViewText(R.id.notification_text_timeSinceAdderall, s);
                 contentView.setTextViewTextSize(R.id.notification_text_timeSinceAdderall,
                         TypedValue.COMPLEX_UNIT_SP, 15);

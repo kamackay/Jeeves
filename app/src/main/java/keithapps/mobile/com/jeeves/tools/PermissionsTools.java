@@ -13,4 +13,9 @@ public class PermissionsTools {
         return c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
                 .getBoolean(c.getString(R.string.permissions_internet), true);
     }
+
+    public static boolean canDrawOverOtherApps(Context c) {
+        return c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE)
+                .getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true);
+    }
 }

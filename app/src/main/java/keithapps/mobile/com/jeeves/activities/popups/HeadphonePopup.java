@@ -26,7 +26,9 @@ import keithapps.mobile.com.jeeves.tools.Settings;
 import static keithapps.mobile.com.jeeves.services.MainService.updateNotification;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.getAllChildren;
 import static keithapps.mobile.com.jeeves.tools.Log.logException;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.closeNotificationTray;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 
 public class HeadphonePopup extends Activity {
 
@@ -34,6 +36,9 @@ public class HeadphonePopup extends Activity {
 
     public static void showHeadphonesPopup(Context c) {
         try {
+            if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+                return;
+            closeNotificationTray(c);
             Intent i = new Intent(c, HeadphonePopup.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

@@ -1,5 +1,8 @@
 package keithapps.mobile.com.jeeves.services;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+
 import keithapps.mobile.com.jeeves.R;
 
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.openGoogle;
@@ -16,8 +19,8 @@ public class FloatingGoogleButton extends PersistentFloatingButton {
     }
 
     @Override
-    public int getImageResource() {
-        return R.drawable.google;
+    public Drawable getImage() {
+        return ContextCompat.getDrawable(getApplicationContext(), R.drawable.google);
     }
 
     @Override

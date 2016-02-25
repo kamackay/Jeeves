@@ -12,6 +12,7 @@ import android.widget.TextView;
 import keithapps.mobile.com.jeeves.R;
 
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
 
 /**
  * Created by Keith on 2/19/2016.
@@ -19,6 +20,8 @@ import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
  */
 public class TextPopup extends Activity {
     public static void showTextPopup(String text, String title, Context c) {
+        if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+            return;
         Intent i = new Intent(c, TextPopup.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

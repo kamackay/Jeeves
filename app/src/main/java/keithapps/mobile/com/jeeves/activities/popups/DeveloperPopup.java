@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import keithapps.mobile.com.jeeves.R;
-import keithapps.mobile.com.jeeves.services.FloatingGoogleButton;
+import keithapps.mobile.com.jeeves.activities.MainActivity;
 import keithapps.mobile.com.jeeves.tools.Email;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
@@ -132,8 +132,18 @@ public class DeveloperPopup extends Activity {
         }
     }
 
-    public void openGoogleButton(View view) {
-        startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+    public void jeevesFloatingButton(View v) {
+        Intent i = new Intent(getApplicationContext(), CreateFloatingButton.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(i);
         finish();
+    }
+
+    public void jeevesMain(View view) {
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(i);
     }
 }

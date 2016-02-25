@@ -5,12 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import java.util.Locale;
+
+import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.activities.MainActivity;
 import keithapps.mobile.com.jeeves.activities.popups.AdderallPopup;
+import keithapps.mobile.com.jeeves.activities.popups.DeveloperPopup;
 import keithapps.mobile.com.jeeves.tools.Log;
 import keithapps.mobile.com.jeeves.tools.SetState;
 import keithapps.mobile.com.jeeves.tools.Settings;
 import keithapps.mobile.com.jeeves.tools.SystemTools;
+
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.isKeith;
 
 /**
  * Created by Keith on 2/4/2016.
@@ -31,6 +37,7 @@ public class NotificationButtonListener extends BroadcastReceiver {
             case Settings.showJeevesMain:
                 SystemTools.closeNotificationTray(c);
                 Intent i = new Intent(c, MainActivity.class);
+                if (isKeith(c)) i = new Intent(c, DeveloperPopup.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 c.startActivity(i);
@@ -49,13 +56,15 @@ public class NotificationButtonListener extends BroadcastReceiver {
                 break;
             case Settings.text_add:
                 SystemTools.closeNotificationTray(c);
+                if (!prefs.getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+                    return;
                 Intent i2 = new Intent(c, AdderallPopup.class);
                 i2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i2.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 c.startActivity(i2);
                 break;
             case Settings.Adderall.intentAction_adderallClear:
-                Log.writeToLog(String.format("You took %d mg of Adderall today",
+                Log.writeToLog(String.format(Locale.getDefault(), "You took %d mg of Adderall today",
                         10 * prefs.getInt(Settings.Adderall.adderall_count, 0)), c);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt(Settings.Adderall.adderall_count, 0);

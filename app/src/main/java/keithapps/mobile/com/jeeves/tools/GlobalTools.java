@@ -26,23 +26,6 @@ import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
  */
 public class GlobalTools {
 
-    /**
-     * Is the given service running.
-     * <p/>
-     * NOTE: The service must be in this APK
-     *
-     * @param serviceClass the class of the service that is being checked
-     * @param c            the context of the calling class
-     * @return true if the given service is running
-     */
-    public static boolean isServiceRunning(Class<?> serviceClass, Context c) {
-        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
-            if (serviceClass.getName().equals(service.service.getClassName()))
-                return true;
-        return false;
-    }
-
     public static boolean isJeevesRunning(Context c) {
         ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo s : manager.getRunningServices(Integer.MAX_VALUE))
@@ -166,4 +149,5 @@ public class GlobalTools {
             KeithToast.show("Error opening Google: " + e.getLocalizedMessage(), c);
         }
     }
+
 }

@@ -1,13 +1,18 @@
 package keithapps.mobile.com.jeeves.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -29,8 +34,21 @@ public abstract class PersistentFloatingButton extends Service {
     Handler handler;
     boolean movingLeft, movingRight, movingToClose, running;
     WindowManager.LayoutParams closeParams;
+    long longPress, clickTime;
     private WindowManager windowManager;
     private ImageView chatHead, closeView;
+
+    public static void createButtonFor(String packageName, Context c) {
+        PackageManager p = c.getPackageManager();
+        boolean installed = false;
+        for (ApplicationInfo packageInfo : p.getInstalledApplications(0))
+            if (packageInfo.packageName.equals(packageName))
+                installed = true;
+        if (!installed) return;
+        Intent i = new Intent(c, DynamicFloatingButton.class);
+        i.putExtra("packageToOpen", packageName);
+        c.startService(i);
+    }
 
     @Nullable
     @Override
@@ -46,11 +64,20 @@ public abstract class PersistentFloatingButton extends Service {
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         chatHead = new ImageView(this);
         closeView = new ImageView(this);
-        chatHead.setImageResource(getImageResource());
+        chatHead.setImageDrawable(getImage());
         chatHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click();
+                if (Math.abs((clickTime = System.currentTimeMillis()) - longPress) >= 1000)
+                    click();
+            }
+        });
+        chatHead.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (Math.abs((longPress = System.currentTimeMillis()) - clickTime) >= 1000)
+                    longClick();
+                return false;
             }
         });
         closeView.setImageResource(R.drawable.close);
@@ -113,8 +140,8 @@ public abstract class PersistentFloatingButton extends Service {
                                 break;
                             case MotionEvent.ACTION_UP:
                                 hideClose();
-                                if (event.getRawX() == initialTouchX && event.getRawY() == initialTouchY)
-                                    click();
+                                //if (event.getRawX() == initialTouchX && event.getRawY() == initialTouchY)
+                                //   click();
                                 Display display = windowManager.getDefaultDisplay();
                                 Point size = new Point();
                                 display.getSize(size);
@@ -163,7 +190,10 @@ public abstract class PersistentFloatingButton extends Service {
                                     }).start();
                                 }
                                 break;
-                            case MotionEvent.ACTION_MOVE:
+                            case MotionEvent.ACTION_MOVE:/*
+                                if (Math.abs(event.getRawX() - paramsF.x) > 10
+                                        || Math.abs(event.getRawY() - paramsF.y) > 10)
+                                    clickTime = System.currentTimeMillis();//*/
                                 Display dis = windowManager.getDefaultDisplay();
                                 Point size2 = new Point();
                                 dis.getSize(size2);
@@ -233,8 +263,8 @@ public abstract class PersistentFloatingButton extends Service {
      *
      * @return the resource value of the bubble's image
      */
-    public int getImageResource() {
-        return R.drawable.white_circle;
+    public Drawable getImage() {
+        return ContextCompat.getDrawable(getApplicationContext(), R.drawable.white_circle);
     }
 
     void showClose() {
@@ -270,5 +300,14 @@ public abstract class PersistentFloatingButton extends Service {
      */
     public int getBubbleSize() {
         return 100;
+    }
+
+    void updateDrawable() {
+        chatHead.setImageDrawable(getImage());
+    }
+
+    @CallSuper
+    void longClick() {
+        //For now, do nothing in this class
     }
 }

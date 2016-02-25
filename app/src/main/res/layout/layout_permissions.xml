@@ -96,4 +96,20 @@
             android:layout_height="wrap_content"
             android:text="@string/phoneNumber" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <keithapps.mobile.com.jeeves.views.SettingsSwitch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/permissions_switch_padding"
+            app:setting="@string/permissions_drawOverOtherApps" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/draw_over_other_apps" />
+    </LinearLayout>
 </LinearLayout>

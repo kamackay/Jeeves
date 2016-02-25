@@ -39,9 +39,8 @@ public class HeadphoneListener extends BroadcastReceiver {
                     break;
                 case 1:
                     if (!prefs.getBoolean(Settings.headset_pluggedIn, false)
-                            && prefs.getBoolean(Settings.showHeadphonePopup, true)) {
+                            && prefs.getBoolean(Settings.showHeadphonePopup, true))
                         showHeadphonesPopup(c);
-                    }
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putBoolean(Settings.headset_pluggedIn, true);
                     edit.apply();

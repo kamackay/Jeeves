@@ -3,6 +3,7 @@ package keithapps.mobile.com.jeeves.tools;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -347,5 +348,26 @@ public class SystemTools {
         } catch (Exception e) {
             //It's ok
         }
+    }
+
+    /**
+     * Is the given service running.
+     * <p/>
+     * NOTE: The service must be in this APK
+     *
+     * @param serviceClass the class of the service that is being checked
+     * @param c            the context of the calling class
+     * @return true if the given service is running
+     */
+    public static boolean isServiceRunning(Class<?> serviceClass, Context c) {
+        ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+            if (serviceClass.getName().equals(service.service.getClassName()))
+                return true;
+        return false;
+    }
+
+    public static void runService(Class<?> serviceClass, Context c) {
+        if (!isServiceRunning(serviceClass, c)) c.startService(new Intent(c, serviceClass));
     }
 }

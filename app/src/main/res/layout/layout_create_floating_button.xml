@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/two_hundred_fifty"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:paddingBottom="@dimen/thirty"
+    android:paddingTop="@dimen/thirty"
+    tools:context=".activities.popups.CreateFloatingButton">
+
+    <Button
+        android:id="@+id/createButton_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:onClick="close"
+        android:paddingBottom="@dimen/twenty"
+        android:text="@string/close" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/createButton_close"
+        android:paddingTop="@dimen/twenty_five">
+
+        <LinearLayout
+            android:id="@+id/createButton_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/two_hundred_fifty"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/createButton_loading"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

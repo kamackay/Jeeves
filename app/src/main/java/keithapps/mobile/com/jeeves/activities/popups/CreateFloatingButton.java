@@ -64,24 +64,9 @@ public class CreateFloatingButton extends Activity {
             @Override
             public void run() {
                 List<PackageInfo> packages = new ArrayList<>();
-                for (final PackageInfo info : p.getInstalledPackages(0)) {
-                    String name = info.applicationInfo.loadLabel(p).toString();
-                    if (info.versionName == null || name.split(".").length > 3 || name.startsWith("com.")
-                            || name.toLowerCase().contains("samsung")) continue;
-                    int x = 0, size = packages.size();
-                    while (x < size && name.compareTo(packages
-                            .get(x).applicationInfo.loadLabel(p).toString()) >= 0)
-                        x++;
-                    packages.add(x, info);
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-                for (int i = 0; i < packages.size(); i++) {
-                    final PackageInfo info = packages.get(i);
+                List<PackageInfo> installed = p.getInstalledPackages(0);
+                for (int i = 0; i < installed.size(); i++) {
+                    final PackageInfo info = installed.get(i);
                     String name = info.applicationInfo.loadLabel(p).toString();
                     final Button b = new Button(getApplicationContext());
                     b.setAllCaps(false);
@@ -99,15 +84,27 @@ public class CreateFloatingButton extends Activity {
                     b.setTextColor(Color.WHITE);
                     final Space s = new Space(getApplicationContext());
                     s.setMinimumHeight(10);
+                    int x = 0, size = packages.size();
+                    while (x < size && name.compareTo(packages
+                            .get(x).applicationInfo.loadLabel(p).toString()) >= 0)
+                        x++;
+                    packages.add(x, info);
+                    final int fX = x;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            root.addView(b, params);
-                            root.addView(s);
+                            root.addView(b, fX * 2, params);
+                            root.addView(s, fX * 2 + 1);
                             root.invalidate();
                         }
                     });
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
             }
         }).start();
     }

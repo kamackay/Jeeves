@@ -71,7 +71,7 @@ public abstract class PersistentFloatingButton extends Service {
                 if (Math.abs((clickTime = System.currentTimeMillis()) - longPress) >= 1000)
                     click();
             }
-        });
+        });/*
         chatHead.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -79,7 +79,7 @@ public abstract class PersistentFloatingButton extends Service {
                     longClick();
                 return false;
             }
-        });
+        });//*///Removing Long Click Listener for now, because it is so damned buggy
         closeView.setImageResource(R.drawable.close);
         running = true;
         /* To show above Lockscreen
@@ -147,8 +147,8 @@ public abstract class PersistentFloatingButton extends Service {
                                 display.getSize(size);
                                 final int width = size.x;
                                 final int height = size.y;
-                                if (Math.abs((width / 2) - event.getRawX()) <= 200 &&
-                                        Math.abs((height - getBubbleSize() * 1.7) - event.getRawY()) <= 200)
+                                if (Math.abs((width / 2) - event.getRawX()) <= closeTraySize &&
+                                        Math.abs((height - getBubbleSize() * 1.7) - event.getRawY()) <= closeTraySize)
                                     onDestroy();
                                 else if (paramsF.x < width / 2) {
                                     movingLeft = true;

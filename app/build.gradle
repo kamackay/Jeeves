@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "keithapps.mobile.com.jeeves"
-        minSdkVersion 21
+        minSdkVersion 20
         targetSdkVersion 23
-        versionCode 28
-        versionName "1.5.3b"
+        versionCode 30
+        versionName "1.5.5a"
     }
     buildTypes {
         release {
@@ -25,8 +25,8 @@ dependencies {
     compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/mail.jar/$)
     compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/activation.jar/$)
     compile files($/C:/Documents/DevLocal/AndroidJeeves/libs/additionnal.jar/$)
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:support-v4:23.2.0'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'

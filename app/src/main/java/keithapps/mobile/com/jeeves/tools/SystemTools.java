@@ -29,6 +29,7 @@ import java.util.Locale;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 
+import static keithapps.mobile.com.jeeves.tools.GlobalTools.isKeith;
 import static keithapps.mobile.com.jeeves.tools.LocationTools.getLastKnownLocation;
 
 /**
@@ -263,6 +264,7 @@ public class SystemTools {
             builder.append(lineStarter + "IPv4: ").append(Utils.getIPAddress(true, c));
             builder.append(lineStarter + "Main Google Account: ").append(getGoogleUsername(c));
             builder.append(lineStarter + "Last Known Location: ").append(getLastKnownLocation(c));
+            builder.append(lineStarter + "Developer: ").append(String.valueOf(isKeith(c)));
             //builder.append(String.format("%sBattery Level: %f%%", lineStarter, getBatteryPercentage(c)));
             //builder.append(lineStarter + "IPv6: " + Utils.getIPAddress(false));
             //builder.append("MAC Address: " + Utils.getMACAddress("eth0")+"\n");

@@ -8,15 +8,37 @@
     android:paddingTop="@dimen/thirty"
     tools:context=".activities.popups.CreateFloatingButton">
 
-    <Button
-        android:id="@+id/createButton_close"
+    <TextView
+        android:id="@+id/createButton_legend1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
+        android:background="@color/background"
+        android:padding="@dimen/five"
+        android:text="@string/installed_from_play_store"
+        android:textColor="@android:color/holo_green_dark" />
+
+    <TextView
+        android:id="@+id/createButton_legend2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/createButton_legend1"
+        android:background="@color/background"
+        android:padding="@dimen/five"
+        android:text="@string/system_installed_app"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <Button
+        android:id="@+id/createButton_close"
+        android:layout_width="@dimen/fifty"
+        android:layout_height="@dimen/fifty"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_menu_close_clear_cancel"
         android:onClick="close"
-        android:paddingBottom="@dimen/twenty"
-        android:text="@string/close" />
+        android:paddingBottom="@dimen/seventyFive" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,5 +60,5 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_centerInParent="true" />
 </RelativeLayout>

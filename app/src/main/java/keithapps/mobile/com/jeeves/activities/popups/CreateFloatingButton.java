@@ -4,9 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
 
@@ -63,11 +64,30 @@ public class CreateFloatingButton extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<PackageInfo> packages = new ArrayList<>();
-                List<PackageInfo> installed = p.getInstalledPackages(0);
-                for (int i = 0; i < installed.size(); i++) {
-                    final PackageInfo info = installed.get(i);
+                final List<String> packages = new ArrayList<>();
+                int notCounted = 0;
+                final long start = System.currentTimeMillis();
+                final int orange = ContextCompat.getColor(getApplicationContext(),
+                        android.R.color.holo_orange_dark);
+                final int green = ContextCompat.getColor(getApplicationContext(),
+                        android.R.color.holo_green_dark);
+                /*for (int i = 0; i < installed.size(); i++) {
+                    final PackageInfo info = installed.get(i);//*/
+                for (final PackageInfo info : p.getInstalledPackages(0)) {
+                    boolean fromStore = false;
+                    int flags = info.applicationInfo.flags;
+                    if ((flags & ApplicationInfo.FLAG_SYSTEM) == 0)
+                        fromStore = true;
+                    else if ((flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
+                        notCounted++;
+                        continue;
+                    }
                     String name = info.applicationInfo.loadLabel(p).toString();
+                    /*
+                    if (name.startsWith("com.") || info.versionName == null) {
+                        notCounted++;
+                        continue;
+                    }//*/
                     final Button b = new Button(getApplicationContext());
                     b.setAllCaps(false);
                     b.setPadding(10, 10, 10, 10);
@@ -81,28 +101,31 @@ public class CreateFloatingButton extends Activity {
                     b.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),
                             R.color.background));
                     b.setText(name);
-                    b.setTextColor(Color.WHITE);
+                    b.setTextColor(fromStore ? green : orange);
                     final Space s = new Space(getApplicationContext());
                     s.setMinimumHeight(10);
                     int x = 0, size = packages.size();
-                    while (x < size && name.compareTo(packages
-                            .get(x).applicationInfo.loadLabel(p).toString()) >= 0)
+                    while (x < size && name.compareTo(packages.get(x)) > 0)
                         x++;
-                    packages.add(x, info);
-                    final int fX = x;
+                    final int fX = x * 2;
+                    packages.add(x, name);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            root.addView(b, fX * 2, params);
-                            root.addView(s, fX * 2 + 1);
-                            root.invalidate();
+                            root.addView(b, fX, params);
+                            root.addView(s, fX + 1);
+                            //root.invalidate();
                         }
                     });
                 }
+                final int appCount = notCounted + packages.size();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
+                        KeithToast.show(String.format(Locale.getDefault(),
+                                "%d Installed Apps\n%d listed\n\nTook %d milliseconds", appCount, packages.size(),
+                                System.currentTimeMillis() - start), getApplicationContext());//*/
                     }
                 });
             }

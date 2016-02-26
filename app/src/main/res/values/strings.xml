@@ -157,4 +157,7 @@
     <string name="permissions_drawOverOtherApps">permissions_drawOverOtherApps</string>
     <string name="draw_over_other_apps">Draw Over Other Apps</string>
     <string name="jeevesMain">Jeeves Main</string>
+    <string name="installed_from_play_store">Installed From Play Store</string>
+    <string name="system_installed_app">System Installed App</string>
+    <string name="manufacturer_installed_apps">Manufacturer Installed Apps</string>
 </resources>

@@ -20,7 +20,6 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
 
@@ -122,6 +121,7 @@ public class CreateFloatingButton extends Activity {
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
+                        /*
                         KeithToast.show(String.format(Locale.getDefault(),
                                 "%d Installed Apps\n%d listed\n\nTook %d milliseconds", appCount, packages.size(),
                                 System.currentTimeMillis() - start), getApplicationContext());//*/

@@ -12,7 +12,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/mainMenu_showLog"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/log_icon"
         android:title="@string/text_showLog"
         app:showAsAction="ifRoom" />
     <item

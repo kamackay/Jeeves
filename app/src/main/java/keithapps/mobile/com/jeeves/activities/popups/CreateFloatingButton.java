@@ -55,6 +55,7 @@ public class CreateFloatingButton extends Activity {
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//*/
+        final long start = System.currentTimeMillis();
         final PackageManager p = getPackageManager();
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -66,7 +67,6 @@ public class CreateFloatingButton extends Activity {
             public void run() {
                 final List<String> packages = new ArrayList<>();
                 int notCounted = 0;
-                final long start = System.currentTimeMillis();
                 final int orange = ContextCompat.getColor(getApplicationContext(),
                         android.R.color.holo_orange_dark);
                 final int green = ContextCompat.getColor(getApplicationContext(),
@@ -90,7 +90,6 @@ public class CreateFloatingButton extends Activity {
                     }//*/
                     final Button b = new Button(getApplicationContext());
                     b.setAllCaps(false);
-                    b.setPadding(10, 10, 10, 10);
                     b.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

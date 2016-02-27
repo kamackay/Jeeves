@@ -17,7 +17,8 @@
         android:background="@color/background"
         android:padding="@dimen/five"
         android:text="@string/installed_from_play_store"
-        android:textColor="@android:color/holo_green_dark" />
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="@dimen/fifteen" />
 
     <TextView
         android:id="@+id/createButton_legend2"
@@ -28,7 +29,8 @@
         android:background="@color/background"
         android:padding="@dimen/five"
         android:text="@string/system_installed_app"
-        android:textColor="@android:color/holo_orange_dark" />
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="@dimen/fifteen" />
 
     <Button
         android:id="@+id/createButton_close"

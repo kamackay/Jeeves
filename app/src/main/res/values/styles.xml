@@ -41,6 +41,13 @@
         <item name="android:buttonStyle">@style/ButtonText</item>
     </style>
 
+    <style name="StandardButton">
+        <item name="android:background">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
     <style name="AppTheme.Dialog.Headphone" parent="AppTheme.Dialog">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

@@ -3,7 +3,6 @@ package keithapps.mobile.com.jeeves.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.Menu;
@@ -26,12 +25,10 @@ import static keithapps.mobile.com.jeeves.tools.SystemTools.getFont;
 
 public class LogActivity extends AppCompatActivity {
 
-    Handler mHandler;
     Runnable mHandlerTask = new Runnable() {
         @Override
         public void run() {
             showLog();
-            mHandler.postDelayed(mHandlerTask, 5000);
         }
     };
 Typeface tf;
@@ -52,7 +49,6 @@ Typeface tf;
                     }
                 });
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mHandler = new Handler();
         mHandlerTask.run();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
@@ -114,7 +110,6 @@ Typeface tf;
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacks(mHandlerTask);
         super.onDestroy();
     }
 

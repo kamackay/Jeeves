@@ -29,6 +29,7 @@ import java.util.Locale;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 
+import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.isKeith;
 import static keithapps.mobile.com.jeeves.tools.LocationTools.getLastKnownLocation;
 
@@ -58,7 +59,7 @@ public class SystemTools {
             wm.setWifiEnabled(true);
             Log.writeToLog("Turned on WiFi", c);
         } catch (Exception e) {
-            Log.writeToLog(e.getLocalizedMessage(), c);
+            emailException("Error trying to turn on WiFi", c, e);
         }
     }
 
@@ -77,7 +78,7 @@ public class SystemTools {
                 Log.writeToLog("Turned off WiFi", c);
             }
         } catch (Exception e) {
-            Log.writeToLog(e.getLocalizedMessage(), c);
+            emailException("Error trying to turn off the WiFi", c, e);
         }
     }
 
@@ -90,7 +91,7 @@ public class SystemTools {
         try {
             c.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
         } catch (Exception e) {
-            //Everything's ok
+            emailException("Error trying to close the Notification tray", c, e);
         }
     }
 
@@ -112,7 +113,7 @@ public class SystemTools {
                 Log.writeToLog("Turned off Bluetooth", c);
             }
         } catch (Exception e) {
-            Email.emailException("Error Turning off Bluetooth", c, e);
+            emailException("Error Turning off Bluetooth", c, e);
         }
     }
 
@@ -130,7 +131,7 @@ public class SystemTools {
                 Log.writeToLog("Turned on Bluetooth", c);
             }
         } catch (Exception e) {
-            Email.emailException("Error Turning on Bluetooth", c, e);
+            emailException("Error Turning on Bluetooth", c, e);
         }
     }
 
@@ -165,7 +166,7 @@ public class SystemTools {
             int height = size.y;
             KeithToast.show(String.format(Locale.getDefault(), "Height: %d\nWidth: %d", height, width), a.getApplicationContext());
         } catch (Exception e) {
-            Email.emailException("Error Showing Screen Size", a.getApplicationContext(), e);
+            emailException("Error Showing Screen Size", a.getApplicationContext(), e);
         }
     }
 
@@ -348,7 +349,8 @@ public class SystemTools {
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             c.startActivity(i);
         } catch (Exception e) {
-            //It's ok
+            if (packageName != null) emailException("Error while trying to open package "
+                    + packageName, c, e);
         }
     }
 
@@ -371,5 +373,17 @@ public class SystemTools {
 
     public static void runService(Class<?> serviceClass, Context c) {
         if (!isServiceRunning(serviceClass, c)) c.startService(new Intent(c, serviceClass));
+    }
+
+    public static void resetWifi(Context c) {
+        try {
+            WifiManager wifiMgr = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+            if (wifiMgr.isWifiEnabled()) { // WiFi adapter is ON
+                wifiMgr.setWifiEnabled(false);
+                wifiMgr.setWifiEnabled(true);
+            } else wifiMgr.setWifiEnabled(true);
+        } catch (Exception e) {
+            emailException("Error trying to reset the WiFi", c, e);
+        }
     }
 }

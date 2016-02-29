@@ -113,4 +113,15 @@ public class AdderallGraphActivity extends Activity {
         }
         return super.onKeyDown(keycode, e);
     }
+
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState Out State
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        finish();
+    }
 }

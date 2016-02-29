@@ -74,6 +74,7 @@ import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
  * The main activity, which contains all of the changes that can be made to the Service's settings
  */
 public class MainActivity extends AppCompatActivity {
+    public static final int mode_runningProcesses = 5;
     /**
      * The font
      */
@@ -192,22 +193,24 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tf = getFont(getApplicationContext());
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
-        if (savedInstanceState != null) {
-            switch (savedInstanceState.getInt("mode", 1)) {
-                case 1:
-                    showModeSettings();
-                    return;
-                case 2:
-                    showFeatures();
-                    return;
-                case 3:
-                    showFeedback();
-                    return;
-                case 4:
-                    showPermissions();
-                    return;
+        switch (getPrefs(getApplicationContext()).getInt(Settings.mainScreen_mode, 1)) {
+            case 1:
+                showModeSettings();
+                return;
+            case 2:
+                showFeatures();
+                return;
+            case 3:
+                showFeedback();
+                return;
+            case 4:
+                showPermissions();
+                return;
+            case mode_runningProcesses:
+                setContentView(R.layout.running_processes_screen);
+                populateProcesses(null);
+                return;
 
-            }
         }
         showModeSettings();
     }
@@ -878,7 +881,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("mode", mode);
+        SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
+        if (mainShowing) edit.putInt(Settings.mainScreen_mode, mode);
+        else edit.putInt(Settings.mainScreen_mode, mode_runningProcesses);
+        edit.apply();
         finish();
     }
 

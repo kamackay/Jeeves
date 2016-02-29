@@ -9,6 +9,7 @@ import android.os.Debug;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
 
@@ -19,6 +20,7 @@ import static keithapps.mobile.com.jeeves.tools.Utils.breakIntoLines;
  * Basically just a textview that stores a process
  */
 public class ProcessView extends TextView {
+    int pid;
     /**
      * Service
      */
@@ -27,16 +29,16 @@ public class ProcessView extends TextView {
      * Process
      */
     private RunningAppProcessInfo process;
-
     public ProcessView(Context context, ActivityManager.RunningServiceInfo service) {
         super(context);
         this.service = service;
         String[] temp = service.service.toString().split("/");
         String c = temp[temp.length - 1].replace("}", "").split(":")[0];
-        setText(String.format("Service -\n    Name: %s\n    PID: %d\n    Client Count: %d" +
+        setText(String.format(Locale.getDefault(), "Service -\n    Name: %s\n    PID: %d\n    Client Count: %d" +
                         "\n    B: %s\n    Is Foreground: %s\n",
                 breakIntoLines(service.process), service.pid, service.clientCount, breakIntoLines(c),
                 (service.foreground ? "Yes" : "No")));
+        pid = service.pid;
         setPadding(40, 50, 20, 20);
     }
 
@@ -63,13 +65,13 @@ public class ProcessView extends TextView {
             String importance;
             switch (process.importance) {
                 case RunningAppProcessInfo.IMPORTANCE_FOREGROUND_SERVICE:
-                    importance = "Foreground Service";
+                    importance = "Foreground Running Service";
                     break;
                 case RunningAppProcessInfo.IMPORTANCE_PERCEPTIBLE:
-                    importance = "Perceptible";
+                    importance = "Perceptible Importance";
                     break;
                 case RunningAppProcessInfo.IMPORTANCE_VISIBLE:
-                    importance = "Has Visible UI";
+                    importance = "Service with Visible Importance";
                     break;
                 case RunningAppProcessInfo.IMPORTANCE_FOREGROUND:
                     importance = "Foreground UI Application";
@@ -87,12 +89,13 @@ public class ProcessView extends TextView {
                     importance = "Unimportant";
                     break;
             }
-            setText(String.format("App Process -\n    Name: %s\n    PID: %d" +
-                            "\n    B: %s\n    Memory: %fMB\n    Importance: %s\n",
+            setText(String.format(Locale.getDefault(), "App Process -\n    Name: %s\n    PID: %d" +
+                            "\n    Package: %s\n    Memory: %fMB\n    Importance: %s\n",
                     breakIntoLines(process.processName), process.pid, breakIntoLines(c),
                     (memInfo[0].getTotalPss() * .001), importance));
         } catch (Exception e) {  //Everything's ok
         }
+        pid = process.pid;
         setPadding(40, 50, 20, 20);
     }
 
@@ -114,8 +117,7 @@ public class ProcessView extends TextView {
         else if (text.toLowerCase().contains("pushbullet")) setTextColor(Color.GREEN);
         super.setText(text);
         if ((service != null && service.foreground) || (process != null
-                && (process.importance == RunningAppProcessInfo.IMPORTANCE_VISIBLE
-                || process.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND)))
+                && process.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND))
             setBackgroundResource(R.drawable.background_processview_inverted);
         else setBackgroundResource(R.drawable.background_processview);
     }
@@ -125,9 +127,12 @@ public class ProcessView extends TextView {
         super.onDraw(canvas);
     }
 
+    /**
+     * Get the PID that this view is associated to
+     *
+     * @return the integer process ID of this view
+     */
     public int getPID() {
-        if (process != null) return process.pid;
-        else if (service != null) return service.pid;
-        return 0;
+        return pid;
     }
 }

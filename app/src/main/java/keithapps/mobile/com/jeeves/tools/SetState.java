@@ -16,6 +16,7 @@ import static keithapps.mobile.com.jeeves.tools.ManageVolume.setRingtoneVolume;
 import static keithapps.mobile.com.jeeves.tools.ManageVolume.setSystemVolume;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.closeNotificationTray;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+import static keithapps.mobile.com.jeeves.tools.SystemTools.resetWifi;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.turnOffBluetooth;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.turnOffWiFi;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.turnOnBluetooth;
@@ -53,9 +54,7 @@ public class SetState {
                     R.string.settings_a_bluetoothAction), SELECTED_LEAVE);
             if (wifiAction == SELECTED_ON) turnOnWiFi(c);
             if (wifiAction == SELECTED_REBOOT) {
-                WifiManager wifiManager = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-                if (wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(false);
-                wifiManager.setWifiEnabled(true);
+                resetWifi(c);
             } else if (wifiAction == SELECTED_OFF) turnOffWiFi(c);
             if (bluetoothAction == SELECTED_ON) turnOnBluetooth(c);
             else if (bluetoothAction == SELECTED_OFF) turnOffBluetooth(c);

@@ -44,6 +44,7 @@
         <item>Roboto Thin</item>
         <item>Code</item>
         <item>Star Jedi</item>
+        <item>Product Sans</item>
     </string-array>
     <string name="title_activity_lock_screen">Lock Screen</string>
     <string name="dummy_button">Dummy Button</string>

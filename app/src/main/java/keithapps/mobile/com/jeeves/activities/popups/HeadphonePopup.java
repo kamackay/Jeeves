@@ -13,7 +13,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -66,14 +66,19 @@ public class HeadphonePopup extends Activity {
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
                 AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
         getWindowManager().getDefaultDisplay().getSize(size);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         getWindow().setLayout((int) (size.x * .75), ViewGroup.LayoutParams.WRAP_CONTENT);
         Log.writeToLog("Headphone Query Popup", getApplicationContext());
+        /*
         Typeface tf = getFont(getApplicationContext());
         if (tf != null) {
             ((Button) findViewById(R.id.headphone_popup_fullButton)).setTypeface(tf);
             ((Button) findViewById(R.id.headphone_popup_partialButton)).setTypeface(tf);
             ((TextView) findViewById(R.id.headphone_popup_text)).setTypeface(tf);
-        }
+        }/**/
         final TextView countdown = (TextView) findViewById(R.id.headphonePopup_countdown);
         final int x = 10;
         setFont();

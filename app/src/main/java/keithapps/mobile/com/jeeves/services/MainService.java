@@ -158,7 +158,7 @@ public class MainService extends Service {
             contentView.setImageViewResource(R.id.notification_buttonB,
                     R.drawable.notification_button_background_selected);
             if (prefs.getBoolean(c.getString(R.string.modeB_icon), true))
-                builder.setSmallIcon(R.drawable.icon_class);
+                builder.setSmallIcon(R.drawable.silent);
         } else if (mode == Mode.C) {
             priority = prefs.getInt(Settings.C.notificationPriority, Notification.PRIORITY_LOW);
             contentView.setImageViewResource(R.id.notification_buttonC,

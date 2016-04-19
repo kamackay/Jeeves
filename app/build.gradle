@@ -8,8 +8,8 @@ android {
         applicationId "keithapps.mobile.com.jeeves"
         minSdkVersion 20
         targetSdkVersion 23
-        versionCode 32
-        versionName "1.5.5c"
+        versionCode 33
+        versionName "1.6.0a"
     }
     buildTypes {
         release {

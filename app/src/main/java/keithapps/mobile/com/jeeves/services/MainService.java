@@ -13,6 +13,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.nfc.NfcAdapter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.TypedValue;
@@ -277,6 +278,18 @@ public class MainService extends Service {
                 edit.putString(Settings.versionName, info.versionName);
                 edit.apply();
             }
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            try {
+                ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
+                                       You should specify only the ones that you need. */
+            }
+            catch (IntentFilter.MalformedMimeTypeException e) {
+                throw new RuntimeException("fail", e);
+            }
+            intentFiltersArray = new IntentFilter[] {ndef, };
             writeToLog("MainService Startup", getApplicationContext(), true);
         } catch (Exception e) {
             writeToLog(String.format("Error occurred while starting MainService: %s",

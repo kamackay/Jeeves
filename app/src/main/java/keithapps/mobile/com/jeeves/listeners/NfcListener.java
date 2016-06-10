@@ -15,6 +15,8 @@ public class NfcListener extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             Toast.makeText(context, "Tag", Toast.LENGTH_LONG).show();
+        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())){
+            Toast.makeText(context, "Tag", Toast.LENGTH_LONG).show();
         }
     }
 }

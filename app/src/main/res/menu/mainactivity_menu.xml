@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/mainMenu_volumeLock"
+        android:title="@string/lock_media_volume_to_100"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/mainMenu_showAdderallGraph"
         android:icon="@android:drawable/ic_menu_view"
         android:title="@string/adderall_graph"

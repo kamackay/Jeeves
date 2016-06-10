@@ -161,4 +161,5 @@
     <string name="installed_from_play_store">Installed From Play Store</string>
     <string name="system_installed_app">System Installed App</string>
     <string name="manufacturer_installed_apps">Manufacturer Installed Apps</string>
+    <string name="lock_media_volume_to_100">Lock Media Volume to 100%</string>
 </resources>

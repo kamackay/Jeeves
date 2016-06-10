@@ -289,7 +289,7 @@ public class MainService extends Service {
             catch (IntentFilter.MalformedMimeTypeException e) {
                 throw new RuntimeException("fail", e);
             }
-            intentFiltersArray = new IntentFilter[] {ndef, };
+            //intentFiltersArray = new IntentFilter[] {ndef, };
             writeToLog("MainService Startup", getApplicationContext(), true);
         } catch (Exception e) {
             writeToLog(String.format("Error occurred while starting MainService: %s",

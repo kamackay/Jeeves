@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.tools.Email;
 import keithapps.mobile.com.jeeves.tools.Log;
+import keithapps.mobile.com.jeeves.tools.ManageVolume;
 import keithapps.mobile.com.jeeves.tools.Settings;
 
 import static keithapps.mobile.com.jeeves.services.MainService.updateNotification;
@@ -131,32 +132,7 @@ public class HeadphonePopup extends Activity {
      * @param v the button that was clicked
      */
     public void clickFull(View v) {
-        final AudioManager audioManager =
-                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
-                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-        SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                MODE_PRIVATE).edit();
-        edit.putBoolean(Settings.headset_full, true);
-        edit.apply();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                            audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
-                } catch (Exception e) {
-                    //Don't do anything with this
-                }
-            }
-        }).start();
-        Log.writeToLog("Headset Popup - Full", getApplicationContext());
-        updateNotification(getApplicationContext());
+        ManageVolume.lockFullVolume(getApplicationContext());
         finish();
     }
 

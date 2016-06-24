@@ -784,6 +784,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainMenu_showAdderallGraph:
                 startActivity(new Intent(getApplicationContext(), AdderallGraphActivity.class));
                 return true;
+            case R.id.mainMenu_volumeLock:
+                ManageVolume.lockFullVolume(getApplicationContext());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

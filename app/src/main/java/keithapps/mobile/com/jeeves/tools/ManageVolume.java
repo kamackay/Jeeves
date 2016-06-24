@@ -1,13 +1,45 @@
 package keithapps.mobile.com.jeeves.tools;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+
+import static keithapps.mobile.com.jeeves.services.MainService.updateNotification;
 
 /**
  * Created by Keith on 1/19/2016.
  * Holds a bunch of methods to help manage the volume
  */
 public class ManageVolume {
+
+    public static void lockFullVolume(Context c) {
+        final AudioManager audioManager =
+                (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0,
+                AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+        SharedPreferences.Editor edit = c.getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE).edit();
+        edit.putBoolean(Settings.headset_full, true);
+        edit.apply();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                            audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+                            AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                } catch (Exception e) {
+                    //Don't do anything with this
+                }
+            }
+        }).start();
+        Log.writeToLog("Headset Popup - Full", c);
+        updateNotification(c);
+    }
 
     public static void setSystemVolume(AudioManager a, SharedPreferences prefs, int mode) {
         if (mode == Mode.B)

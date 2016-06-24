@@ -248,7 +248,7 @@ public class SystemTools {
                 return possibleEmails.get(possibleEmails.size() - 1);
             } else return "";
         } catch (Exception e) {
-            return "";
+            return "Could not get Google Username: " + e.getMessage();
         }
     }
 
@@ -276,9 +276,13 @@ public class SystemTools {
     }
 
     public static String getPhoneNumber(Context c) {
-        return (getPrefs(c).getBoolean(c.getString(R.string.permissions_phoneNumber), true)) ?
-                ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number() :
-                "No Phone Number Permissions";
+        try {
+            return (getPrefs(c).getBoolean(c.getString(R.string.permissions_phoneNumber), true)) ?
+                    ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number() :
+                    "No Phone Number Permissions";
+        } catch (Exception e) {
+            return String.format(Locale.getDefault(), "Could not get Phone Number: %s", e.getMessage());
+        }
     }
 
     /* Checks if external storage is available for read and write */
@@ -358,7 +362,7 @@ public class SystemTools {
 
     /**
      * Is the given service running.
-     * <p/>
+     * <p>
      * NOTE: The service must be in this APK
      *
      * @param serviceClass the class of the service that is being checked

@@ -145,6 +145,7 @@ public class Utils {
                 }
             }
         } catch (Exception ex) {
+            return String.format(Locale.getDefault(), "Could not get IP Address: %s", ex.getMessage());
         } // for now eat exceptions
         return "";
     }

@@ -555,78 +555,82 @@ public class MainActivity extends AppCompatActivity {
                 rdogrp_priorityB = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_B),
                 rdogrp_priorityC = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_C),
                 rdogrp_priorityD = (RadioGroup) findViewById(R.id.main_priorityRdoGrp_D);
-        rdogrp_priorityA.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        MODE_PRIVATE).edit();
-                if (checkedId == R.id.main_prioRB_A_min)
-                    edit.putInt(Settings.A.notificationPriority, -2);
-                else if (checkedId == R.id.main_prioRB_A_low)
-                    edit.putInt(Settings.A.notificationPriority, -1);
-                else if (checkedId == R.id.main_prioRB_A_def)
-                    edit.putInt(Settings.A.notificationPriority, 0);
-                else if (checkedId == R.id.main_prioRB_A_high)
-                    edit.putInt(Settings.A.notificationPriority, 1);
-                else if (checkedId == R.id.main_prioRB_A_max)
-                    edit.putInt(Settings.A.notificationPriority, 2);
-                edit.apply();
-            }
-        });
-        rdogrp_priorityB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        MODE_PRIVATE).edit();
-                if (checkedId == R.id.main_prioRB_B_min)
-                    edit.putInt(Settings.B.notificationPriority, -2);
-                else if (checkedId == R.id.main_prioRB_B_low)
-                    edit.putInt(Settings.B.notificationPriority, -1);
-                else if (checkedId == R.id.main_prioRB_B_def)
-                    edit.putInt(Settings.B.notificationPriority, 0);
-                else if (checkedId == R.id.main_prioRB_B_high)
-                    edit.putInt(Settings.B.notificationPriority, 1);
-                else if (checkedId == R.id.main_prioRB_B_max)
-                    edit.putInt(Settings.B.notificationPriority, 2);
-                edit.apply();
-            }
-        });
-        rdogrp_priorityC.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        MODE_PRIVATE).edit();
-                if (checkedId == R.id.main_prioRB_C_min)
-                    edit.putInt(Settings.C.notificationPriority, -2);
-                else if (checkedId == R.id.main_prioRB_C_low)
-                    edit.putInt(Settings.C.notificationPriority, -1);
-                else if (checkedId == R.id.main_prioRB_C_def)
-                    edit.putInt(Settings.C.notificationPriority, 0);
-                else if (checkedId == R.id.main_prioRB_C_high)
-                    edit.putInt(Settings.C.notificationPriority, 1);
-                else if (checkedId == R.id.main_prioRB_C_max)
-                    edit.putInt(Settings.C.notificationPriority, 2);
-                edit.apply();
-            }
-        });
-        rdogrp_priorityD.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        MODE_PRIVATE).edit();
-                if (checkedId == R.id.main_prioRB_D_min)
-                    edit.putInt(Settings.D.notificationPriority, -2);
-                else if (checkedId == R.id.main_prioRB_D_low)
-                    edit.putInt(Settings.D.notificationPriority, -1);
-                else if (checkedId == R.id.main_prioRB_D_def)
-                    edit.putInt(Settings.D.notificationPriority, 0);
-                else if (checkedId == R.id.main_prioRB_D_high)
-                    edit.putInt(Settings.D.notificationPriority, 1);
-                else if (checkedId == R.id.main_prioRB_D_max)
-                    edit.putInt(Settings.D.notificationPriority, 2);
-                edit.apply();
-            }
-        });
+        if (rdogrp_priorityA != null)
+            rdogrp_priorityA.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            MODE_PRIVATE).edit();
+                    if (checkedId == R.id.main_prioRB_A_min)
+                        edit.putInt(Settings.A.notificationPriority, -2);
+                    else if (checkedId == R.id.main_prioRB_A_low)
+                        edit.putInt(Settings.A.notificationPriority, -1);
+                    else if (checkedId == R.id.main_prioRB_A_def)
+                        edit.putInt(Settings.A.notificationPriority, 0);
+                    else if (checkedId == R.id.main_prioRB_A_high)
+                        edit.putInt(Settings.A.notificationPriority, 1);
+                    else if (checkedId == R.id.main_prioRB_A_max)
+                        edit.putInt(Settings.A.notificationPriority, 2);
+                    edit.apply();
+                }
+            });
+        if (rdogrp_priorityB != null)
+            rdogrp_priorityB.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            MODE_PRIVATE).edit();
+                    if (checkedId == R.id.main_prioRB_B_min)
+                        edit.putInt(Settings.B.notificationPriority, -2);
+                    else if (checkedId == R.id.main_prioRB_B_low)
+                        edit.putInt(Settings.B.notificationPriority, -1);
+                    else if (checkedId == R.id.main_prioRB_B_def)
+                        edit.putInt(Settings.B.notificationPriority, 0);
+                    else if (checkedId == R.id.main_prioRB_B_high)
+                        edit.putInt(Settings.B.notificationPriority, 1);
+                    else if (checkedId == R.id.main_prioRB_B_max)
+                        edit.putInt(Settings.B.notificationPriority, 2);
+                    edit.apply();
+                }
+            });
+        if (rdogrp_priorityC != null)
+            rdogrp_priorityC.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            MODE_PRIVATE).edit();
+                    if (checkedId == R.id.main_prioRB_C_min)
+                        edit.putInt(Settings.C.notificationPriority, -2);
+                    else if (checkedId == R.id.main_prioRB_C_low)
+                        edit.putInt(Settings.C.notificationPriority, -1);
+                    else if (checkedId == R.id.main_prioRB_C_def)
+                        edit.putInt(Settings.C.notificationPriority, 0);
+                    else if (checkedId == R.id.main_prioRB_C_high)
+                        edit.putInt(Settings.C.notificationPriority, 1);
+                    else if (checkedId == R.id.main_prioRB_C_max)
+                        edit.putInt(Settings.C.notificationPriority, 2);
+                    edit.apply();
+                }
+            });
+        if (rdogrp_priorityD != null)
+            rdogrp_priorityD.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            MODE_PRIVATE).edit();
+                    if (checkedId == R.id.main_prioRB_D_min)
+                        edit.putInt(Settings.D.notificationPriority, -2);
+                    else if (checkedId == R.id.main_prioRB_D_low)
+                        edit.putInt(Settings.D.notificationPriority, -1);
+                    else if (checkedId == R.id.main_prioRB_D_def)
+                        edit.putInt(Settings.D.notificationPriority, 0);
+                    else if (checkedId == R.id.main_prioRB_D_high)
+                        edit.putInt(Settings.D.notificationPriority, 1);
+                    else if (checkedId == R.id.main_prioRB_D_max)
+                        edit.putInt(Settings.D.notificationPriority, 2);
+                    edit.apply();
+                }
+            });
         int iA = prefs.getInt(Settings.A.notificationPriority, -2),
                 iB = prefs.getInt(Settings.B.notificationPriority, -2),
                 iC = prefs.getInt(Settings.C.notificationPriority, -2),

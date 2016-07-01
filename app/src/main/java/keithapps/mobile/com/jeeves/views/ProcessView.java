@@ -11,8 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import keithapps.mobile.com.jeeves.R;
-
 import static keithapps.mobile.com.jeeves.tools.Utils.breakIntoLines;
 
 /**
@@ -118,8 +116,9 @@ public class ProcessView extends TextView {
         super.setText(text);
         if ((service != null && service.foreground) || (process != null
                 && process.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND))
-            setBackgroundResource(R.drawable.background_processview_inverted);
-        else setBackgroundResource(R.drawable.background_processview);
+            //setBackgroundResource(R.drawable.background_processview_inverted);
+            setBackgroundColor(Color.DKGRAY);
+        else setBackgroundColor(Color.LTGRAY);
     }
 
     @Override

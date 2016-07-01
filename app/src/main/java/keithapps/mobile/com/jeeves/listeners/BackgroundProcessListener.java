@@ -89,7 +89,7 @@ public class BackgroundProcessListener extends BroadcastReceiver
                         .addApi(LocationServices.API)
                         .build();
                 if (!mGoogleApiClient.isConnected()) mGoogleApiClient.connect();
-                else mGoogleApiClient.reconnect();
+                //else mGoogleApiClient.reconnect();
                 //mGoogleApiClient.disconnect();
             }
         } catch (Exception e) {

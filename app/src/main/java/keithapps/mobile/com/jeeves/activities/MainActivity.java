@@ -1,14 +1,18 @@
 package keithapps.mobile.com.jeeves.activities;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.TypedValue;
@@ -28,6 +32,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +80,7 @@ import static keithapps.mobile.com.jeeves.views.ModeChangeView.SELECTED_ON;
  */
 public class MainActivity extends AppCompatActivity {
     public static final int mode_runningProcesses = 5;
+    private static final int PERMISSION_REQUEST_READ_SMS = 9713;
     /**
      * The font
      */
@@ -140,6 +146,20 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
+            }
+        }
+    };
     /**
      * The runnable to send feedback info
      */
@@ -166,20 +186,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
 
     /**
      * Creation event
@@ -193,6 +199,15 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tf = getFont(getApplicationContext());
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+            List<String> permissions = new ArrayList<>();
+            if (getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
+                permissions.add(Manifest.permission.READ_SMS);
+            if (getApplicationContext().checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permissions.size() > 0)
+                ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), PERMISSION_REQUEST_READ_SMS);
+        }
         switch (getPrefs(getApplicationContext()).getInt(Settings.mainScreen_mode, 1)) {
             case 1:
                 showModeSettings();
@@ -215,6 +230,27 @@ public class MainActivity extends AppCompatActivity {
         showModeSettings();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_SMS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    KeithToast.show("Thank you, this makes life easier", getApplicationContext());
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Well, OK...", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
     /**
      * Show the Features on the main screen.
      *
@@ -223,62 +259,70 @@ public class MainActivity extends AppCompatActivity {
     public void showFeatures(View useless) {
         mode = 2;
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
-        frame.removeAllViews();
+        if (frame != null) frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_features_settings, frame, true);
         SharedPreferences prefs = getPrefs(getApplicationContext());
         EditText frequency = (EditText) findViewById(R.id.intrusivePopup_frequency);
-        findViewById(R.id.features_showGoogleButton_button)
-                .setOnClickListener(new View.OnClickListener() {
+        try {
+            findViewById(R.id.features_showGoogleButton_button)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                                startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+                        }
+                    });
+            frequency.setText(String.valueOf(prefs.getInt(Settings.intrusivePopupFrequency, 50)));
+            frequency.addTextChangedListener(new TextChangeListener() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    int n = Integer.parseInt(s.toString());
+                    if (n >= 0 && n <= 999) {
+                        SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
+                        edit.putInt(Settings.intrusivePopupFrequency, n);
+                        edit.apply();
+                    }
+                }
+            });
+            SettingsSwitch switchShowNotification =
+                    (SettingsSwitch) findViewById(R.id.settingsScreen_showNotification);
+            if (switchShowNotification != null) {
+                switchShowNotification.setAfterChangeEvent(new Runnable() {
                     @Override
-                    public void onClick(View v) {
-                        if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
-                            startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+                    public void run() {
+                        showNotification(getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE)
+                                        .getInt(Settings.current_mode, ManageVolume.Mode.A),
+                                getApplicationContext());
                     }
                 });
-        frequency.setText(String.valueOf(prefs.getInt(Settings.intrusivePopupFrequency, 50)));
-        frequency.addTextChangedListener(new TextChangeListener() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                int n = Integer.parseInt(s.toString());
-                if (n >= 0 && n <= 999) {
-                    SharedPreferences.Editor edit = getPrefs(getApplicationContext()).edit();
-                    edit.putInt(Settings.intrusivePopupFrequency, n);
-                    edit.apply();
+                switchShowNotification.setMySetting(Settings.showNotification);
+            }
+            final SettingsSwitch switchIntrusivePopup =
+                    (SettingsSwitch) findViewById(R.id.features_showIntrusivePopup);
+            if (switchIntrusivePopup != null) {
+                switchIntrusivePopup.setAfterChangeEvent(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.features_intrusivePopup_frequency_root)
+                                .setVisibility(switchIntrusivePopup.isChecked() ? View.VISIBLE : View.GONE);
+                    }
+                });
+                switchIntrusivePopup.setMySetting(Settings.showScreamingSunRandomly);
+            }
+            ((SettingsSwitch) findViewById(R.id.settingsScreen_showHeadphonePopup))
+                    .setMySetting(Settings.showHeadphonePopup);
+            ((SettingsSwitch) findViewById(R.id.features_showGoogleButton_switch)).setAfterChangeEvent(new Runnable() {
+                @Override
+                public void run() {
+                    stopService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+                    if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                        startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
                 }
-            }
-        });
-        SettingsSwitch switchShowNotification =
-                (SettingsSwitch) findViewById(R.id.settingsScreen_showNotification);
-        switchShowNotification.setAfterChangeEvent(new Runnable() {
-            @Override
-            public void run() {
-                showNotification(getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE)
-                                .getInt(Settings.current_mode, ManageVolume.Mode.A),
-                        getApplicationContext());
-            }
-        });
-        switchShowNotification.setMySetting(Settings.showNotification);
-        final SettingsSwitch switchIntrusivePopup =
-                (SettingsSwitch) findViewById(R.id.features_showIntrusivePopup);
-        switchIntrusivePopup.setAfterChangeEvent(new Runnable() {
-            @Override
-            public void run() {
-                findViewById(R.id.features_intrusivePopup_frequency_root)
-                        .setVisibility(switchIntrusivePopup.isChecked() ? View.VISIBLE : View.GONE);
-            }
-        });
-        switchIntrusivePopup.setMySetting(Settings.showScreamingSunRandomly);
-        ((SettingsSwitch) findViewById(R.id.settingsScreen_showHeadphonePopup))
-                .setMySetting(Settings.showHeadphonePopup);
-        ((SettingsSwitch) findViewById(R.id.features_showGoogleButton_switch)).setAfterChangeEvent(new Runnable() {
-            @Override
-            public void run() {
-                stopService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
-                if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
-                    startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
-            }
-        });
+            });
+        } catch (Exception e) {
+            //It Happens
+        }
         final Spinner fontSpinner = (Spinner) findViewById(R.id.features_fontSpinner);
         FontSpinnerAdapter adapter = new FontSpinnerAdapter(getApplicationContext(),
                 R.layout.spinner_dropdown, Arrays.asList(getResources().getStringArray(R.array.fonts)));
@@ -324,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
     public void showModeSettings(View useless) {
         mode = 1;
         frame = (FrameLayout) findViewById(R.id.mainScreen_frame);
-        frame.removeAllViews();
+        if (frame != null) frame.removeAllViews();
         LayoutInflater.from(getApplicationContext())
                 .inflate(R.layout.layout_mode_settings, frame, true);
         SharedPreferences prefs = getPrefs(getApplicationContext());
@@ -332,46 +376,54 @@ public class MainActivity extends AppCompatActivity {
                 et_B = (EditText) findViewById(R.id.main_text_B),
                 et_C = (EditText) findViewById(R.id.main_text_C),
                 et_D = (EditText) findViewById(R.id.main_text_D);
-        et_A.setText(prefs.getString(Settings.action_a_name, getString(R.string.text_home)));
-        et_B.setText(prefs.getString(Settings.action_b_name, getString(R.string.text_class)));
-        et_C.setText(prefs.getString(Settings.action_c_name, getString(R.string.text_out)));
-        et_D.setText(prefs.getString(Settings.action_d_name, getString(R.string.text_car)));
-        et_A.addTextChangedListener(new TextChangeListener() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        Context.MODE_PRIVATE).edit();
-                edit.putString(Settings.action_a_name, s.toString().trim());
-                edit.apply();
-            }
-        });
-        et_B.addTextChangedListener(new TextChangeListener() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        Context.MODE_PRIVATE).edit();
-                edit.putString(Settings.action_b_name, s.toString().trim());
-                edit.apply();
-            }
-        });
-        et_C.addTextChangedListener(new TextChangeListener() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        Context.MODE_PRIVATE).edit();
-                edit.putString(Settings.action_c_name, s.toString().trim());
-                edit.apply();
-            }
-        });
-        et_D.addTextChangedListener(new TextChangeListener() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
-                        Context.MODE_PRIVATE).edit();
-                edit.putString(Settings.action_d_name, s.toString().trim());
-                edit.apply();
-            }
-        });
+        if (et_A != null) {
+            et_A.setText(prefs.getString(Settings.action_a_name, getString(R.string.text_home)));
+            et_A.addTextChangedListener(new TextChangeListener() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            Context.MODE_PRIVATE).edit();
+                    edit.putString(Settings.action_a_name, s.toString().trim());
+                    edit.apply();
+                }
+            });
+        }
+        if (et_B != null) {
+            et_B.setText(prefs.getString(Settings.action_b_name, getString(R.string.text_class)));
+            et_B.addTextChangedListener(new TextChangeListener() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            Context.MODE_PRIVATE).edit();
+                    edit.putString(Settings.action_b_name, s.toString().trim());
+                    edit.apply();
+                }
+            });
+        }
+        if (et_C != null) {
+            et_C.setText(prefs.getString(Settings.action_c_name, getString(R.string.text_out)));
+            et_C.addTextChangedListener(new TextChangeListener() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            Context.MODE_PRIVATE).edit();
+                    edit.putString(Settings.action_c_name, s.toString().trim());
+                    edit.apply();
+                }
+            });
+        }
+        if (et_D != null) {
+            et_D.setText(prefs.getString(Settings.action_d_name, getString(R.string.text_car)));
+            et_D.addTextChangedListener(new TextChangeListener() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    SharedPreferences.Editor edit = getSharedPreferences(Settings.sharedPrefs_code,
+                            Context.MODE_PRIVATE).edit();
+                    edit.putString(Settings.action_d_name, s.toString().trim());
+                    edit.apply();
+                }
+            });
+        }
         mainShowing = true;
         final Spinner[] spinners = getSpinners();
         List<String> strings = Arrays.asList(getResources().getStringArray(R.array.percentages));
@@ -769,10 +821,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainMenu_showSysInfo:
                 showSystemInfo();
                 return true;
-            case R.id.mainMenu_showAllRunningActions:
+            /*case R.id.mainMenu_showAllRunningActions:
                 setContentView(R.layout.running_processes_screen);
                 populateProcesses(null);
-                return true;
+                return true;/**///This always sucked, and doesn't work in Marshmallow at all
             case R.id.mainMenu_showScreenSize:
                 showScreenSize(this);
                 return true;

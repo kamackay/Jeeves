@@ -27,7 +27,7 @@ public class FloatingGoogleButton extends PersistentFloatingButton {
     public void onCreate() {
         super.onCreate();
         if (!getPrefs(getApplicationContext())
-                .getBoolean(getString(R.string.settings_showGoogleButton), true)) onDestroy();
+                .getBoolean(getString(R.string.settings_showGoogleButton), false)) onDestroy();
     }
 
     @Override

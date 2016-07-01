@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/notification_background"
+    android:background="#555555"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/five"
     android:paddingEnd="@dimen/zero"
@@ -14,97 +14,60 @@
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="7"
-        android:paddingEnd="@dimen/ten"
-        android:paddingStart="@dimen/zero" android:contentDescription="@string/text_jeevesImage"
+        android:contentDescription="@string/text_jeevesImage"
+        android:paddingEnd="@dimen/five"
+        android:paddingStart="@dimen/zero"
         android:scaleType="fitCenter"
         android:src="@drawable/icon" />
 
-    <RelativeLayout
+
+    <Button
+        android:id="@+id/notification_buttonA"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
-        android:paddingStart="@dimen/notification_paddingBetweenButtons">
+        android:contentDescription="@string/desc_notification_AButton"
+        android:text="@string/text_home"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/twelve" />
 
-        <ImageView
-            android:id="@+id/notification_buttonA"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_AButton"
-            android:src="@drawable/notification_button_background" />
-
-        <TextView
-            android:id="@+id/notification_textA"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/text_home" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <Button
+        android:id="@+id/notification_buttonB"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
-        android:paddingStart="@dimen/notification_paddingBetweenButtons">
+        android:contentDescription="@string/desc_notification_AButton"
+        android:text="@string/text_home"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/twelve" />
 
-        <ImageView
-            android:id="@+id/notification_buttonB"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_BButton"
-            android:src="@drawable/notification_button_background" />
-
-        <TextView
-            android:id="@+id/notification_textB"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/text_class" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <Button
+        android:id="@+id/notification_buttonC"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
-        android:paddingStart="@dimen/notification_paddingBetweenButtons">
+        android:contentDescription="@string/desc_notification_AButton"
+        android:text="@string/text_home"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/twelve" />
 
-        <ImageView
-            android:id="@+id/notification_buttonC"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/desc_notification_CButton"
-            android:src="@drawable/notification_button_background" />
-
-        <TextView
-            android:id="@+id/notification_textC"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/text_out" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <Button
+        android:id="@+id/notification_buttonD"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0sp"
         android:layout_height="match_parent"
         android:layout_weight="10"
-        android:paddingEnd="@dimen/notification_paddingBetweenButtons"
-        android:paddingStart="@dimen/notification_paddingBetweenButtons">
-
-        <ImageView
-            android:id="@+id/notification_buttonD"
-            android:layout_width="match_parent" android:contentDescription="@string/text_buttonD"
-            android:layout_height="match_parent"
-            android:src="@drawable/notification_button_background" />
-
-        <TextView
-            android:id="@+id/notification_textD"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/text_car" />
-    </RelativeLayout>
+        android:contentDescription="@string/desc_notification_AButton"
+        android:text="@string/text_home"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/twelve" />
 
     <LinearLayout
         android:layout_width="@dimen/zero"
@@ -121,6 +84,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
+
         <TextView
             android:id="@+id/notification_text_timeSinceAdderall"
             android:layout_width="match_parent"

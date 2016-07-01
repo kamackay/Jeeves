@@ -21,11 +21,6 @@
         android:title="@string/text_showLog"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/mainMenu_showAllRunningActions"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="@string/text_showAllRunningProcesses"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/mainMenu_showSysInfo"
         android:title="@string/text_showSystemInfo"
         app:showAsAction="never" />

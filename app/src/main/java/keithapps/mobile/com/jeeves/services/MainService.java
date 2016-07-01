@@ -1,6 +1,5 @@
 package keithapps.mobile.com.jeeves.services;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,14 +12,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.nfc.NfcAdapter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 
 import keithapps.mobile.com.jeeves.R;
@@ -36,7 +33,6 @@ import keithapps.mobile.com.jeeves.tools.Settings;
 import static keithapps.mobile.com.jeeves.tools.Email.sendEmail;
 import static keithapps.mobile.com.jeeves.tools.Log.writeToLog;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getDeviceInfo;
-import static keithapps.mobile.com.jeeves.tools.SystemTools.isServiceRunning;
 import static keithapps.mobile.com.jeeves.tools.Utils.getStackTraceString;
 import static keithapps.mobile.com.jeeves.tools.Utils.getTimestamp;
 
@@ -104,25 +100,29 @@ public class MainService extends Service {
                 PendingIntent.getBroadcast(c, 0, i, 0));
         contentView.setOnClickPendingIntent(R.id.notification_text_adderallSoFar,
                 PendingIntent.getBroadcast(c, 0, i, 0));
-        contentView.setImageViewResource(R.id.notification_buttonA,
+        /*contentView.setImageViewResource(R.id.notification_buttonA,
                 R.drawable.notification_button_background);
         contentView.setImageViewResource(R.id.notification_buttonB,
                 R.drawable.notification_button_background);
         contentView.setImageViewResource(R.id.notification_buttonC,
                 R.drawable.notification_button_background);
         contentView.setImageViewResource(R.id.notification_buttonD,
-                R.drawable.notification_button_background);
-        contentView.setTextColor(R.id.notification_textC, Color.WHITE);
-        contentView.setTextColor(R.id.notification_textB, Color.WHITE);
-        contentView.setTextColor(R.id.notification_textA, Color.WHITE);
-        contentView.setTextColor(R.id.notification_textD, Color.WHITE);
-        contentView.setTextViewText(R.id.notification_textA,
+                R.drawable.notification_button_background);/**///This was from when the buttons were ImageViews with backgrounds... Ew
+        contentView.setTextColor(R.id.notification_buttonC, Color.BLACK);
+        contentView.setTextColor(R.id.notification_buttonB, Color.BLACK);
+        contentView.setTextColor(R.id.notification_buttonA, Color.BLACK);
+        contentView.setTextColor(R.id.notification_buttonD, Color.BLACK);
+        contentView.setTextViewTextSize(R.id.notification_buttonA, TypedValue.COMPLEX_UNIT_SP, 12);
+        contentView.setTextViewTextSize(R.id.notification_buttonB, TypedValue.COMPLEX_UNIT_SP, 12);
+        contentView.setTextViewTextSize(R.id.notification_buttonC, TypedValue.COMPLEX_UNIT_SP, 12);
+        contentView.setTextViewTextSize(R.id.notification_buttonD, TypedValue.COMPLEX_UNIT_SP, 12);
+        contentView.setTextViewText(R.id.notification_buttonA,
                 prefs.getString(Settings.action_a_name, c.getString(R.string.text_home)));
-        contentView.setTextViewText(R.id.notification_textB,
+        contentView.setTextViewText(R.id.notification_buttonB,
                 prefs.getString(Settings.action_b_name, c.getString(R.string.text_class)));
-        contentView.setTextViewText(R.id.notification_textC,
+        contentView.setTextViewText(R.id.notification_buttonC,
                 prefs.getString(Settings.action_c_name, c.getString(R.string.text_out)));
-        contentView.setTextViewText(R.id.notification_textD,
+        contentView.setTextViewText(R.id.notification_buttonD,
                 prefs.getString(Settings.action_d_name, c.getString(R.string.text_car)));
         contentView.setTextViewText(R.id.notification_text_adderallSoFar,
                 String.format(Locale.getDefault(), "%d mg",
@@ -148,30 +148,26 @@ public class MainService extends Service {
             builder.setSmallIcon(android.R.color.transparent);
         else if (mode == Mode.A) {
             priority = prefs.getInt(Settings.A.notificationPriority, Notification.PRIORITY_LOW);
-            contentView.setTextColor(R.id.notification_textA, Color.BLACK);
-            contentView.setImageViewResource(R.id.notification_buttonA,
-                    R.drawable.notification_button_background_selected);
+            contentView.setTextColor(R.id.notification_buttonA, Color.argb(255, 0, 175, 255));
+            //contentView.setImageViewResource(R.id.notification_buttonA,                    R.drawable.notification_button_background_selected);
             builder.setSmallIcon(android.R.color.transparent);
             //builder.setPriority(Notification.PRIORITY_MIN);
         } else if (mode == Mode.B) {
             priority = prefs.getInt(Settings.B.notificationPriority, Notification.PRIORITY_LOW);
-            contentView.setTextColor(R.id.notification_textB, Color.BLACK);
-            contentView.setImageViewResource(R.id.notification_buttonB,
-                    R.drawable.notification_button_background_selected);
+            contentView.setTextColor(R.id.notification_buttonB, Color.argb(255, 0, 175, 255));
+            //contentView.setImageViewResource(R.id.notification_buttonB,                    R.drawable.notification_button_background_selected);
             if (prefs.getBoolean(c.getString(R.string.modeB_icon), true))
                 builder.setSmallIcon(R.drawable.silent);
         } else if (mode == Mode.C) {
             priority = prefs.getInt(Settings.C.notificationPriority, Notification.PRIORITY_LOW);
-            contentView.setImageViewResource(R.id.notification_buttonC,
-                    R.drawable.notification_button_background_selected);
-            contentView.setTextColor(R.id.notification_textC, Color.BLACK);
+            //contentView.setImageViewResource(R.id.notification_buttonC,                    R.drawable.notification_button_background_selected);
+            contentView.setTextColor(R.id.notification_buttonC, Color.argb(255, 0, 175, 255));
             if (prefs.getBoolean(c.getString(R.string.modeC_icon), true))
                 builder.setSmallIcon(R.drawable.icon_small);
         } else if (mode == Mode.D) {
             priority = prefs.getInt(Settings.D.notificationPriority, Notification.PRIORITY_LOW);
-            contentView.setImageViewResource(R.id.notification_buttonD,
-                    R.drawable.notification_button_background_selected);
-            contentView.setTextColor(R.id.notification_textD, Color.BLACK);
+            //contentView.setImageViewResource(R.id.notification_buttonD,                    R.drawable.notification_button_background_selected);
+            contentView.setTextColor(R.id.notification_buttonD, Color.argb(255, 0, 175, 255));
             if (prefs.getBoolean(c.getString(R.string.modeD_icon), true))
                 builder.setSmallIcon(R.drawable.icon_car_white);
         } else builder.setSmallIcon(R.drawable.icon_small);
@@ -203,21 +199,23 @@ public class MainService extends Service {
     }
 
     public static void startBackgroundProcess(Context c) {
-        Intent myIntent = new Intent(c, BackgroundProcessListener.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(c, 0, myIntent, 0);
-        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
         c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_CONNECTED));
         c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_POWER_DISCONNECTED));
         c.registerReceiver(new BootListener(), new IntentFilter(Intent.ACTION_SCREEN_OFF));
         c.registerReceiver(new BootListener(), new IntentFilter(Intent.ACTION_SCREEN_ON));
-        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter((Intent.ACTION_UNINSTALL_PACKAGE)));
-        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter((Intent.ACTION_INSTALL_PACKAGE)));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_UNINSTALL_PACKAGE));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_INSTALL_PACKAGE));
+        c.registerReceiver(new BackgroundProcessListener(), new IntentFilter(Intent.ACTION_PACKAGE_CHANGED));
+        /*
+        Intent myIntent = new Intent(c, BackgroundProcessListener.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(c, 0, myIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 0); // first time
         long frequency = 60 * 5000; // in ms
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                frequency, pendingIntent);
+                frequency, pendingIntent);/**///This code refreshed the Service every 5 minutes, which is bad for runtimes
         writeToLog("Background Process Started", c);
     }
 
@@ -248,8 +246,8 @@ public class MainService extends Service {
             NotificationListener notificationListener = new NotificationListener();
             registerReceiver(notificationListener, notificationFilter);
 
-            if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
-                startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));
+          /*  if (!isServiceRunning(FloatingGoogleButton.class, getApplicationContext()))
+                startService(new Intent(getApplicationContext(), FloatingGoogleButton.class));/**/
 
             mVolumeChangeListener = new VolumeChangeListener(this, new Handler());
 
@@ -279,16 +277,16 @@ public class MainService extends Service {
                 edit.apply();
             }
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(
-                    this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-            IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-            try {
-                ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
-                                       You should specify only the ones that you need. */
-            }
-            catch (IntentFilter.MalformedMimeTypeException e) {
-                throw new RuntimeException("fail", e);
-            }
+            // PendingIntent pendingIntent = PendingIntent.getActivity(
+            //       this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            // IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
+            //try {
+            //    ndef.addDataType("*/*");    /* Handles all MIME based dispatches.
+            //                            You should specify only the ones that you need. */
+            //}
+            // catch (IntentFilter.MalformedMimeTypeException e) {
+            //    throw new RuntimeException("fail", e);
+            // }
             //intentFiltersArray = new IntentFilter[] {ndef, };
             writeToLog("MainService Startup", getApplicationContext(), true);
         } catch (Exception e) {

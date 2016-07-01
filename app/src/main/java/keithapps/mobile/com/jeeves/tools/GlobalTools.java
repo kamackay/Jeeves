@@ -7,18 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import keithapps.mobile.com.jeeves.BuildConfig;
-import keithapps.mobile.com.jeeves.R;
 import keithapps.mobile.com.jeeves.activities.popups.DeveloperPopup;
 import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
+
+import static keithapps.mobile.com.jeeves.tools.SystemTools.getGoogleUsername;
 
 /**
  * Created by Keith on 1/17/2016.
@@ -59,12 +57,16 @@ public class GlobalTools {
      */
     public static boolean isKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, Context.MODE_PRIVATE);
-        return prefs.getBoolean(c.getString(R.string.settings_isKeith), false) &&
+        String s = getGoogleUsername(c);
+
+        return "keith.mackay3@gmail.com".equals(s);
+
+        /*prefs.getBoolean(c.getString(R.string.settings_isKeith), false) &&
                 BuildConfig.DEBUG &&
                 Build.BRAND.toLowerCase().equals("samsung") &&
-                Build.MODEL.toLowerCase().equals("sm-n900");
+                Build.MODEL.toLowerCase().equals("sm-n900");/**///This is a now outdated version of this method when I only had one phone
     }
-
+/*
     public static void makeKeith(Context c) {
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code,
                 Context.MODE_PRIVATE);
@@ -79,18 +81,18 @@ public class GlobalTools {
             editor.apply();
             KeithToast.show("Hello, Keith", c);
         }
-    }
+    }/**/
 
-    public static void turnOffVibrate(AudioManager a) {/**
+    /**public static void turnOffVibrate(AudioManager a) {
      a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-     a.setRingerMode(AudioManager.RINGER_MODE_SILENT);*/
+     a.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }
 
-    public static void turnOnVibrate(Context c) {/**
+     public static void turnOnVibrate(Context c) {
      AudioManager audioManager = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
      audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-     Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);//*/
-    }
+     Vibrator v = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
+     }/**/
 
     public static ArrayList<View> getAllChildren(View v) {
         if (!(v instanceof ViewGroup)) {

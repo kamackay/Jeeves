@@ -31,7 +31,6 @@ import keithapps.mobile.com.jeeves.activities.popups.KeithToast;
 
 import static keithapps.mobile.com.jeeves.tools.Email.emailException;
 import static keithapps.mobile.com.jeeves.tools.GlobalTools.isKeith;
-import static keithapps.mobile.com.jeeves.tools.LocationTools.getLastKnownLocation;
 
 /**
  * Created by Keith on 2/18/2016.
@@ -261,10 +260,10 @@ public class SystemTools {
             builder.append(lineStarter + "Device: ");
             builder.append(WordUtils.capitalizeFully(Build.MANUFACTURER)).append(" ");
             builder.append(Build.MODEL);
-            builder.append(lineStarter + "Phone #").append(getPhoneNumber(c));
+            //builder.append(lineStarter + "Phone #").append(getPhoneNumber(c));//Marshmallow hates me, so I can't get the phone number at the moment
             builder.append(lineStarter + "IPv4: ").append(Utils.getIPAddress(true, c));
             builder.append(lineStarter + "Main Google Account: ").append(getGoogleUsername(c));
-            builder.append(lineStarter + "Last Known Location: ").append(getLastKnownLocation(c));
+            //builder.append(lineStarter + "Last Known Location: ").append(getLastKnownLocation(c));
             builder.append(lineStarter + "Developer: ").append(String.valueOf(isKeith(c)));
             //builder.append(String.format("%sBattery Level: %f%%", lineStarter, getBatteryPercentage(c)));
             //builder.append(lineStarter + "IPv6: " + Utils.getIPAddress(false));
@@ -277,9 +276,19 @@ public class SystemTools {
 
     public static String getPhoneNumber(Context c) {
         try {
-            return (getPrefs(c).getBoolean(c.getString(R.string.permissions_phoneNumber), true)) ?
-                    ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number() :
-                    "No Phone Number Permissions";
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                if (c.checkCallingOrSelfPermission(android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED)
+                    return (getPrefs(c).getBoolean(c.getString(R.string.permissions_phoneNumber), true)) ?
+                            ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number() :
+                            "No Phone Number Permissions";
+                else {
+                    //Request permissions, then try again
+                    return "Don't have permission";
+                }
+            } else
+                return (getPrefs(c).getBoolean(c.getString(R.string.permissions_phoneNumber), true)) ?
+                        ((TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number() :
+                        "No Phone Number Permissions";
         } catch (Exception e) {
             return String.format(Locale.getDefault(), "Could not get Phone Number: %s", e.getMessage());
         }
@@ -362,7 +371,7 @@ public class SystemTools {
 
     /**
      * Is the given service running.
-     * <p>
+     * <p/>
      * NOTE: The service must be in this APK
      *
      * @param serviceClass the class of the service that is being checked

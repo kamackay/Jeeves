@@ -2,19 +2,19 @@ package keithapps.mobile.com.jeeves.tools;
 
 import android.content.Context;
 
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import keithapps.mobile.com.jeeves.R;
 
-import static javax.mail.Session.getInstance;
 import static keithapps.mobile.com.jeeves.tools.SystemTools.getPrefs;
+
+/**
+ * import javax.mail.Message;
+ * import javax.mail.PasswordAuthentication;
+ * import javax.mail.Session;
+ * import javax.mail.Transport;
+ * import javax.mail.internet.InternetAddress;
+ * import javax.mail.internet.MimeMessage;/
+ **/
+//import static javax.mail.Session.getInstance;
 
 /**
  * Created by Keith on 2/18/2016.
@@ -32,7 +32,7 @@ public class Email {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
+                        try {/*//Removing the emailing for now, because the Gradle project hates the javax.mail package
                             final String username = "android.jeeves@yahoo.com";
                             final String password = "jeevspass";
                             Properties props = new Properties();
@@ -60,7 +60,7 @@ public class Email {
                                 Transport.send(m);
                             } catch (Exception e) {
                                 if (resend) sendEmailTo(header, message, recipient, false, c);
-                            }
+                            }/**/
                         } catch (Exception e) {
                             //Just let it go
                         }

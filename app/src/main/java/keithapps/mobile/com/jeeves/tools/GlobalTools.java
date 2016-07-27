@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,9 +40,10 @@ public class GlobalTools {
      */
     public static boolean isJeevesActivityForeground(Context c) {
         try {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) return false;
             List<ActivityManager.RunningAppProcessInfo> tasks = ((ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE))
                     .getRunningAppProcesses();
-            if (tasks == null) return false;
+            if (tasks == null || tasks.size() <= 1) return false;
             String mainActivity = tasks.get(0).processName;
             return mainActivity.toLowerCase().contains("keithapps");
         } catch (Exception e) {

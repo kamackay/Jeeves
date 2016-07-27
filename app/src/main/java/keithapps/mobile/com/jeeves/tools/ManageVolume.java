@@ -12,6 +12,15 @@ import static keithapps.mobile.com.jeeves.services.MainService.updateNotificatio
  */
 public class ManageVolume {
 
+    public static void unlockFullVolume(Context c) {
+        SharedPreferences.Editor edit = c.getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE).edit();
+        edit.putBoolean(Settings.headset_full, false);
+        edit.apply();
+        SetState.setState(c);
+        //updateNotification(c);//This is probably redundant since SetState calls it
+    }
+
     public static void lockFullVolume(Context c) {
         final AudioManager audioManager =
                 (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);

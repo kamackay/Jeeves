@@ -37,7 +37,9 @@ public class HeadphonePopup extends Activity {
 
     public static void showHeadphonesPopup(Context c) {
         try {
-            if (!getPrefs(c).getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true))
+            SharedPreferences prefs = getPrefs(c);
+            if (!prefs.getBoolean(c.getString(R.string.permissions_drawOverOtherApps), true)
+                    || prefs.getBoolean(Settings.headset_full, false))//Don't bother opening the popup if already locked to 100%
                 return;
             closeNotificationTray(c);
             Intent i = new Intent(c, HeadphonePopup.class);

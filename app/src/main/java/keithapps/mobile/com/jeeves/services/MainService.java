@@ -71,6 +71,7 @@ public class MainService extends Service {
      * @param c    the calling context
      */
     public static void showNotification(int mode, Context c) {
+        final int defaultFontColor = Color.WHITE;
         SharedPreferences prefs = c.getSharedPreferences(Settings.sharedPrefs_code, MODE_PRIVATE);
         Intent intent = new Intent(c, BackgroundProcessListener.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(c, 1,
@@ -108,10 +109,10 @@ public class MainService extends Service {
                 R.drawable.notification_button_background);
         contentView.setImageViewResource(R.id.notification_buttonD,
                 R.drawable.notification_button_background);/**///This was from when the buttons were ImageViews with backgrounds... Ew
-        contentView.setTextColor(R.id.notification_buttonC, Color.BLACK);
-        contentView.setTextColor(R.id.notification_buttonB, Color.BLACK);
-        contentView.setTextColor(R.id.notification_buttonA, Color.BLACK);
-        contentView.setTextColor(R.id.notification_buttonD, Color.BLACK);
+        contentView.setTextColor(R.id.notification_buttonC, defaultFontColor);
+        contentView.setTextColor(R.id.notification_buttonB, defaultFontColor);
+        contentView.setTextColor(R.id.notification_buttonA, defaultFontColor);
+        contentView.setTextColor(R.id.notification_buttonD, defaultFontColor);
         contentView.setTextViewTextSize(R.id.notification_buttonA, TypedValue.COMPLEX_UNIT_SP, 12);
         contentView.setTextViewTextSize(R.id.notification_buttonB, TypedValue.COMPLEX_UNIT_SP, 12);
         contentView.setTextViewTextSize(R.id.notification_buttonC, TypedValue.COMPLEX_UNIT_SP, 12);
@@ -311,7 +312,7 @@ public class MainService extends Service {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        writeToLog("MainService onConfigurationChanged", getApplicationContext());
+        //writeToLog("MainService onConfigurationChanged", getApplicationContext());
         super.onConfigurationChanged(newConfig);
     }
 
@@ -321,7 +322,7 @@ public class MainService extends Service {
     @Override
     public void onDestroy() {
         getApplicationContext().getContentResolver().unregisterContentObserver(mVolumeChangeListener);
-        writeToLog("Main Service Killed", getApplicationContext());
+        //writeToLog("Main Service Killed", getApplicationContext());
         super.onDestroy();
     }
 
@@ -339,7 +340,7 @@ public class MainService extends Service {
      */
     @Override
     public boolean onUnbind(Intent intent) {
-        writeToLog("MainService onUnbind", getApplicationContext());
+        //writeToLog("MainService onUnbind", getApplicationContext());
         return super.onUnbind(intent);
     }
 
@@ -355,13 +356,13 @@ public class MainService extends Service {
      */
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        writeToLog("MainService onTaskRemoved", getApplicationContext());
+        //writeToLog("MainService onTaskRemoved", getApplicationContext());
         super.onTaskRemoved(rootIntent);
     }
 
     @Override
     public void onLowMemory() {
-        writeToLog("MainService onLowMemory", getApplicationContext());
+        // writeToLog("MainService onLowMemory", getApplicationContext());
         super.onLowMemory();
     }
 

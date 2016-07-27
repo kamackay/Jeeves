@@ -32,7 +32,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,20 +145,6 @@ public class MainActivity extends AppCompatActivity {
      * The main frame to load all of the screens into
      */
     private FrameLayout frame;
-    SwipeListener swipeListener = new SwipeListener() {
-        @Override
-        public void onSwipe(Details details) {
-            if (details.getDirection() == Direction.Right) {
-                if (mode == 2) showModeSettings();
-                else if (mode == 3) showFeatures();
-                else if (mode == 4) showFeedback();
-            } else if (details.getDirection() == Direction.Left) {
-                if (mode == 1) showFeatures();
-                else if (mode == 2) showFeedback();
-                else if (mode == 3) showPermissions();
-            }
-        }
-    };
     /**
      * The runnable to send feedback info
      */
@@ -183,6 +168,20 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 emailException("Error Sending feedback email", getApplicationContext(), e);
                 KeithToast.show("Error sending feedback", getApplicationContext());
+            }
+        }
+    };
+    SwipeListener swipeListener = new SwipeListener() {
+        @Override
+        public void onSwipe(Details details) {
+            if (details.getDirection() == Direction.Right) {
+                if (mode == 2) showModeSettings();
+                else if (mode == 3) showFeatures();
+                else if (mode == 4) showFeedback();
+            } else if (details.getDirection() == Direction.Left) {
+                if (mode == 1) showFeatures();
+                else if (mode == 2) showFeedback();
+                else if (mode == 3) showPermissions();
             }
         }
     };
@@ -240,9 +239,9 @@ public class MainActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     KeithToast.show("Thank you, this makes life easier", getApplicationContext());
 
-                } else {
+                } /*else {
                     Toast.makeText(getApplicationContext(), "Well, OK...", Toast.LENGTH_LONG).show();
-                }
+                }/**/
                 return;
             }
 
@@ -806,6 +805,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainactivity_menu, menu);
+        MenuItem item = menu.findItem(R.id.mainMenu_volumeLock);
+        if (item != null && getSharedPreferences(Settings.sharedPrefs_code,
+                Context.MODE_PRIVATE).getBoolean(Settings.headset_full, false))
+            item.setTitle("Unlock Media Volume from 100%");
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.mainMenu_volumeLock);
+        if (item != null) {
+            if (getSharedPreferences(Settings.sharedPrefs_code,
+                    Context.MODE_PRIVATE).getBoolean(Settings.headset_full, false))
+                item.setTitle("Unlock Media Volume from 100%");
+            else item.setTitle(getString(R.string.lock_media_volume_to_100));
+        }
         return true;
     }
 
@@ -841,7 +856,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), AdderallGraphActivity.class));
                 return true;
             case R.id.mainMenu_volumeLock:
-                ManageVolume.lockFullVolume(getApplicationContext());
+                SharedPreferences prefs = getSharedPreferences(Settings.sharedPrefs_code,
+                        Context.MODE_PRIVATE);
+                if (prefs.getBoolean(Settings.headset_full, false)) {
+                    ManageVolume.unlockFullVolume(getApplicationContext());
+                } else ManageVolume.lockFullVolume(getApplicationContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
